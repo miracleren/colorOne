@@ -1,7 +1,7 @@
 const path = require('path')
 const resolve = dir => path.join(__dirname, dir)
 const {defineConfig} = require('@vue/cli-service')
-const defaultSettings = require('./src/settings.js')
+const defaultSettings = require('./src/store/settings.js')
 
 const name = defaultSettings.title
 
@@ -14,12 +14,32 @@ module.exports = defineConfig({
         }
     },
     configureWebpack: {
-        name:name,
+        name: name,
         resolve: {
             alias: {
                 '@': resolve('src')
             }
         }
     },
+    chainWebpack: config => {
+        /**
+         * svg-sprite-loader
+         */
+        config.module
+            .rule('svg')
+            .exclude.add(resolve('src/assets/icons/svg'))
+            .end();
+        config.module
+            .rule('icons')
+            .test(/\.svg$/)
+            .include.add(resolve('src/assets/icons/svg'))
+            .end()
+            .use('svg-sprite-loader')
+            .loader('svg-sprite-loader')
+            .options({
+                symbolId: 'icon-[name]',
+            })
+            .end();
+    }
 })
 

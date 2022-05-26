@@ -8,11 +8,11 @@ import {
     // create naive ui
     create,
     // component
-    NButton
+    NButton,NCard,NInput,NForm,NFormItem,NIcon
 } from 'naive-ui'
 
 const naive = create({
-    components: [NButton]
+    components: [NButton,NCard,NInput,NForm,NFormItem,NIcon]
 })
 
 export default naive
