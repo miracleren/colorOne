@@ -18,6 +18,6 @@
                        ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝                                           
                                                                                     
 
-1. colorXX 颜一简易管理系统简要说明
-colorXX一套开源的权限管理系统，相关功能将持续开发更新。
+1. colorOne 颜一简易管理系统简要说明
+colorOne一套开源的权限管理系统，相关功能将持续开发更新。
 基于SpringBoot，Spring Security，MybatisPlus，Vue3， naiveUi，MySql 实现的前后端分离权限管理简易系统。
