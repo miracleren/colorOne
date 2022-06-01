@@ -1,0 +1,17 @@
+# 开发环境配置
+server:
+  # 服务器的HTTP端口，默认为8181
+  port: 8181
+  servlet:
+    # 应用的访问路径
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    max-swallow-size: -1MB
+    threads:
+      # tomcat最大线程数，默认为200
+      max: 200
+      # Tomcat启动初始化的线程数，默认值25
+      min-spare: 25
+
