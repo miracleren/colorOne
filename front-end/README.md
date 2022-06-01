@@ -1,4 +1,4 @@
-# colorxx
+# colorOne
 
 ## Project setup
 ```

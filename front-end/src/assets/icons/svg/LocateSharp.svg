@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">
+  <path fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" stroke-width="48" d="M256 96V56" />
+  <path fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" stroke-width="48" d="M256 456v-40" />
+  <path d="M256 112a144 144 0 1 0 144 144a144 144 0 0 0-144-144z" fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" stroke-width="48" />
+  <path fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" stroke-width="48" d="M416 256h40" />
+  <path fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" stroke-width="48" d="M56 256h40" />
+</svg>
