@@ -8,24 +8,13 @@
         <version>0.0.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>color-start</artifactId>
 
-    <description>
-        web服务入口
-    </description>
+    <artifactId>color-common</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
-    <dependencies>
-        <!-- 系统管理业务模块 -->
-        <dependency>
-            <groupId>com.colorOne</groupId>
-            <artifactId>color-system</artifactId>
-            <version>0.0.1</version>
-        </dependency>
 
-    </dependencies>
 </project>
