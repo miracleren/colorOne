@@ -17,6 +17,10 @@ server:
 
 # 数据库配置
 spring:
+  #springboot多环境配置
+  profiles:
+    active: dev
+
   datasource:
     dynamic:
       primary: master #设置默认数据源或数据源组，master默认值(数据源名称可以随意起名，没有固定值，eg:db1,db2)
@@ -25,17 +29,17 @@ spring:
         # 主数据库
         master:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://localhoat:3306/colorxx?
-          username: colorxx
-          password: colorxx
+          url: jdbc:mysql://localhost:3306/colorxx?
+          username: colorone
+          password: colorone
           maximum-pool-size: 10
           min-idle: 1
         # 从数据库
         slave:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://localhoat:3306
-          username: colorxx
-          password: colorxx
+          url: jdbc:mysql://localhost:3306
+          username: colorone
+          password: colorone
           maximum-pool-size: 10
           min-idle: 1
 
@@ -47,6 +51,6 @@ mybatis-plus:
   type-aliases-package: com.colorone.**.domain
   configuration:
     #是否开启自动驼峰命名规则（camel case）映射，即从经典数据库列名 A_COLUMN（下划线命名） 到经典 Java 属性名 aColumn（驼峰命名） 的类似映射。
-    map-underscore-to-camel-case: false
+    map-underscore-to-camel-case: true
 
 
