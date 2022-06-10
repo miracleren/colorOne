@@ -25,7 +25,7 @@ spring:
         # 主数据库
         master:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://119.91.225.55:3306/colorxx?
+          url: jdbc:mysql://localhoat:3306/colorxx?
           username: colorxx
           password: colorxx
           maximum-pool-size: 10
@@ -33,7 +33,7 @@ spring:
         # 从数据库
         slave:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://119.91.225.55:3306
+          url: jdbc:mysql://localhoat:3306
           username: colorxx
           password: colorxx
           maximum-pool-size: 10
