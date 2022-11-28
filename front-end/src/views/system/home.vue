@@ -1,6 +1,9 @@
 <template>
   <n-layout class="app-body">
     <n-layout-header :inverted="inverted" bordered>
+      <div class="header-logo">
+        colorOne
+      </div>
       <n-space justify="end">
         <n-switch v-model:value="inverted"/>
         深色
@@ -125,7 +128,13 @@ const menuOptions = [
 
   .n-layout-header {
     height: 50px;
-    padding: 10px;
+    padding: 15px 10px 5px 10px;
+
+    .header-logo{
+      position: absolute;
+      font-size: 18px;
+      font-weight: bold;
+    }
   }
 
   .body-center {

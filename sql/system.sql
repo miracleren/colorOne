@@ -25,7 +25,7 @@ create table base_user
 
     primary key (user_id)
 ) engine = innodb
-  auto_increment = 1000 comment = '用户信息表';
+  auto_increment = 99999 comment = '用户信息表';
 
 -- ----------------------------
 -- 添加框架默认用户
@@ -35,3 +35,42 @@ values (1, 0, 'admin', '颜一', 'miracleren@gmail.com', '13888888888', '1',
         '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '127.0.0.1', sysdate(), '初始管理员', 0,
         'admin',sysdate(), 'admin', sysdate());
 
+
+
+
+-- ----------------------------
+-- 2、菜单接口权限信息表
+-- ----------------------------
+create table base_menu
+(
+    menu_id     bigint(10)   not null auto_increment comment '菜单id',
+    menu_name   varchar(50) not null comment '菜单接口名称',
+    parent_id   bigint(19)    default 0 comment '父级id',
+    order_num   bigint(10)    default 0 comment '显示顺序',
+    menu_type   varchar(1) comment '菜单类型（c目录 m菜单 b按钮 a接口）',
+    component   varchar(255) comment '组件路径',
+    path        varchar(200) comment '路由地址、接口地址',
+    visible     varchar(1)   default '0' comment '菜单是否显示（0显示 1隐藏）',
+    status      varchar(1)   default '0' comment '菜单状态（0正常 1停用）',
+    icon        varchar(100) default '#' comment '菜单图标',
+    remark      varchar(500) comment '备注',
+
+    del_flag    bigint(1)      default 0 comment '删除标志（0代表存在 1代表删除）',
+    create_by   varchar(64)  default '' comment '创建者',
+    create_time datetime comment '创建时间',
+    update_by   varchar(64)  default '' comment '更新者',
+    update_time datetime comment '更新时间',
+
+    primary key(menu_id)
+)engine = innodb
+  auto_increment = 99999 comment = '菜单接口权限信息表';
+
+-- ----------------------------
+-- 添加框架默认菜单
+-- ----------------------------
+insert into base_menu
+values (1, '系统管理', 0, 100, 'c', 'system', 'system', '0', '0', '#', '系统管理目录',0, 'admin', sysdate(), 'admin', sysdate());
+insert into base_menu
+values (2, '用户管理', 0, 100, 'm', 'system', 'user', '0', '0', '#', '系统管理用户管理',0, 'admin', sysdate(), 'admin', sysdate());
+insert into base_menu
+values (3, '菜单管理', 0, 101, 'm', 'system', 'menu', '0', '0', '#', '系统管理菜单管理',0, 'admin', sysdate(), 'admin', sysdate());
