@@ -74,6 +74,15 @@
             <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
             <version>3.5.1</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.alibaba.fastjson2/fastjson2 -->
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>2.0.20</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
