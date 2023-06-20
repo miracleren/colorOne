@@ -2,9 +2,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://119.91.225.55:3306/colorxx?
-    username: colorxx
-    password: colorxx
+    url: jdbc:mysql://119.91.225.**:3306/colorxx?
+    username: 123
+    password: 123
     type: com.alibaba.druid.pool.DruidDataSource
     hikari:
       maximum-pool-size: 10
