@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="color-common" />
+        <module name="color-start" />
+        <module name="color-system" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="color-common" options="-parameters -Xlint:unchecked" />
+      <module name="color-start" options="-parameters -Xlint:unchecked" />
+      <module name="color-system" options="-parameters -Xlint:unchecked" />
+      <module name="colorOne" options="-parameters -Xlint:unchecked" />
+    </option>
+  </component>
+</project>

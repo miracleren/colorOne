@@ -1,5 +1,7 @@
 package com.colorone.system.service;
 
+import org.springframework.stereotype.Service;
+
 import java.util.Map;
 
 /**

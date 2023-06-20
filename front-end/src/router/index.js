@@ -26,6 +26,11 @@ const routes = [
         path: '/home',
         component: () => import('../views/system/home'),
         hidden: true
+    },
+    {
+        path: '/test',
+        component: () => import('../views/system/test'),
+        hidden: true
     }
 // {
 //   path: '/404',

@@ -7,11 +7,26 @@ const name = defaultSettings.title
 
 module.exports = defineConfig({
     transpileDependencies: true,
-    lintOnSave:false,
+    lintOnSave: false,
     pluginOptions: {
         'style-resources-loader': {
             preProcessor: 'scss',
             patterns: []
+        }
+    },
+    // webpack-dev-server 相关配置
+    devServer: {
+        host: '127.0.0.1',
+        port: '818',
+        open: true,
+        proxy: {
+            [process.env.app_base_api]: {
+                target: `http://localhost:8686`,
+                changeOrigin: true,
+                pathRewrite: {
+                    ['^' + process.env.app_base_api]: ''
+                }
+            }
         }
     },
     configureWebpack: {

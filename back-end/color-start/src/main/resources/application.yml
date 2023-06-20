@@ -15,64 +15,22 @@ server:
       # Tomcat启动初始化的线程数，默认值25
       min-spare: 25
 
+
 # 数据库配置
 spring:
   #springboot多环境配置
   profiles:
     active: dev
 
-  #数据库配置
-  datasource:
-    dynamic:
-      primary: master #设置默认数据源或数据源组，master默认值(数据源名称可以随意起名，没有固定值，eg:db1,db2)
-      strict: false #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候回抛出异常,不启动会使用默认数据源.
-      datasource:
-        # 主数据库
-        master:
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://localhost:3306/colorxx?
-          username: colorone
-          password: colorone
-          maximum-pool-size: 10
-          min-idle: 1
-        # 从数据库
-        slave:
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://localhost:3306
-          username: colorone
-          password: colorone
-          maximum-pool-size: 10
-          min-idle: 1
-  # redis 配置
-  redis:
-    # 地址
-    host: 127.0.0.1
-    # 端口，默认为6379
-    port: 7000
-    # 密码
-    password: redis@TW123
-    # 连接超时时间
-    timeout: 10s
-    lettuce:
-      pool:
-        # 连接池中的最小空闲连接
-        min-idle: 0
-        # 连接池中的最大空闲连接
-        max-idle: 8
-        # 连接池的最大数据库连接数
-        max-active: 8
-        # #连接池最大阻塞等待时间（使用负值表示没有限制）
-        max-wait: -1ms
-    database: 8
 
 # MyBatis配置
 mybatis-plus:
   # 对应的 XML 文件位置
-  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  #mapper-locations: classpath*:mapper/*.xml
+  mapper-locations: classpath*:mapper/**.xml
   # 实体扫描，多个package用逗号或者分号分隔
   type-aliases-package: com.colorone.**.domain
   configuration:
     #是否开启自动驼峰命名规则（camel case）映射，即从经典数据库列名 A_COLUMN（下划线命名） 到经典 Java 属性名 aColumn（驼峰命名） 的类似映射。
     map-underscore-to-camel-case: true
-
 

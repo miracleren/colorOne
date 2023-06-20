@@ -1,5 +1,6 @@
 package com.colorone;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,7 +9,6 @@ public class ColorStartApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ColorStartApplication.class, args);
-        System.out.println("  (♥◠‿◠)ﾉﾞ  颜一简易管理系统启动成功   ლ(´ڡ`ლ)ﾞ ");
     }
 
 }

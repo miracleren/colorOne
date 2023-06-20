@@ -1,4 +1,4 @@
-package com.colorone.common.core.domain;
+package com.colorone.common.domain.core;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;

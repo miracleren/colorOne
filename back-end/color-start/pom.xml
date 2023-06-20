@@ -2,45 +2,57 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.colorone</groupId>
+    <artifactId>color-start</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>color-start</name>
+    <description>系统启动模块</description>
+
     <parent>
         <artifactId>colorOne</artifactId>
         <groupId>com.colorone</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.colorone</groupId>
-    <artifactId>color-start</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>color-start</name>
-    <description>系统入口模块</description>
-
     <properties>
         <java.version>17</java.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
         <!--系统管理功能模块-->
         <dependency>
             <groupId>com.colorone</groupId>
             <artifactId>color-system</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
+        <!--系统通用模块-->
+        <dependency>
+            <groupId>com.colorone</groupId>
+            <artifactId>color-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
     <build>
-        <finalName>color-start</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

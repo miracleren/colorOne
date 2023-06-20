@@ -3,6 +3,7 @@ package com.colorone.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.colorone.system.domain.BaseMenu;
 import org.apache.ibatis.annotations.Mapper;
+import org.mybatis.spring.annotation.MapperScan;
 
 import java.util.List;
 

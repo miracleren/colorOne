@@ -1,22 +1,12 @@
+# 数据源配置
 spring:
   datasource:
-    dynamic:
-      primary: master #设置默认数据源或数据源组，master默认值(数据源名称可以随意起名，没有固定值，eg:db1,db2)
-      strict: false #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候回抛出异常,不启动会使用默认数据源.
-      datasource:
-        # 主数据库
-        master:
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://119.91.225.55:3306/colorxx?
-          username: colorxx
-          password: colorxx
-          maximum-pool-size: 10
-          min-idle: 1
-        # 从数据库
-        slave:
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://119.91.225.55:3306
-          username: colorxx
-          password: colorxx
-          maximum-pool-size: 10
-          min-idle: 1
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://119.91.225.55:3306/colorxx?
+    username: colorxx
+    password: colorxx
+    type: com.alibaba.druid.pool.DruidDataSource
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 1
+      connection-test-query: SELECT 1 FROM DUAL
