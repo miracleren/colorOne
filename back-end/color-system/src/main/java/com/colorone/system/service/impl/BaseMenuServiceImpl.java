@@ -2,7 +2,7 @@ package com.colorone.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.colorone.system.domain.BaseMenu;
+import com.colorone.system.domain.entity.BaseMenu;
 import com.colorone.system.mapper.BaseMenuMapper;
 import com.colorone.system.service.BaseMenuService;
 import jakarta.annotation.Resource;

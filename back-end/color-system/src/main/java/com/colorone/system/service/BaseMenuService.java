@@ -1,6 +1,6 @@
 package com.colorone.system.service;
 
-import com.colorone.system.domain.BaseMenu;
+import com.colorone.system.domain.entity.BaseMenu;
 
 import java.util.List;
 

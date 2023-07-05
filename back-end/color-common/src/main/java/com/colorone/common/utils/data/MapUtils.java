@@ -1,4 +1,4 @@
-package com.colorone.common.utils;
+package com.colorone.common.utils.data;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -74,3 +74,48 @@ insert into base_menu
 values (2, '用户管理', 0, 100, 'm', 'system', 'user', '0', '0', '#', '系统管理用户管理',0, 'admin', sysdate(), 'admin', sysdate());
 insert into base_menu
 values (3, '菜单管理', 0, 101, 'm', 'system', 'menu', '0', '0', '#', '系统管理菜单管理',0, 'admin', sysdate(), 'admin', sysdate());
+
+
+
+-- ----------------------------
+-- 3、用户角色表
+-- ----------------------------
+create table base_role (
+  role_id              bigint(20)      not null auto_increment    comment '角色ID',
+  role_name            varchar(30)     not null                   comment '角色名称',
+  role_key             varchar(100)    not null                   comment '角色标识',
+  role_sort            int(4)          not null                   comment '显示顺序',
+  role_status          char(1)         not null                   comment '角色状态（0正常 1停用）',
+  remark               varchar(500)    default null               comment '备注',
+
+  del_flag    bigint(1)      default 0 comment '删除标志（0代表存在 1代表删除）',
+  create_by   varchar(64)  default '' comment '创建者',
+  create_time datetime comment '创建时间',
+  update_by   varchar(64)  default '' comment '更新者',
+  update_time datetime comment '更新时间',
+  
+  primary key (role_id)
+)engine=innodb comment = '用户角色表';
+-- ----------------------------
+-- 添加框架初始角色
+-- ----------------------------
+insert into base_role values('1', '系统超级管理员', 'A', 1,1,'系统超级管理员角色',0,'', sysdate(), 'OneAdmin', null);
+
+
+-- ----------------------------
+-- 4、用户与角色关联表
+-- ----------------------------
+create table base_user_role (
+  user_id   bigint(20) not null comment '用户ID',
+  role_id   bigint(20) not null comment '角色ID',
+
+  del_flag    bigint(1)      default 0 comment '删除标志（0代表存在 1代表删除）',
+  create_by   varchar(64)  default '' comment '创建者',
+  create_time datetime comment '创建时间',
+  update_by   varchar(64)  default '' comment '更新者',
+  update_time datetime comment '更新时间'
+
+  primary key(user_id, role_id)
+) engine=innodb comment = '用户和角色关联表';
+INSERT INTO colorxx.base_user_role (user_id, role_id, del_flag, create_by, create_time, update_by, update_time) VALUES (1, 1, 0, 'OneAdmin', '2023-06-29 15:46:32', '', null);
+

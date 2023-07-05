@@ -1,0 +1,8 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="JavadocDeclaration" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ADDITIONAL_TAGS" value="备注：redis配置,date：2023/7/4,email：miracleren@gmail.com,author：,备注：redis,备注：认证失败处理方法" />
+    </inspection_tool>
+  </profile>
+</component>
