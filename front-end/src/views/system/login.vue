@@ -1,4 +1,4 @@
-abc<template>
+<template>
   <div class="login-view">
     <div class="login-box">
       <n-gradient-text class="login-title" :size="26" type="success">
@@ -39,16 +39,24 @@ abc<template>
 import CIcon from '@/components/icon'
 import {reactive} from "vue"
 import {useRouter} from 'vue-router'
+import {loginUser} from "@/api/system/login";
+import {setToken} from "@/utils/system/token.js";
+import {useStore} from 'vuex'
 
 //region 用户登录
 let loginInfo = reactive({
-  userName: "",
-  password: ""
+  userName: "OneAdmin",
+  password: "Color@123"
 })
 
+const store = useStore();
 const router = useRouter()
 const handleLogin = () => {
-  router.push("/home")
+  loginUser(loginInfo).then(res => {
+    setToken(res.data.token)
+    store.dispatch("userLogin", res.data)
+    router.push("/home")
+  })
 }
 //endregion
 

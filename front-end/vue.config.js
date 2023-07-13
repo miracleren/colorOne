@@ -1,7 +1,7 @@
 const path = require('path')
 const resolve = dir => path.join(__dirname, dir)
 const {defineConfig} = require('@vue/cli-service')
-const defaultSettings = require('./src/store/settings.js')
+const defaultSettings = require('./src/frame/settings')
 
 const name = defaultSettings.title
 
@@ -20,11 +20,11 @@ module.exports = defineConfig({
         port: '818',
         open: true,
         proxy: {
-            [process.env.app_base_api]: {
-                target: `http://localhost:8686`,
+            '/api': {
+                target: `http://127.0.0.1:8181`,
                 changeOrigin: true,
                 pathRewrite: {
-                    ['^' + process.env.app_base_api]: ''
+                    '^/api': ''
                 }
             }
         }

@@ -1,18 +1,16 @@
 <template>
   <div id="app">
-    <router-view :key="key"/>
+    <!--全局提示-->
+    <n-message-provider>
+      <message-api/>
+    </n-message-provider>
+
+    <router-view/>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'App',
-  computed: {
-    key() {
-      return this.$route.path
-    }
-  }
-}
+<script setup>
+import messageApi from "@/components/message-api"
 </script>
 
 <style>
