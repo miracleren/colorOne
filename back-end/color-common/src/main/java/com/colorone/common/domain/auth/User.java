@@ -1,4 +1,4 @@
-package com.colorone.common.domain;
+package com.colorone.common.domain.auth;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

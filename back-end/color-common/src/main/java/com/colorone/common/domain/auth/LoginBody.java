@@ -1,4 +1,4 @@
-package com.colorone.common.domain;
+package com.colorone.common.domain.auth;
 
 import lombok.Data;
 

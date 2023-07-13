@@ -1,11 +1,9 @@
 package com.colorone.common.frame.security.filter;
 
-import com.colorone.common.domain.LoginUser;
-import com.colorone.common.domain.User;
+import com.colorone.common.domain.auth.LoginUser;
 import com.colorone.common.frame.security.web.TokenService;
 import com.colorone.common.utils.data.ObjectUtils;
 import com.colorone.common.utils.SecurityUtils;
-import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

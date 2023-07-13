@@ -1,7 +1,7 @@
 package com.colorone.common.frame.security.web;
 
-import com.colorone.common.domain.User;
-import com.colorone.common.domain.LoginUser;
+import com.colorone.common.domain.auth.User;
+import com.colorone.common.domain.auth.LoginUser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,9 +35,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         User user = userDetailsMapper.selectUserByUserName(userName);
-
         if (user == null) {
-            log.info("当前登录用户名" + userName + "不存在!");
             throw new UsernameNotFoundException("当前登录用户名" + userName + "不存在!");
         }
 

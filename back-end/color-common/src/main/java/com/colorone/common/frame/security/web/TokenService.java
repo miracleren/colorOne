@@ -1,8 +1,7 @@
 package com.colorone.common.frame.security.web;
 
 import com.colorone.common.constant.RedisPrefix;
-import com.colorone.common.domain.LoginUser;
-import com.colorone.common.domain.User;
+import com.colorone.common.domain.auth.LoginUser;
 import com.colorone.common.utils.data.DateUtils;
 import com.colorone.common.utils.data.IdUtils;
 import com.colorone.common.utils.data.ObjectUtils;

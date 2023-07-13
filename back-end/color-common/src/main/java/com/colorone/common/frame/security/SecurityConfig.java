@@ -1,7 +1,5 @@
 package com.colorone.common.frame.security;
 
-import com.colorone.common.domain.LoginUser;
-import com.colorone.common.domain.User;
 import com.colorone.common.frame.security.filter.AuthenticationTokenFilter;
 import com.colorone.common.frame.security.handle.AuthenticationEntryPointImpl;
 import com.colorone.common.frame.security.web.SecurityUserDetailsService;

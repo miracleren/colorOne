@@ -1,6 +1,6 @@
 package com.colorone.common.frame.security.web;
 
-import com.colorone.common.domain.User;
+import com.colorone.common.domain.auth.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

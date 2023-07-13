@@ -1,9 +1,10 @@
 package com.colorone.system.controller;
 
-import com.colorone.common.domain.LoginBody;
-import com.colorone.common.domain.LoginUser;
+import com.colorone.common.domain.auth.LoginBody;
+import com.colorone.common.domain.auth.LoginUser;
 import com.colorone.common.domain.core.RequestResult;
 import com.colorone.common.frame.security.web.TokenService;
+import com.colorone.system.domain.vo.ClientUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,9 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author： lee
@@ -60,10 +58,9 @@ public class LoginController {
         //登录成功缓存用户信息
         tokenService.cacheLoginUser(loginUser);
 
-        Map<String, Object> model = new HashMap<>();
-        model.put("username", username);
-        model.put("token", token);
+        ClientUser clientUser = new ClientUser(loginUser);
+        clientUser.setToken(token);
 
-        return RequestResult.success(model);
+        return RequestResult.success(clientUser);
     }
 }
