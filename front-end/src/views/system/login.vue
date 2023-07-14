@@ -40,8 +40,8 @@ import CIcon from '@/components/icon'
 import {reactive} from "vue"
 import {useRouter} from 'vue-router'
 import {loginUser} from "@/api/system/login";
-import {setToken} from "@/utils/system/token.js";
 import {useStore} from 'vuex'
+import {formatDate} from "@/utils/DateUtil"
 
 //region 用户登录
 let loginInfo = reactive({
@@ -53,9 +53,11 @@ const store = useStore();
 const router = useRouter()
 const handleLogin = () => {
   loginUser(loginInfo).then(res => {
-    setToken(res.data.token)
-    store.dispatch("userLogin", res.data)
-    router.push("/home")
+    if (res.data.token) {
+      store.dispatch("userLogin", res.data)
+      window.$message.success(`欢迎${res.data.nickName}，当前登录日期是 ${formatDate(new Date())}`)
+      router.push("/home")
+    }
   })
 }
 //endregion

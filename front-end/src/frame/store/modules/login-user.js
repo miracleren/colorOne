@@ -1,4 +1,6 @@
 // initial state
+import {removeToken, setToken} from "@/utils/system/token"
+
 const state = () => ({
     id: '',
     name: '',
@@ -32,16 +34,23 @@ const getters = {}
 // actions
 const actions = {
     userLogin({commit}, userInfo) {
+        setToken(userInfo.token)
+
         commit("userSetId", userInfo.userId)
         commit("userSetName", userInfo.userName)
         commit("userSetNickName", userInfo.nickName)
         commit("userSetToken", userInfo.token)
-        //commit("userSetRoles",userInfo.roles)
+    },
+
+    userLoginOut({commit}) {
+        removeToken()
+
+        commit("userSetId", '')
+        commit("userSetName", '')
+        commit("userSetNickName", '')
+        commit("userSetToken", '')
     }
-    // async getAllProducts({commit}) {
-    //     const products = await shop.getProducts()
-    //     commit('setProducts', products)
-    // }
+
 }
 
 

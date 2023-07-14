@@ -4,6 +4,10 @@
     <n-message-provider>
       <message-api/>
     </n-message-provider>
+    <n-dialog-provider>
+      <dialog-api/>
+    </n-dialog-provider>
+
 
     <router-view/>
   </div>
@@ -11,6 +15,7 @@
 
 <script setup>
 import messageApi from "@/components/message-api"
+import dialogApi from "@/components/dialog-api"
 </script>
 
 <style>

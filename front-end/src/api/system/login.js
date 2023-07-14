@@ -8,3 +8,13 @@ export function loginUser(data) {
         method: "post",
     });
 }
+
+
+//用户登陆
+export function loginUserOut(data) {
+    return request({
+        url: "/login/user/out",
+        data: data,
+        method: "post",
+    });
+}

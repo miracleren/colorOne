@@ -22,9 +22,11 @@
 </template>
 
 <script setup>
-import {defineEmits, ref} from 'vue';
+import {defineEmits, ref} from 'vue'
 import {useStore} from 'vuex'
 import icon from "@/components/icon/index.vue"
+import {removeToken} from "@/utils/system/token"
+import router from "@/router"
 
 
 //更换主题
@@ -40,21 +42,19 @@ nickName.value = store.state.nickName
 console.log(store.state)
 
 //退出登录
-// const loginOut = () => {
-//   console.log("loginOut")
-//   window.$dialog.warning({
-//     title: '警告',
-//     content: '你确定退出当时登录用户吗？',
-//     positiveText: '确定',
-//     negativeText: '关闭',
-//     onPositiveClick: () => {
-//
-//     },
-//     onNegativeClick: () => {
-//
-//     }
-//   })
-// }
+const loginOut = () => {
+  console.log("loginOut")
+  window.$dialog.warning({
+    title: '警告',
+    content: '你确定退出当时登录用户吗？',
+    positiveText: '确定',
+    negativeText: '关闭',
+    onPositiveClick: () => {
+      store.dispatch("userLoginOut")
+      router.push("/")
+    }
+  })
+}
 </script>
 
 <style lang="scss" scoped>
