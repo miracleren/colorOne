@@ -2,7 +2,7 @@ spring:
   # 数据源配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://119.91.225.55:3306/colorxx?
+    url: jdbc:mysql://localhost:3306/colorxx?
     username: colorxx
     password: colorxx
     type: com.alibaba.druid.pool.DruidDataSource
