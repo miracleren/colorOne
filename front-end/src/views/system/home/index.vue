@@ -9,7 +9,7 @@
               object-fit="fill"
               :src="require('@/assets/logo.png')"
           />
-          <span>颜一简易系统</span>
+          <n-gradient-text class="logo-text">颜一简易系统</n-gradient-text>
         </div>
         <div class="header-tags">标签栏</div>
         <div class="header-options">
@@ -45,7 +45,7 @@
 import {h, ref, watch} from "vue"
 import CIcon from '@/components/icon/index.vue'
 import {darkTheme} from 'naive-ui'
-import UserOptions from "@/views/system/home/user-options.vue";
+import UserOptions from "@/views/system/home/user-options.vue"
 
 //更改主题颜色
 const curTheme = ref(null)
@@ -151,8 +151,12 @@ const menuOptions = [
       .header-logo {
         padding: 0 10px 0 10px;
         font-size: 18px;
-        font-weight: bold;
         display: flex;
+
+        .logo-text {
+          font-weight: bold ;
+        }
+
       }
 
       .header-tags {

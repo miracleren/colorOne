@@ -10,11 +10,10 @@ export function loginUser(data) {
 }
 
 
-//用户登陆
-export function loginUserOut(data) {
+//用户登出
+export function loginUserOut() {
     return request({
         url: "/login/user/out",
-        data: data,
         method: "post",
     });
 }

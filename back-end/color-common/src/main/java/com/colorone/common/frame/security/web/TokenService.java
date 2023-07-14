@@ -163,4 +163,14 @@ public class TokenService {
         String userKey = RedisPrefix.LOGIN_USER + loginUser.getUuid();
         redisHelper.setObject(userKey, loginUser, NumberUtils.createInteger(expireTime), TimeUnit.MINUTES);
     }
+
+    /**
+     * 清空用户登录信息
+     *
+     * @param loginUser
+     */
+    public void clearToken(LoginUser loginUser) {
+        String userKey = RedisPrefix.LOGIN_USER + loginUser.getUuid();
+         redisHelper.clearObject(userKey);
+    }
 }

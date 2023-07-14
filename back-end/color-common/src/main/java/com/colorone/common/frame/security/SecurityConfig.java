@@ -2,6 +2,7 @@ package com.colorone.common.frame.security;
 
 import com.colorone.common.frame.security.filter.AuthenticationTokenFilter;
 import com.colorone.common.frame.security.handle.AuthenticationEntryPointImpl;
+import com.colorone.common.frame.security.handle.LogoutSuccessHandlerImpl;
 import com.colorone.common.frame.security.web.SecurityUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,12 +14,15 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 /**
  * @author： lee
@@ -42,6 +46,12 @@ public class SecurityConfig {
     private AuthenticationEntryPointImpl authenticationEntryPoint;
 
     /**
+     * 登出处理方法
+     */
+    @Autowired
+    private LogoutSuccessHandlerImpl logoutSuccessHandler;
+
+    /**
      * HttpSecurity配置
      *
      * @param http
@@ -50,33 +60,36 @@ public class SecurityConfig {
      */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                // 禁用basic明文验证
-                .httpBasic().disable()
-                // 前后端分离架构不需要csrf保护
-                .csrf().disable()
-                // 禁用默认登录页
-                .formLogin().disable()
-                // 禁用默认登出页
-                .logout().disable()
+        //CSRF禁用，因为不使用session
+        http.csrf(AbstractHttpConfigurer::disable)
                 // 设置异常的EntryPoint，如果不设置，默认使用Http403ForbiddenEntryPoint
                 .exceptionHandling(exceptions -> exceptions.authenticationEntryPoint(authenticationEntryPoint))
                 // 前后端分离是无状态的，不需要session了，直接禁用。
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        // 允许所有OPTIONS请求
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        // 允许直接访问授权登录接口
-                        .requestMatchers(HttpMethod.POST, "/web/authenticate").permitAll()
-                        // 允许 SpringMVC 的默认错误地址匿名访问
-                        .requestMatchers("/error", "/login/user", "/common/user/1").permitAll()
-                        // 其他所有接口必须有Authority信息，Authority在登录成功后的UserDetailsImpl对象中默认设置“ROLE_USER”
-                        //.requestMatchers("/**").hasAnyAuthority("ROLE_USER")
-                        // 允许任意请求被已登录用户访问，不检查Authority
-                        .anyRequest().authenticated())
+                .authorizeHttpRequests(
+                        authorizeHttpRequests -> authorizeHttpRequests
+                                // 允许所有OPTIONS请求
+                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                // 允许直接访问授权登录接口
+                                .requestMatchers(HttpMethod.POST, "/web/authenticate").permitAll()
+                                // 允许 SpringMVC 的默认错误地址匿名访问
+                                .requestMatchers("/error", "/login/user", "/common/user/1").permitAll()
+                                // 其他所有接口必须有Authority信息，Authority在登录成功后的UserDetailsImpl对象中默认设置“ROLE_USER”
+                                //.requestMatchers("/**").hasAnyAuthority("ROLE_USER")
+                                // 允许任意请求被已登录用户访问，不检查Authority
+                                .anyRequest().authenticated()
+                )
+                //登录成功
+                .formLogin(withDefaults())
+                //登出成功处理
+                .logout((logout) ->
+                        logout.logoutUrl("/login/user/out")
+                                .logoutSuccessHandler(logoutSuccessHandler))
                 .authenticationProvider(authenticationProvider())
-        // 加我们自定义的过滤器，替代UsernamePasswordAuthenticationFilter
-        .addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+
+                // 加我们自定义的过滤器，替代UsernamePasswordAuthenticationFilter
+                .addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+
 
         return http.build();
     }

@@ -40,4 +40,12 @@ public class RedisHelper {
         ValueOperations<String, T> operation = redisTemplate.opsForValue();
         return operation.get(key);
     }
+
+    /**
+     * 通过key清除缓存对象
+     * @param key
+     */
+    public boolean clearObject(String key) {
+        return redisTemplate.delete(key);
+    }
 }
