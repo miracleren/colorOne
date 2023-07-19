@@ -142,6 +142,15 @@ public class TokenService {
     }
 
     /**
+     * 通过request获取登录用户
+     * @param request
+     * @return
+     */
+    public LoginUser getLoginUser(HttpServletRequest request) {
+        return getLoginUser(getRequestToken(request));
+    }
+
+    /**
      * 验证token是否即将过期，并刷新token
      *
      * @param loginUser

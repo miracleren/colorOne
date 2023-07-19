@@ -23,4 +23,4 @@ spring:
 logging:
   level:
     com.colorone.system.mapper: debug
-    root: info
+    root: debug

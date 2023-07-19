@@ -25,7 +25,7 @@ public class BaseUser extends BaseEntity {
      * comment '用户ID'   bigint(20)  not null autoIncrement
      */
     @TableId(value = "user_id", type = IdType.AUTO)
-    String userId;
+    Long userId;
 
     /**
      * comment '部门ID'   bigint(20)   default null

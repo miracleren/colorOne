@@ -1,7 +1,11 @@
 package com.colorone.common.domain.core;
 
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author： lee
@@ -124,5 +128,19 @@ public class RequestResult {
      */
     public static RequestResult error(int code, String msg) {
         return new RequestResult(code, msg, null);
+    }
+
+
+    /**
+     * 设置返回值为Map类型
+     *
+     * @param key
+     * @param value
+     */
+    public void setData(String key, Object value) {
+        if (!(this.data instanceof Map)) {
+            this.data = new HashMap<>();
+        }
+        ((Map) this.data).put(key, value);
     }
 }

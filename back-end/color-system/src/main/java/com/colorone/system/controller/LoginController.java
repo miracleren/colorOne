@@ -2,18 +2,17 @@ package com.colorone.system.controller;
 
 import com.colorone.common.domain.auth.LoginBody;
 import com.colorone.common.domain.auth.LoginUser;
+import com.colorone.common.domain.auth.User;
 import com.colorone.common.domain.core.RequestResult;
 import com.colorone.common.frame.security.web.TokenService;
-import com.colorone.system.domain.vo.ClientUser;
+import com.colorone.common.utils.HttpServletUtils;
+import com.colorone.system.domain.entity.BaseUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author： lee
@@ -24,9 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/login")
 public class LoginController {
-    //    @Autowired
-//    private SecurityUserDetailsService securityUserDetailsService;
-//
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -58,9 +54,31 @@ public class LoginController {
         //登录成功缓存用户信息
         tokenService.cacheLoginUser(loginUser);
 
-        ClientUser clientUser = new ClientUser(loginUser);
-        clientUser.setToken(token);
+        return RequestResult.success(token);
+    }
 
-        return RequestResult.success(clientUser);
+    /**
+     * 获取登录用户信息
+     *
+     * @return
+     */
+    @GetMapping("/user/info")
+    public RequestResult loginUserInfo() {
+        LoginUser loginUser = tokenService.getLoginUser(HttpServletUtils.getRequest());
+//        SysUser user = loginUser.getUser();
+//        // 角色集合
+//        Set<String> roles = permissionService.getRolePermission(user);
+//        // 权限集合
+//        Set<String> permissions = permissionService.getMenuPermission(user);
+//        AjaxResult ajax = AjaxResult.success();
+//        ajax.put("user", user);
+//        ajax.put("roles", roles);
+//        ajax.put("permissions", permissions);
+        User user = loginUser.getUser();
+
+        RequestResult res = RequestResult.success();
+        res.setData("user",user);
+        res.setData("roles","123");
+        return res;
     }
 }

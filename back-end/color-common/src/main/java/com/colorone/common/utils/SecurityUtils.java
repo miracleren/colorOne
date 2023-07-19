@@ -1,5 +1,8 @@
 package com.colorone.common.utils;
 
+import com.colorone.common.domain.auth.LoginUser;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -16,10 +19,9 @@ public class SecurityUtils {
      **/
     public static Long getUserId() {
         try {
-            return (long) 1;
+            return getLoginUser().getUser().getUserId();
         } catch (Exception e) {
-            return null;
-            //throw new CustomException("获取用户ID异常", HttpStatus.UNAUTHORIZED);
+            throw new AccessDeniedException("获取用户ID异常");
         }
 
     }
@@ -29,10 +31,20 @@ public class SecurityUtils {
      **/
     public static String getUsername() {
         try {
-            return "admin";
+            return getLoginUser().getUsername();
         } catch (Exception e) {
-            return null;
-            //throw new CustomException("获取用户账户异常", HttpStatus.UNAUTHORIZED);
+            throw new AccessDeniedException("获取用户名异常");
+        }
+    }
+
+    /**
+     * 获取登录用户信息
+     */
+    public static LoginUser getLoginUser() {
+        try {
+            return (LoginUser) getAuthentication().getPrincipal();
+        } catch (Exception e) {
+            throw new AccessDeniedException("获取用户信息异常");
         }
     }
 

@@ -3,6 +3,7 @@ package com.colorone.common.domain.auth;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -25,7 +26,7 @@ public class User implements Serializable {
      * comment '用户ID'   bigint(20)  not null autoIncrement
      */
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
-    String userId;
+    Long userId;
 
     /**
      * comment '部门ID'   bigint(20)   default null

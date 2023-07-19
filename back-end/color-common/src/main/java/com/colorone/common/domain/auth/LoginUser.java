@@ -46,6 +46,7 @@ public class LoginUser implements UserDetails {
      */
     private Date expireTime;
 
+
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
