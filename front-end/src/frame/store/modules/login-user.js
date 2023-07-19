@@ -1,5 +1,6 @@
 // initial state
 import {removeToken, setToken} from "@/utils/system/token"
+import {loginUser, loginUserInfo} from "@/api/system/login"
 
 const state = () => ({
     id: '',
@@ -33,15 +34,36 @@ const getters = {}
 
 // actions
 const actions = {
-    userLogin({commit}, userInfo) {
-        setToken(userInfo.token)
+    userLogin({commit}, loginInfo) {
+        return new Promise((resolve, reject) => {
+            loginUser(loginInfo).then(res => {
+                let token = res.data
+                if (token) {
+                    setToken(token)
+                    commit("userSetToken", token)
+                    console.log("handleLogin-resolve")
+                    resolve()
+                }
+            }).catch(() => {
+                reject()
+            })
+        })
 
-        commit("userSetId", userInfo.userId)
-        commit("userSetName", userInfo.userName)
-        commit("userSetNickName", userInfo.nickName)
-        commit("userSetToken", userInfo.token)
     },
-
+    userInfoSet({commit}) {
+        return new Promise((resolve, reject) => {
+            loginUserInfo().then(res => {
+                console.log("loginUserInfo", res)
+                let user = res.data.user
+                commit("userSetId", user.userId)
+                commit("userSetName", user.userName)
+                commit("userSetNickName", user.nickName)
+                resolve()
+            }).catch(() => {
+                reject()
+            })
+        })
+    },
     userLoginOut({commit}) {
         removeToken()
 

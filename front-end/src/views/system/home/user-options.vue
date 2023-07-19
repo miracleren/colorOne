@@ -10,11 +10,11 @@
       <div class="user-options-bar">
         <div class="n-menu ">
           <n-switch @update:value="changeTheme"/>
-          <span>深色</span>
+          <span>深色主题</span>
         </div>
         <div class="n-menu " @click="loginOut">
           <icon icon="LogInOutline" size="18"></icon>
-          <span>{{ nickName }}退出</span>
+          <span>{{ nickName }}登出</span>
         </div>
       </div>
     </n-popover>

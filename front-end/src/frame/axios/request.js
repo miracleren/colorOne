@@ -1,4 +1,3 @@
-import {useMessage} from 'naive-ui'
 
 //1. 先引入axios依赖包
 import axios from "axios"

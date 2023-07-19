@@ -39,7 +39,6 @@
 import CIcon from '@/components/icon'
 import {reactive} from "vue"
 import {useRouter} from 'vue-router'
-import {loginUser} from "@/api/system/login";
 import {useStore} from 'vuex'
 import {formatDate} from "@/utils/DateUtil"
 
@@ -49,15 +48,16 @@ let loginInfo = reactive({
   password: "Color@123"
 })
 
-const store = useStore();
+//登录获取token，用户息通过路由守卫获取，并校验限权
+const store = useStore()
 const router = useRouter()
 const handleLogin = () => {
-  loginUser(loginInfo).then(res => {
-    if (res.data.token) {
-      store.dispatch("userLogin", res.data)
-      window.$message.success(`欢迎${res.data.nickName}，当前登录日期是 ${formatDate(new Date())}`)
-      router.push("/home")
-    }
+  store.dispatch("userLogin", loginInfo).then(() => {
+    console.log("handleLogin")
+    window.$message.success(`欢迎${loginInfo.userName}，当前登录日期是 ${formatDate(new Date())}`)
+    router.push("/home")
+  }).catch(() => {
+    //登录失败处理
   })
 }
 //endregion

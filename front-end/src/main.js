@@ -9,7 +9,7 @@ import naive from '@/frame/naive-plugin'
 //icons svg 图标引入
 import '@/assets/icons';
 //自定义指令
-import directive from '@/utils/directives/directive'
+import directive from '@/frame/directives/directive'
 //全局路由权限守卫
 import '@/frame/auth-permission'
 

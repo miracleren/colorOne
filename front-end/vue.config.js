@@ -38,13 +38,20 @@ module.exports = defineConfig({
         }
     },
     chainWebpack: config => {
+        //配置浏览器标题
+        config.plugin('html')
+            .tap(args => {
+                args[0].title = name
+                return args
+            })
+
         /**
          * svg-sprite-loader
          */
         config.module
             .rule('svg')
             .exclude.add(resolve('src/assets/icons/svg'))
-            .end();
+            .end()
         config.module
             .rule('icons')
             .test(/\.svg$/)
@@ -55,7 +62,7 @@ module.exports = defineConfig({
             .options({
                 symbolId: 'icon-[name]',
             })
-            .end();
+            .end()
     }
 })
 
