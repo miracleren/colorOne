@@ -1,4 +1,4 @@
-import {createRouter, createWebHistory} from 'vue-router';
+import {createRouter, createWebHistory} from 'vue-router'
 
 /**
  * Note: 路由配置项
@@ -20,13 +20,22 @@ const routes = [
     {
         path: '/login',
         component: () => import('../views/system/login'),
-        hidden: true
     },
     {
         path: '/home',
         component: () => import('../views/system/home'),
-        hidden: true
+        children: [
+            {
+                path: '/system/user',
+                component: () => import('../views/system/management/bas-user'),
+            },
+            {
+                path: '/system/menu',
+                component: () => import('../views/system/management/bas-menu'),
+            }
+        ]
     }
+
 // {
 //   path: '/404',
 //   component: (resolve) => require(['@/views/error/404'], resolve),
@@ -42,6 +51,6 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),  // hash路由模式
     routes
-});
+})
 
-export default router;
+export default router

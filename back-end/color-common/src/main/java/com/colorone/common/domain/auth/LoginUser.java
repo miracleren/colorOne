@@ -16,6 +16,8 @@ import java.util.Date;
  */
 @Data
 public class LoginUser implements UserDetails {
+    //用户登录信息，值初始化 SecurityUserDetailsService
+
     /**
      * 登录用户信息
      */
@@ -46,6 +48,11 @@ public class LoginUser implements UserDetails {
      */
     private Date expireTime;
 
+
+    /**
+     * 用户角色组
+     */
+    private Long[] roles;
 
     @JsonIgnore
     @Override

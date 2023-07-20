@@ -34,11 +34,21 @@ public class SecurityUserDetailsService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        //用户信息
         User user = userDetailsMapper.selectUserByUserName(userName);
         if (user == null) {
             throw new UsernameNotFoundException("当前登录用户名" + userName + "不存在!");
         }
 
-        return new LoginUser(user);
+        //用户角色
+        Long[] roles = userDetailsMapper.selectUserRoleByUserId(user.getUserId());
+        if (roles == null) {
+            throw new UsernameNotFoundException("当前登录用户名" + userName + "不存没有所在的角色!");
+        }
+
+        //返回登录用户信息实体类
+        LoginUser loginUser = new LoginUser(user);
+        loginUser.setRoles(roles);
+        return loginUser;
     }
 }

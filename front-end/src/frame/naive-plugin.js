@@ -11,14 +11,14 @@ import {
     NButton, NCard, NInput, NForm, NFormItem, NIcon, NGradientText, NSpace,
     NLayout, NMenu, NSwitch, NLayoutHeader, NLayoutSider, NLayoutFooter,
     NMessageProvider, NConfigProvider, NAvatar, NPopover, NImage,
-    NDialogProvider
+    NDialogProvider, NTabPane, NTabs, NLayoutContent, NCollapseTransition
 } from 'naive-ui'
 
 const naive = create({
     components: [NButton, NCard, NInput, NForm, NFormItem, NIcon, NGradientText, NSpace,
         NLayout, NMenu, NSwitch, NLayoutHeader, NLayoutSider, NLayoutFooter,
         NMessageProvider, NConfigProvider, NAvatar, NPopover, NImage,
-        NDialogProvider]
+        NDialogProvider, NTabPane, NTabs, NLayoutContent, NCollapseTransition]
 })
 
 export default naive

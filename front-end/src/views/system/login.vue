@@ -40,7 +40,7 @@ import CIcon from '@/components/icon'
 import {reactive} from "vue"
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'
-import {formatDate} from "@/utils/DateUtil"
+import {formatDate} from "@/utils/DateUtils"
 
 //region 用户登录
 let loginInfo = reactive({

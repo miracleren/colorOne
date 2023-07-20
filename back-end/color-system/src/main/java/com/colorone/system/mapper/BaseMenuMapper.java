@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.colorone.system.domain.entity.BaseMenu;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 
 /**
  * @author： lee
@@ -13,4 +15,11 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface BaseMenuMapper extends BaseMapper<BaseMenu> {
 
+    /**
+     * 通过角色组查询用户菜单
+     *
+     * @param roles
+     * @return
+     */
+    List<BaseMenu> selectMenuListByRoles(Long[] roles);
 }

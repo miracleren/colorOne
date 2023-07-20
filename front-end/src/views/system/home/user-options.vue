@@ -64,7 +64,7 @@ const loginOut = () => {
 .user-options-bar {
   .n-menu {
     &:hover {
-      background-color: rgb(243, 243, 245);
+      background-color: rgba(243, 243, 245, 0.2);
     }
 
     display: flex;

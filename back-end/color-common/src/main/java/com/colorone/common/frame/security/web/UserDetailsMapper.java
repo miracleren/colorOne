@@ -20,4 +20,13 @@ public interface UserDetailsMapper {
      */
     @Select("select * from base_user where user_name = #{userName}")
     User selectUserByUserName(String userName);
+
+    /**
+     * 通过用户ID获取角色ID列表
+     *
+     * @param userId
+     * @return
+     */
+    @Select("select role_id from base_user_role where del_flag = 0 and user_id = #{userId}")
+    Long[] selectUserRoleByUserId(Long userId);
 }
