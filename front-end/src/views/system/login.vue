@@ -55,7 +55,7 @@ const handleLogin = () => {
   store.dispatch("userLogin", loginInfo).then(() => {
     console.log("handleLogin")
     window.$message.success(`欢迎${loginInfo.userName}，当前登录日期是 ${formatDate(new Date())}`)
-    router.push("/home")
+    router.push("/")
   }).catch(() => {
     //登录失败处理
   })

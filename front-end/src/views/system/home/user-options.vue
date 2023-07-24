@@ -22,11 +22,11 @@
 </template>
 
 <script setup>
-import {defineEmits, ref} from 'vue'
+import {computed, defineEmits, ref} from 'vue'
 import {useStore} from 'vuex'
-import icon from "@/components/icon/index.vue"
-import router from "@/router"
-import {loginUserOut} from "@/api/system/login"
+import icon from '@/components/icon/index.vue'
+import router from '@/router'
+import {loginUserOut} from '@/api/system/login'
 
 //更换主题
 const emit = defineEmits(['aboutExeVisible'])
@@ -36,13 +36,12 @@ const changeTheme = () => {
 
 //获取用户信息
 const store = useStore()
-const nickName = ref(null)
-nickName.value = store.state.loginUser.nickName
+const nickName = computed(() => store.state.loginUser.nickName)
 
 
 //退出登录
 const loginOut = () => {
-  console.log("loginOut")
+  console.log('loginOut')
   window.$dialog.warning({
     title: '警告',
     content: '你确定退出当时登录用户吗？',
@@ -50,9 +49,9 @@ const loginOut = () => {
     negativeText: '关闭',
     onPositiveClick: () => {
       loginUserOut().then(res => {
-        store.dispatch("userLoginOut")
+        store.dispatch('userLoginOut')
         window.$message.success(res.msg)
-        router.push("/")
+        router.push('/')
       })
     }
   })

@@ -4,7 +4,6 @@
  * @param fn
  */
 export function traverseTree(tree, fn) {
-
     if (!tree || typeof (fn) != 'function')
         return
 

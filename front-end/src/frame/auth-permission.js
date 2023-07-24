@@ -1,6 +1,6 @@
 import router from '@/router/index'
-import store from "@/frame/store"
-import {getToken} from "@/utils/system/token"
+import store from '@/frame/store'
+import {getToken} from '@/utils/system/token'
 
 
 //不经权限验证的白名单
@@ -10,24 +10,33 @@ router.beforeEach((to, from, next) => {
     if (getToken()) {
         //token存在时，如果访问登录页跳转到首页
         if (to.path === whiteList[0]) {
-            next({path: '/home'})
+            next({path: '/'})
         } else {
-            console.log("store.state.loginUser.userName", store.state.loginUser.userName)
             //用户登录相关信息不存在
-            if (!store.state.loginUser.userName) {
-                store.dispatch("userInfoSet").then(res => {
+            console.log('store userName', store._state.data.loginUser)
+            if (!store._state.data.loginUser.name) {
+                //用户登录相关信息不存在
+                store.dispatch('userInfoSet').then(res => {
                     //处理路由权限等信息
-                    console.log("userInfoSet", res)
-
+                    store.dispatch('routerGenerate').then(routes => {
+                        //在父路由添加动态路由
+                        let layout = router.getRoutes().find(r => {
+                            return r.name === 'bas-layout'
+                        })
+                        layout.children = routes
+                        router.addRoute(layout)
+                        //确保路由加载完成
+                        next({...to, replace: true})
+                    })
                 }).catch(err => {
                     store.dispatch('userLoginOut').then(() => {
                         window.$message.error(err)
                         next({path: '/'})
                     })
                 })
+            } else {
+                next()
             }
-            console.log('router has token')
-            next()
         }
     } else {
         console.log('router no token')

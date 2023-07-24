@@ -18,11 +18,12 @@
 </template>
 
 <script setup>
-import {traverseTree} from "@/utils/TreeUtils"
-import {getUserMenuTree} from "@/api/system/menu"
-import {h, ref} from "vue"
+import {traverseTree} from '@/utils/TreeUtils'
+import {computed, h, ref} from 'vue'
 import CIcon from '@/components/icon/index.vue'
 import {RouterLink} from 'vue-router'
+import {useStore} from 'vuex'
+import {deepClone} from '@/utils/ObjectUtils'
 
 //region 菜单相关
 const menuOptions = ref([])
@@ -30,33 +31,29 @@ const renderIcon = (icon) => {
   return () => h(CIcon, {icon: icon, color: 'rgb(14, 122, 13)'})
 }
 
-//获取菜单树
-getUserMenuTree().then(res => {
-  let menuTree = res.data
-
-  //遍历树生成配置
-  traverseTree(menuTree, (node) => {
-    node.icon = renderIcon(node.icon)
-    console.log(node)
-    if (node.menuType === 'c')
-      node.label = node.menuName
-    else
-      node.label = () =>
-          h(
-              RouterLink,
-              {
-                to: {
-                  path: node.path
-                }
-              },
-              {default: () => node.menuName}
-          )
-  })
-  console.log("getUserMenuTree", menuTree)
-  //渲染菜单
-  menuOptions.value = menuTree
+//构建菜单树
+const store = useStore()
+const menuTree = computed(() => store.state.routerMenu.menuTree)
+let menus = deepClone(menuTree.value)
+traverseTree(menus, (node) => {
+  console.log(node)
+  node.icon = renderIcon(node.icon)
+  //菜单按钮
+  if (node.menuType === 'm') {
+    node.label = () =>
+        h(
+            RouterLink,
+            {
+              to: {
+                path: node.path
+              }
+            },
+            {default: () => node.menuName}
+        )
+  } else
+    node.label = node.menuName
 })
-//endregion
+menuOptions.value = menus
 </script>
 
 <style lang="scss">
