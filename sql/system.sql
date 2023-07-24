@@ -25,7 +25,7 @@ create table base_user
 
     primary key (user_id)
 ) engine = innodb
-  auto_increment = 99999 comment = '用户信息表';
+  auto_increment = 1000 comment = '用户信息表';
 
 -- ----------------------------
 -- 添加框架默认用户
@@ -63,7 +63,7 @@ create table base_menu
 
     primary key(menu_id)
 )engine = innodb
-  auto_increment = 99999 comment = '菜单接口权限信息表';
+  auto_increment = 1000 comment = '菜单接口权限信息表';
 
 -- ----------------------------
 -- 添加框架默认菜单
@@ -95,7 +95,8 @@ create table base_role (
   update_time datetime comment '更新时间',
   
   primary key (role_id)
-)engine=innodb comment = '用户角色表';
+)engine=innodb 
+ auto_increment = 1000 comment = '用户角色表';
 -- ----------------------------
 -- 添加框架初始角色
 -- ----------------------------
@@ -113,9 +114,26 @@ create table base_user_role (
   create_by   varchar(64)  default '' comment '创建者',
   create_time datetime comment '创建时间',
   update_by   varchar(64)  default '' comment '更新者',
-  update_time datetime comment '更新时间'
+  update_time datetime comment '更新时间',
 
   primary key(user_id, role_id)
 ) engine=innodb comment = '用户和角色关联表';
 INSERT INTO colorxx.base_user_role (user_id, role_id, del_flag, create_by, create_time, update_by, update_time) VALUES (1, 1, 0, 'OneAdmin', '2023-06-29 15:46:32', '', null);
 
+
+
+-- ----------------------------
+-- 5、角色与菜单关联表
+-- ----------------------------
+create table base_role_menu (
+  role_id   bigint(20) not null comment '角色ID',
+  menu_id   bigint(20) not null comment '菜单ID',
+
+  del_flag    bigint(1)      default 0 comment '删除标志（0代表存在 1代表删除）',
+  create_by   varchar(64)  default '' comment '创建者',
+  create_time datetime comment '创建时间',
+  update_by   varchar(64)  default '' comment '更新者',
+  update_time datetime comment '更新时间',
+
+  primary key(role_id, menu_id)
+) engine=innodb comment = '角色与菜单关联表';
