@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import CIcon from '@/components/icon'
+import CIcon from '@/components/icon/index.vue'
 import {reactive} from "vue"
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'

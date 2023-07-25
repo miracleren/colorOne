@@ -54,8 +54,8 @@
 <script setup>
 import {ref} from "vue"
 import {darkTheme} from 'naive-ui'
-import UserOptions from "@/views/system/home/user-options.vue"
-import SidebarMenu from "@/views/system/home/sidebar-menu.vue"
+import UserOptions from "@/views/frame/home/user-options.vue"
+import SidebarMenu from "@/views/frame/home/sidebar-menu.vue"
 
 //更改主题颜色
 const curTheme = ref(null)

@@ -8,39 +8,23 @@ import {createRouter, createWebHistory} from 'vue-router'
 
 // 公共静态路由配置
 const routes = [
-
-    {
-        path: '/login',
-        component: () => import('../views/system/login'),
-    },
     {
         //基础父路由
         path: '/',
         name: 'bas-layout',
-        component: () => import('../views/system/home'),
+        component: () => import('../views/frame/home'),
         children: []
-        // children: [
-        //     {
-        //         path: '/system/user',
-        //         component: () => import('../views/system/management/bas-user'),
-        //     },
-        //     {
-        //         path: '/system/menu',
-        //         component: () => import('../views/system/management/bas-menu'),
-        //     }
-        // ]
+    },
+    {
+        path: '/login',
+        component: () => import('../views/frame/login'),
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'not-found',
+        component: () => import('@/views/frame/error/404'),
+        hidden: true
     }
-
-// {
-//   path: '/404',
-//   component: (resolve) => require(['@/views/error/404'], resolve),
-//   hidden: true
-// },
-// {
-//   path: '/401',
-//   component: (resolve) => require(['@/views/error/401'], resolve),
-//   hidden: true
-// }
 ]
 
 const router = createRouter({
