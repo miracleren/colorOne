@@ -25,6 +25,7 @@ import CIcon from '@/components/icon/index.vue'
 import {RouterLink} from 'vue-router'
 import {useStore} from 'vuex'
 import {deepClone} from '@/utils/ObjectUtils'
+import router from '@/router'
 
 //region 菜单相关
 const menuOptions = ref([])
@@ -32,7 +33,7 @@ const renderIcon = (icon) => {
   return () => h(CIcon, {icon: icon, color: 'rgb(14, 122, 13)'})
 }
 
-/*构建菜单树*/
+/*构建初始化菜单树、初始化tags标签、权限数据*/
 const store = useStore()
 const menuTree = computed(() => store.state.routerMenu.menuTree)
 let menus = deepClone(menuTree.value)
@@ -53,12 +54,24 @@ traverseTree(menus, (node) => {
         )
   } else
     node.label = node.menuName
+
+  //初始化当前路由页面对应标签
+  let curPath = router.currentRoute.value.fullPath
+  if (curPath !== '/' && curPath === node.path) {
+    let tag = {
+      id: node.menuId,
+      name: node.menuName,
+      path: node.path
+    }
+    store.dispatch('tagsAdd', tag)
+    store.dispatch('tagsSetCur', tag.id)
+  }
+
 })
 menuOptions.value = menus
 
 /*菜单选定触发事件*/
 const selectMenu = (key, item) => {
-
   let tag = {
     id: item.menuId,
     name: item.menuName,

@@ -12,8 +12,9 @@
           />
           <n-gradient-text class="logo-text">颜一简易系统</n-gradient-text>
         </div>
-        <div class="header-tags">
-          <tags-view v-if="false"></tags-view>
+        <div class="header-tags" :class="defaultSetting.useTags ? 'flex-end' : 'flex-center'">
+          <tags-view v-if="defaultSetting.useTags"></tags-view>
+          <breadcrumb-menu v-if="!defaultSetting.useTags"></breadcrumb-menu>
         </div>
         <div class="header-options">
           <user-options @changeTheme="changeTheme"></user-options>
@@ -24,7 +25,12 @@
       <n-layout class="body-center" has-sider>
         <sidebar-menu></sidebar-menu>
         <n-layout class="section-body">
-          <router-view/>
+          <router-view v-slot="{ Component ,route }">
+            <keep-alive>
+              <component :is="Component" v-if="defaultSetting.keepAlive" :key="route.name"/>
+            </keep-alive>
+            <component :is="Component" v-if="!defaultSetting.keepAlive" :key="route.name"/>
+          </router-view>
         </n-layout>
       </n-layout>
 
@@ -42,6 +48,8 @@ import {darkTheme} from 'naive-ui'
 import UserOptions from '@/views/frame/home/user-options.vue'
 import SidebarMenu from '@/views/frame/home/sidebar-menu.vue'
 import TagsView from '@/views/frame/home/tags-view.vue'
+import defaultSetting from '@/frame/settings'
+import BreadcrumbMenu from '@/views/frame/home/breadcrumb-menu.vue'
 
 /*更改主题颜色*/
 const curTheme = ref(null)
@@ -84,7 +92,14 @@ const changeTheme = () => {
         flex: 1;
         width: 0;
         height: 50px;
+      }
+
+      .flex-end {
         align-items: flex-end;
+      }
+
+      .flex-center {
+        align-items: center;
       }
 
       .header-options {

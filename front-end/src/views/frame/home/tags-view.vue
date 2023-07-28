@@ -1,7 +1,7 @@
 <template>
   <div class="tag-view">
     <n-tabs v-model:value="curTag" @update:value="selectTag">
-      <n-tab name="home" tab="首页">
+      <n-tab name="index" tab="首页">
       </n-tab>
       <n-tab v-for="tag in tags" :name="tag.id" :tab="tag.name"
              @mouseenter="showClose(tag.id)"
@@ -29,23 +29,23 @@ const store = useStore()
 const tags = computed(() => store.state.tagsView.tags)
 
 /*标签切换事件处理*/
-const curTag = ref('home')
+const curTag = ref('index')
 const currentTag = computed(() => store.state.tagsView.currentTag)
 const selectTag = (index) => {
   console.log('selectTag', index)
   //切换标签跳转路由
   store.dispatch('tagsSetCur', index).then(tag => {
     console.log('tagsSetCur', tag)
-    router.push(tag.path ? tag.path : '/')
+    router.push(tag.path || '/')
   })
 }
 
 /*currentTag当前标签值，切换标签和路由*/
 watch(currentTag, (n, o) => {
   console.log('currentTag', n)
-  curTag.value = n.id ? n.id : 'home'
+  curTag.value = n.id || 'index'
   if (n.path !== o.path)
-    router.push(n.path ? n.path : '/')
+    router.push(n.path || '/')
 })
 
 /*标签关闭处理事件*/

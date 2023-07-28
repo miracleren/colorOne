@@ -12,7 +12,7 @@ import {
     NLayout, NMenu, NSwitch, NLayoutHeader, NLayoutSider, NLayoutFooter,
     NMessageProvider, NConfigProvider, NAvatar, NPopover, NImage,
     NDialogProvider, NTabPane, NTabs, NLayoutContent, NCollapseTransition,
-    NTab
+    NTab, NBreadcrumb, NBreadcrumbItem
 } from 'naive-ui'
 
 const naive = create({
@@ -20,7 +20,7 @@ const naive = create({
         NLayout, NMenu, NSwitch, NLayoutHeader, NLayoutSider, NLayoutFooter,
         NMessageProvider, NConfigProvider, NAvatar, NPopover, NImage,
         NDialogProvider, NTabPane, NTabs, NLayoutContent, NCollapseTransition,
-        NTab]
+        NTab, NBreadcrumb, NBreadcrumbItem]
 })
 
 export default naive
