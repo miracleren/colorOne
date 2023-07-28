@@ -1,4 +1,4 @@
-import router from '@/router/index'
+import router, {addError} from '@/router/index'
 import store from '@/frame/store'
 import {getToken} from '@/utils/system/token'
 
@@ -6,6 +6,7 @@ import {getToken} from '@/utils/system/token'
 //不经权限验证的白名单
 const whiteList = ['/login']
 
+/*路由守卫*/
 router.beforeEach((to, from, next) => {
     if (getToken()) {
         //token存在时，如果访问登录页跳转到首页
@@ -23,8 +24,13 @@ router.beforeEach((to, from, next) => {
                         let layout = router.getRoutes().find(r => {
                             return r.name === 'bas-layout'
                         })
-                        layout.children = routes
+                        layout.children = routes.concat(layout.children)
+                        //layout.children = routes
                         router.addRoute(layout)
+                        //动态添加404
+                        addError()
+
+                        console.log('addRoute', router.getRoutes())
                         //确保路由加载完成
                         next({...to, replace: true})
                     })

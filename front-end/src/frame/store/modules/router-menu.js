@@ -1,4 +1,6 @@
-// initial routers
+/**
+ * 用户角色菜单、权限及路由
+ */
 import {getUserMenuTree} from '@/api/system/menu'
 import {traverseTree} from '@/utils/TreeUtils'
 

@@ -12,20 +12,32 @@ const routes = [
         //基础父路由
         path: '/',
         name: 'bas-layout',
-        component: () => import('../views/frame/home'),
-        children: []
+        component: () => import('@/views/frame/home'),
+        redirect: '/index',
+        children: [
+            {
+                path: '/index',
+                name: 'dashboard',
+                component: () => import('@/views/frame/home/dashboard'),
+            }
+        ]
     },
     {
         path: '/login',
-        component: () => import('../views/frame/login'),
+        name: 'login',
+        component: () => import('@/views/frame/login'),
     },
     {
-        path: '/:pathMatch(.*)*',
+        path: '/404',
         name: 'not-found',
         component: () => import('@/views/frame/error/404'),
         hidden: true
     }
 ]
+
+export function addError() {
+    router.addRoute({path: '/:pathMatch(.*)*', redirect: '/404'})
+}
 
 const router = createRouter({
     history: createWebHistory(),  // hash路由模式

@@ -1,4 +1,6 @@
-// initial state
+/**
+ * 用户登录信息
+ */
 import {removeToken, setToken} from "@/utils/system/token"
 import {loginUser, loginUserInfo} from "@/api/system/login"
 

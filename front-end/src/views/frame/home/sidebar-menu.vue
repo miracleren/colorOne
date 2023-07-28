@@ -13,6 +13,7 @@
         :collapsed-icon-size="22"
         :options="menuOptions"
         key-field="menuId"
+        @update:value="selectMenu"
     />
   </n-layout-sider>
 </template>
@@ -31,14 +32,14 @@ const renderIcon = (icon) => {
   return () => h(CIcon, {icon: icon, color: 'rgb(14, 122, 13)'})
 }
 
-//构建菜单树
+/*构建菜单树*/
 const store = useStore()
 const menuTree = computed(() => store.state.routerMenu.menuTree)
 let menus = deepClone(menuTree.value)
 traverseTree(menus, (node) => {
   console.log(node)
   node.icon = renderIcon(node.icon)
-  //菜单按钮
+  //菜单按钮,通过RouterLink切换路由
   if (node.menuType === 'm') {
     node.label = () =>
         h(
@@ -54,6 +55,18 @@ traverseTree(menus, (node) => {
     node.label = node.menuName
 })
 menuOptions.value = menus
+
+/*菜单选定触发事件*/
+const selectMenu = (key, item) => {
+
+  let tag = {
+    id: item.menuId,
+    name: item.menuName,
+    path: item.path
+  }
+  console.log('selectMenu', tag)
+  store.dispatch('tagsAdd', tag)
+}
 </script>
 
 <style lang="scss">

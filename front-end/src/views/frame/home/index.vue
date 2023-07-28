@@ -13,22 +13,7 @@
           <n-gradient-text class="logo-text">颜一简易系统</n-gradient-text>
         </div>
         <div class="header-tags">
-          <n-tabs default-value="home" closable>
-            <n-tab-pane name="home" tab="首页">
-            </n-tab-pane>
-            <n-tab-pane name="oasis" tab="Oasis">
-            </n-tab-pane>
-            <n-tab-pane name="the beatles" tab="the Beatles">
-            </n-tab-pane>
-            <n-tab-pane name="jay chou" tab="周杰伦">
-            </n-tab-pane>
-            <n-tab-pane name="the beatles1" tab="the beatles1">
-            </n-tab-pane>
-            <n-tab-pane name="the beatles2" tab="the beatles2">
-            </n-tab-pane>
-            <n-tab-pane name="the beatles3" tab="the beatles3">
-            </n-tab-pane>
-          </n-tabs>
+          <tags-view v-if="false"></tags-view>
         </div>
         <div class="header-options">
           <user-options @changeTheme="changeTheme"></user-options>
@@ -52,12 +37,13 @@
 </template>
 
 <script setup>
-import {ref} from "vue"
+import {ref} from 'vue'
 import {darkTheme} from 'naive-ui'
-import UserOptions from "@/views/frame/home/user-options.vue"
-import SidebarMenu from "@/views/frame/home/sidebar-menu.vue"
+import UserOptions from '@/views/frame/home/user-options.vue'
+import SidebarMenu from '@/views/frame/home/sidebar-menu.vue'
+import TagsView from '@/views/frame/home/tags-view.vue'
 
-//更改主题颜色
+/*更改主题颜色*/
 const curTheme = ref(null)
 const changeTheme = () => {
   console.log(curTheme.value)
@@ -97,10 +83,8 @@ const changeTheme = () => {
         display: flex;
         flex: 1;
         width: 0;
-
-        .n-tabs {
-          margin-top: 30px;
-        }
+        height: 50px;
+        align-items: flex-end;
       }
 
       .header-options {
@@ -113,7 +97,8 @@ const changeTheme = () => {
 
     .body-center {
       height: calc(100% - 50px);
-      .section-body{
+
+      .section-body {
         padding: 16px;
       }
     }

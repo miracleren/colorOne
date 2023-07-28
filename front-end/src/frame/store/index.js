@@ -1,6 +1,7 @@
 import {createStore, createLogger} from 'vuex'
-import loginUser from './modules/login-user'
-import routerMenu from './modules/router-menu'
+import loginUser from '@/frame/store/modules/login-user'
+import routerMenu from '@/frame/store/modules/router-menu'
+import tagsView from '@/frame/store/modules/tags-view'
 
 
 const debug = process.env.NODE_ENV !== 'production'
@@ -8,7 +9,8 @@ const debug = process.env.NODE_ENV !== 'production'
 export default createStore({
     modules: {
         loginUser,
-        routerMenu
+        routerMenu,
+        tagsView
     },
     strict: debug,
     plugins: debug ? [createLogger()] : []

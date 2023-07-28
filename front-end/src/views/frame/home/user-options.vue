@@ -28,18 +28,18 @@ import icon from '@/components/icon/index.vue'
 import router from '@/router'
 import {loginUserOut} from '@/api/system/login'
 
-//更换主题
+/*更换主题*/
 const emit = defineEmits(['aboutExeVisible'])
 const changeTheme = () => {
   emit('changeTheme')
 }
 
-//获取用户信息
+/*获取用户信息*/
 const store = useStore()
 const nickName = computed(() => store.state.loginUser.nickName)
 
 
-//退出登录
+/*退出登录处理*/
 const loginOut = () => {
   console.log('loginOut')
   window.$dialog.warning({
