@@ -20,3 +20,16 @@ export function deepClone(source) {
     }
     return targetObj
 }
+
+/**
+ * 判断对象是否为空
+ * @param data
+ * @returns {boolean}
+ * @constructor
+ */
+export function ObjectIsEmpty(data) {
+    if (data === null || Object.keys(data).length === 0)
+        return false
+    else
+        return true
+}

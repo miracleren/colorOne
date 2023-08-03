@@ -1,7 +1,8 @@
+import qs from 'qs'
 
 //1. 先引入axios依赖包
-import axios from "axios"
-import {getToken} from "@/utils/system/token"
+import axios from 'axios'
+import {getToken} from '@/utils/system/token'
 
 axios.defaults.headers['Content-Type'] = 'application/json'
 
@@ -9,6 +10,7 @@ axios.defaults.headers['Content-Type'] = 'application/json'
 const service = axios.create({
     baseURL: '/api', //管理后台要使用的接口的基地址
     timeout: 8000, //超时时间
+    paramsSerializer: (params) => qs.stringify(params, {indices: false})
 })
 
 //3. 定义前置拦截器，请求拦截器，请求发送出去之前触发的
@@ -17,6 +19,7 @@ service.interceptors.request.use((config) => {
     if (getToken()) {
         config.headers['Authorization'] = 'Bearer ' + getToken()
     }
+
     //config 接口请求的配置信息
     return config
 }, (error) => {
