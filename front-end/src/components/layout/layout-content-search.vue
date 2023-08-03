@@ -1,0 +1,58 @@
+<template>
+  <div class="content-search">
+    <div v-if="useSlots().search" class="search-box">
+      <slot name="search"></slot>
+    </div>
+    <div v-if="useSlots().tool" class="tool-box">
+      <slot name="tool"></slot>
+    </div>
+    <div v-if="useSlots().content" class="content-box">
+      <slot name="content"></slot>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import {useSlots} from 'vue'
+
+/**
+ * 表格（查询、编辑、内容竖向三层结构）
+ */
+
+</script>
+
+<style lang="scss">
+.content-search {
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+
+  .search-box {
+    padding: 10px 16px;
+    background-color: #9e9e9e26;
+
+    .n-form--inline {
+      flex-wrap: wrap;
+
+      .n-input {
+        //max-height: 32px;
+      }
+    }
+  }
+
+  .tool-box {
+    padding: 12px 16px 0 16px;
+
+    .n-button {
+      margin-right: 15px;
+      height: 28px;
+    }
+  }
+
+  .content-box {
+    padding: 12px;
+    flex: 1;
+  }
+
+}
+</style>

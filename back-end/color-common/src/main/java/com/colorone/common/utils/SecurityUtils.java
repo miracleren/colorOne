@@ -55,4 +55,18 @@ public class SecurityUtils {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
+
+    /**
+     * 是否为超级管理员
+     *
+     * @param userId 用户ID
+     * @return 结果
+     */
+    public static boolean isSuperAdmin(Long userId) {
+        return userId != null && 1L == userId;
+    }
+
+    public static boolean isSuperAdmin() {
+        return isSuperAdmin(getLoginUser().getUser().getUserId());
+    }
 }

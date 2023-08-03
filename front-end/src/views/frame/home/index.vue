@@ -1,5 +1,5 @@
 <template>
-  <n-config-provider :theme="curTheme" class="app-provider">
+  <n-config-provider :theme="curTheme" class="app-provider" :locale="zhCN" :date-locale="dateZhCN">
     <n-layout class="app-body">
 
       <!--顶部-->
@@ -50,6 +50,7 @@ import SidebarMenu from '@/views/frame/home/sidebar-menu.vue'
 import TagsView from '@/views/frame/home/tags-view.vue'
 import defaultSetting from '@/frame/settings'
 import BreadcrumbMenu from '@/views/frame/home/breadcrumb-menu.vue'
+import {zhCN, dateZhCN} from 'naive-ui'
 
 /*更改主题颜色*/
 const curTheme = ref(null)
@@ -114,7 +115,7 @@ const changeTheme = () => {
       height: calc(100% - 50px);
 
       .section-body {
-        padding: 16px;
+        //padding: 16px;
       }
     }
 

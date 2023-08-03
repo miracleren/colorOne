@@ -2,11 +2,12 @@
  * 全局css样式布局处理
  * Copyright (c) 2022 miracleren@gmail.com
  */
-html{
+html {
   height: 100%;
   width: 100%;
 }
-body{
+
+body {
   margin: 0;
   padding: 0;
   font-size: 13px;
@@ -14,3 +15,25 @@ body{
   width: 100%;
 }
 
+
+/* input 标准宽 */
+.input-140 {
+  width: 140px;
+}
+
+.input-180 {
+  width: 180px;
+}
+
+.input-220 {
+  width: 220px;
+}
+
+.input-360 {
+  width: 360px;
+}
+
+/* 表格组件样式 */
+.select-row {
+  color: red !important;
+}

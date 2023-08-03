@@ -19,7 +19,7 @@ import lombok.ToString;
 @Data
 @ToString
 @NoArgsConstructor
-@TableName("baseMenu")
+@TableName("base_menu")
 public class BaseMenu extends BaseEntity {
     /**
      * comment '菜单id'   bigint(10)   not null autoIncrement

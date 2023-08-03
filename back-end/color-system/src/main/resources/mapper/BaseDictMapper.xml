@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.colorone.system.mapper.BaseDictMapper">
+
+    <select id="selectComDictByType" resultType="java.util.Map">
+        select dict_label label,
+               dict_value value,
+               style
+        from base_dict
+        where del_flag = 0
+          and dict_type = #{type}
+          and parent_id is not null
+        order by dict_sort
+    </select>
+    <select id="selectDictList" resultType="com.colorone.system.domain.entity.BaseDict">
+        select d.*,db.dict_label status_name
+        from base_dict d
+        left join base_dict db on db.dict_value = CONVERT(d.status,char ) and db.dict_type='base_status'
+        where d.del_flag = 0
+        <if test="dictLabel != null  and dictLabel != ''">
+            and d.dict_label like "%"#{dictLabel}"%"
+        </if>
+        <if test="dictType != null  and dictType != ''">
+            and d.dict_type = #{dictType}
+        </if>
+        <if test="parentId == null or parentId == ''">
+            and d.parent_id is null
+        </if>
+        <if test="params != null and params.startTime != null ">
+            and d.create_time > FROM_UNIXTIME(#{params.startTime}/1000)
+        </if>
+        <if test="params != null and params.endTime != null">
+            and d.create_time <![CDATA[<=]]> adddate(FROM_UNIXTIME(#{params.endTime}/1000),1)
+        </if>
+        order by dict_sort
+    </select>
+</mapper>

@@ -12,6 +12,7 @@
     "core-js": "^3.8.3",
     "js-cookie": "^3.0.5",
     "node-sass": "^7.0.1",
+    "qs": "^6.11.2",
     "sass": "^1.52.1",
     "sass-loader": "^13.0.0",
     "svg-sprite-loader": "^6.0.11",

@@ -12,7 +12,8 @@ import {
     NLayout, NMenu, NSwitch, NLayoutHeader, NLayoutSider, NLayoutFooter,
     NMessageProvider, NConfigProvider, NAvatar, NPopover, NImage,
     NDialogProvider, NTabPane, NTabs, NLayoutContent, NCollapseTransition,
-    NTab, NBreadcrumb, NBreadcrumbItem
+    NTab, NBreadcrumb, NBreadcrumbItem, NDatePicker, NSelect,
+    NDataTable, NModal, NGrid, NFormItemGi
 } from 'naive-ui'
 
 const naive = create({
@@ -20,7 +21,8 @@ const naive = create({
         NLayout, NMenu, NSwitch, NLayoutHeader, NLayoutSider, NLayoutFooter,
         NMessageProvider, NConfigProvider, NAvatar, NPopover, NImage,
         NDialogProvider, NTabPane, NTabs, NLayoutContent, NCollapseTransition,
-        NTab, NBreadcrumb, NBreadcrumbItem]
+        NTab, NBreadcrumb, NBreadcrumbItem, NDatePicker, NSelect,
+        NDataTable, NModal, NGrid, NFormItemGi]
 })
 
 export default naive

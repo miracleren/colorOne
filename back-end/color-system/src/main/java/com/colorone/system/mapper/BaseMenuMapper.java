@@ -22,4 +22,12 @@ public interface BaseMenuMapper extends BaseMapper<BaseMenu> {
      * @return
      */
     List<BaseMenu> selectMenuListByRoles(Long[] roles);
+
+    /**
+     * 查询菜单列表
+     *
+     * @return
+     */
+    List<BaseMenu> selectMenuList();
+
 }

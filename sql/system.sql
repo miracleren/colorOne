@@ -137,3 +137,32 @@ create table base_role_menu (
 
   primary key(role_id, menu_id)
 ) engine=innodb comment = '角色与菜单关联表';
+
+
+-------------------------------
+-- 6、字典数据表
+-------------------------------
+create table base_dict
+(
+    dict_id     bigint(20) not null auto_increment comment '字典主键',
+    parent_id   bigint(20)              comment '父主键',
+    dict_type   varchar(100) default '' comment '字典类型',
+
+    dict_label  varchar(100) default '' comment '字典标签',
+    dict_value  varchar(100) default '' comment '字典键值',
+    dict_sort   bigint(4)    default 0 comment '字典排序',
+    style       varchar(200) default '' comment '字典样式',
+    status      bigint(1)    default 0 comment '状态（0正常 1停用）',
+
+     remark     varchar(200)    default null               comment '备注',
+
+    del_flag    bigint(1)    default 0 comment '删除标志（0代表存在 1代表删除）',
+    create_by   varchar(64)  default '' comment '创建者',
+    create_time datetime comment '创建时间',
+    update_by   varchar(64)  default '' comment '更新者',
+    update_time datetime comment '更新时间',
+
+    primary key (dict_id)
+) engine = innodb
+  auto_increment = 1000 comment = '字典数据表';
+;
