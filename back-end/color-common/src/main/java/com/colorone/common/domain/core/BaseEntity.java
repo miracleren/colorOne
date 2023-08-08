@@ -1,6 +1,8 @@
 package com.colorone.common.domain.core;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -20,28 +22,38 @@ public class BaseEntity implements Serializable {
     /**
      * default 0 comment '删除标志（0代表存在 1代表删除）'
      */
+    @TableLogic
+    @TableField(value = "del_flag", fill = FieldFill.INSERT)
+    @JsonIgnore
     Integer delFlag;
 
     /**
      * varchar(64)  default '' comment '创建者'
      */
+    @TableField(value = "create_by", fill = FieldFill.INSERT)
+    @JsonIgnore
     String createBy;
 
     /**
      * datetime comment '创建时间'
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     Date createTime;
 
     /**
      * varchar(64)  default '' comment '更新者'
      */
+    @TableField(value = "update_by", fill = FieldFill.UPDATE)
+    @JsonIgnore
     String updateBy;
 
     /**
      * datetime comment '更新时间'
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField(value = "update_time", fill = FieldFill.UPDATE)
+    @JsonIgnore
     Date updateTime;
 
 
@@ -49,7 +61,7 @@ public class BaseEntity implements Serializable {
      * 是否自动填充通用值字段值
      */
     @TableField(exist = false)
-    @JsonIgnore(value = false)
+    @JsonIgnore
     private Boolean autoFill = true;
 
     /**

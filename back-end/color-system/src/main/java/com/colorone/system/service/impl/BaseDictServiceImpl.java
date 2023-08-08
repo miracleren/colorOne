@@ -21,12 +21,28 @@ public class BaseDictServiceImpl implements BaseDictService {
     private BaseDictMapper baseDictMapper;
 
     @Override
+    public List<BaseDict> getDictList(BaseDict dict) {
+        return baseDictMapper.selectDictList(dict);
+    }
+
+    @Override
+    public Integer addBaseDict(BaseDict dict) {
+        return baseDictMapper.insert(dict);
+    }
+
+    @Override
+    public Integer editBaseDict(BaseDict dict) {
+        return baseDictMapper.updateById(dict);
+    }
+
+    @Override
+    public Integer deleteBaseDict(Long dictId) {
+        return baseDictMapper.deleteById(dictId);
+    }
+
+    @Override
     public List<Map<String, Object>> getSelectDictByType(String type) {
         return baseDictMapper.selectComDictByType(type);
     }
 
-    @Override
-    public List<BaseDict> getDictList(BaseDict dict) {
-        return baseDictMapper.selectDictList(dict);
-    }
 }

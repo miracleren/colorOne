@@ -51,8 +51,8 @@
     </template>
   </layout-table-search>
 
-  <n-modal v-model:show="showForm" preset="dialog" :title="formTitle">
-    <form-dict v-model:value="formData"></form-dict>
+  <n-modal v-model:show="formConfig.show" preset="card" :title="formConfig.title" class="edit-from">
+    <form-dict v-model="formData" :config="formConfig"/>
   </n-modal>
 </template>
 
@@ -60,14 +60,14 @@
 import {onMounted, ref} from 'vue'
 import LayoutTableSearch from '@/components/layout/layout-content-search.vue'
 import icon from '@/components/icon/index.vue'
-import {getDictList} from '@/api/system/dict'
+import {deleteBaseDict, getBaseDictList} from '@/api/system/dict'
 import FormDict from '@/views/system/manage/base-dict/form-dict.vue'
 import {ObjectIsEmpty} from '@/utils/ObjectUtils'
 import {formRangeTime} from '@/utils/DateUtils'
 
 /** 查询参数 **/
 const searchFrom = ref({
-  dictLabel: null, dictType: null, parentId: null, params: {}
+  dictLabel: null, dictType: null, parentId: null
 })
 const rangeDate = ref(null)
 
@@ -106,6 +106,10 @@ const table = {
       key: 'statusName'
     },
     {
+      title: '创建时间',
+      key: 'createTime'
+    },
+    {
       title: '备注',
       key: 'remark'
     }
@@ -118,44 +122,50 @@ const tableData = ref([])
 
 /** 查询字典数据 **/
 const getData = () => {
-  console.log('rangeDate', rangeDate.value)
-  console.log('formRangeTime(rangeDate)', formRangeTime(rangeDate.value))
   searchFrom.value.params = formRangeTime(rangeDate.value)
-  // if (rangeDate.value != null) {
-  //   searchFrom.value.params['beginTime'] = rangeDate.value[0]
-  //   searchFrom.value.params['endTime'] = rangeDate.value[1]
-  // }
-  console.log('searchFrom.value', searchFrom.value)
-  getDictList(searchFrom.value).then(res => {
+  getBaseDictList(searchFrom.value).then(res => {
     tableData.value = res.data
   })
 }
 
 /**数据操作事件**/
-const showForm = ref(false)
 const formData = ref({})
-const formTitle = ref('')
+const formConfig = ref({
+  show: false,
+  title: '',
+  type: '',
+  success: (data) => {
+    getData()
+  }
+})
+
 const handle = (key) => {
+  formConfig.value.type = key
   switch (key) {
     case 'search': {
       getData()
       break
     }
     case 'add': {
-      formTitle.value = '新增字典分组'
+      formConfig.value.show = true
+      formConfig.value.title = '新增字典组'
       formData.value = {}
-      showForm.value = true
       break
     }
     case 'edit': {
-      console.log('edit formData', checkRow)
-      formTitle.value = '修改字典分组-' + checkRow.value.dictLabel
+      formConfig.value.show = true
+      formConfig.value.title = checkRow.value.dictLabel + '-修改字典组'
       formData.value = checkRow.value
-      showForm.value = true
+      console.log('formData.value', formData.value)
       break
     }
     case 'delete': {
-      console.log('delete')
+      deleteBaseDict(checkRow.value.dictId).then(res => {
+        if (res.data) {
+          window.$message.success('成功删除数据')
+          getData()
+        }
+      })
       break
     }
   }

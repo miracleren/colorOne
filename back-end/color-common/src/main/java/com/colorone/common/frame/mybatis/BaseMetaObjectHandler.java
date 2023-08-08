@@ -31,7 +31,7 @@ public class BaseMetaObjectHandler implements MetaObjectHandler {
     private static final String del_flag = "delFlag";
 
     //是否自动填充标识
-    private static final String is_auto_field = "isAutoField";
+    private static final String is_auto_field = "autoFill";
 
 
     /**

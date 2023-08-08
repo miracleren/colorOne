@@ -12,19 +12,45 @@ import java.util.Map;
  * @备注：
  */
 public interface BaseDictService {
-    /**
-     * 根据字典类型获取字典数据
-     *
-     * @param type
-     * @return
-     */
-    List<Map<String, Object>> getSelectDictByType(String type);
 
     /**
      * 查询字典数据列表
      *
-     * @param dict
-     * @return
+     * @param dict dict 字典实体类
+     * @return 字典列表
      */
     List<BaseDict> getDictList(BaseDict dict);
+
+    /**
+     * 新增字典数据
+     *
+     * @param dict 字典实体类
+     * @return 成功失败
+     */
+    Integer addBaseDict(BaseDict dict);
+
+    /**
+     * 修改字典数据
+     *
+     * @param dict 字典实体类
+     * @return 成功失败
+     */
+    Integer editBaseDict(BaseDict dict);
+
+    /**
+     * 删除字典数据
+     *
+     * @param dictId 字典键值
+     * @return 成功失败
+     */
+    Integer deleteBaseDict(Long dictId);
+
+    /**
+     * 根据字典类型获取字典数据，数据类型关联select组件
+     *
+     * @param type 字典类型标识
+     * @return 字典select数据
+     */
+    List<Map<String, Object>> getSelectDictByType(String type);
+
 }

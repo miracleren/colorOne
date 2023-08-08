@@ -24,12 +24,12 @@ public class BaseDict extends BaseEntity {
      * comment '字典主键' bigint(20) not null autoIncrement
      */
     @TableId(value = "dict_id", type = IdType.AUTO)
-    private String dictId;
+    private Long dictId;
 
     /**
      * comment '父主键' bigint(20) not null
      */
-    private String parentId;
+    private Long parentId;
 
     /**
      * comment '字典类型' varchar(100) default ''
@@ -49,7 +49,7 @@ public class BaseDict extends BaseEntity {
     /**
      * comment '字典排序' bigint(4)    default 0
      */
-    private String dictSort;
+    private Integer dictSort;
 
     /**
      * comment '字典样式' varchar(200) default ''
@@ -59,7 +59,7 @@ public class BaseDict extends BaseEntity {
     /**
      * comment '状态（0正常 1停用）' bigint(1)    default 0
      */
-    private String status;
+    private Integer status;
 
     /**
      * comment '备注'    varchar(200)    default null

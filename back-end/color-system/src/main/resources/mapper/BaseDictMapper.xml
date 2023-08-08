@@ -32,6 +32,6 @@
         <if test="params != null and params.endTime != null">
             and d.create_time <![CDATA[<=]]> adddate(FROM_UNIXTIME(#{params.endTime}/1000),1)
         </if>
-        order by dict_sort
+        order by d.create_time
     </select>
 </mapper>

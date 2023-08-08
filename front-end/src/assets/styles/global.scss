@@ -37,3 +37,25 @@ body {
 .select-row {
   color: red !important;
 }
+
+/* From弹框通用样式 */
+.edit-from {
+  width: 680px; //默认宽度
+
+  .n-card-header {
+    font-size: 16px;
+  }
+
+  .n-card__content {
+
+  }
+
+  .form-action, .n-card__footer {
+    display: flex;
+    flex-direction: row-reverse;
+
+    button {
+      margin-left: 20px;
+    }
+  }
+}

@@ -1,19 +1,37 @@
 import request from '@/frame/axios/request'
 
-//通过字典类型获取字典数据
-export function getSelectDictList(type) {
+//查询字典数据列表
+export function getBaseDictList(query) {
     return request({
-        url: `/dict/select/${type}`,
-        method: 'get',
+        url: '/dict/list', method: 'get', params: query
+    })
+}
+
+//新增字典数据
+export function addBaseDict(data) {
+    return request({
+        url: '/dict/add', method: 'post', data: data
+    })
+}
+
+//修改字典数据
+export function editBaseDict(data) {
+    return request({
+        url: '/dict/edit', method: 'put', data: data
+    })
+}
+
+//新增字典数据
+export function deleteBaseDict(dictId) {
+    return request({
+        url: `/dict/delete/${dictId}`, method: 'delete'
     })
 }
 
 
-//查询字典列表数据+ '?params%5BstartTime%5D%3D1690819200000&params%5BendTime%5D%3D1692115200000',',
-export function getDictList(query) {
+//通过字典类型获取字典数据
+export function getSelectDictList(type) {
     return request({
-        url: '/dict/list',
-        method: 'get',
-        params: query
+        url: `/dict/select/${type}`, method: 'get',
     })
 }
