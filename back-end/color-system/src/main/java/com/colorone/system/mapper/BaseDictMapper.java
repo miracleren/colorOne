@@ -29,4 +29,20 @@ public interface BaseDictMapper extends BaseMapper<BaseDict> {
      * @return
      */
     List<BaseDict> selectDictList(BaseDict dict);
+
+    /**
+     * 查询子字典数据列表
+     *
+     * @param dictId 字典父ID
+     * @return 字典列表
+     */
+    List<BaseDict> selectBaseDictChildren(Long dictId);
+
+    /**
+     * 根据父ID删除子字典列表
+     *
+     * @param parentId 父ID
+     * @return 执行行数
+     */
+    Integer deleteChildrenById(Long parentId);
 }

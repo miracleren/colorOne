@@ -28,8 +28,5 @@ export function deepClone(source) {
  * @constructor
  */
 export function ObjectIsEmpty(data) {
-    if (data === null || Object.keys(data).length === 0)
-        return false
-    else
-        return true
+    return !(data === null || Object.keys(data).length === 0);
 }

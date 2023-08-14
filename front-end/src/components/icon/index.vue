@@ -20,7 +20,7 @@ export default {
     },
     color: {
       type: String,
-      default: 'rgb(14, 122, 13)'
+      default: 'var(--n-text-color)'
     }
   },
   setup(props) {

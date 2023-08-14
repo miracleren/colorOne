@@ -35,3 +35,10 @@ export function getSelectDictList(type) {
         url: `/dict/select/${type}`, method: 'get',
     })
 }
+
+//查询子字典数据列表
+export function getBaseDictChildren(dictId) {
+    return request({
+        url: `/dict/children/${dictId}`, method: 'get'
+    })
+}

@@ -47,7 +47,20 @@ const number = (path, message, min = null, max = null) => {
     }
 }
 
+
+const selectRequired = (path, message, isNumber = false) => {
+    return {
+        path: path,
+        rule: {
+            required: true,
+            type: isNumber ? 'number' : 'string',
+            trigger: ['blur', 'change'],
+            message: message || '请选择有效内容',
+        }
+    }
+}
+
 let validator = {
-    required, number
+    required, number, selectRequired
 }
 export default validator

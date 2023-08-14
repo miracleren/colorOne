@@ -76,4 +76,16 @@ public class BaseDictController {
     public RequestResult getSelectDictList(@PathVariable String type) {
         return RequestResult.success(baseDictService.getSelectDictByType(type));
     }
+
+
+    /**
+     * 查询子字典数据列表
+     *
+     * @param dictId 字典父ID
+     * @return 字典列表
+     */
+    @GetMapping("/children/{dictId}")
+    public RequestResult getBaseDictChildren(@PathVariable Long dictId) {
+        return RequestResult.success(baseDictService.getBaseDictChildren(dictId));
+    }
 }

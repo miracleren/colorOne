@@ -42,6 +42,7 @@ import {useSlots} from 'vue'
 
   .tool-box {
     padding: 12px 16px 0 16px;
+    display: flex;
 
     .n-button {
       margin-right: 15px;

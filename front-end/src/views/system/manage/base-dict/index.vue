@@ -29,12 +29,20 @@
     </template>
     <template #tool>
       <n-button dashed type="success" @click="handle('add')">
-        新增
+        <icon icon="Add"/>
+        新增分组
+      </n-button>
+      <n-button :disabled="!!checkRow.parentId || !ObjectIsEmpty(checkRow)" dashed type="success"
+                @click="handle('addChildren')">
+        <icon icon="Tree"/>
+        新增字典数据
       </n-button>
       <n-button :disabled="!ObjectIsEmpty(checkRow)" dashed type="success" @click="handle('edit')">
+        <icon icon="Edit"/>
         修改
       </n-button>
       <n-button :disabled="!ObjectIsEmpty(checkRow)" dashed type="warning" @click="handle('delete')">
+        <icon icon="Delete"/>
         删除
       </n-button>
     </template>
@@ -47,6 +55,8 @@
           flex-height
           :row-key="(row)=>row.dictId"
           @update:checked-row-keys="(key,rows)=>{checkRow=rows[0]}"
+          allow-checking-not-loaded
+          @load="onLoadChildren"
       />
     </template>
   </layout-table-search>
@@ -60,7 +70,7 @@
 import {onMounted, ref} from 'vue'
 import LayoutTableSearch from '@/components/layout/layout-content-search.vue'
 import icon from '@/components/icon/index.vue'
-import {deleteBaseDict, getBaseDictList} from '@/api/system/dict'
+import {deleteBaseDict, getBaseDictChildren, getBaseDictList} from '@/api/system/dict'
 import FormDict from '@/views/system/manage/base-dict/form-dict.vue'
 import {ObjectIsEmpty} from '@/utils/ObjectUtils'
 import {formRangeTime} from '@/utils/DateUtils'
@@ -73,10 +83,11 @@ const rangeDate = ref(null)
 
 /** 初始化相关数据 **/
 onMounted(() => {
+
   getData()
 })
 
-/** 表格数据 **/
+/** 表格数据、事件 **/
 let checkRow = ref({})
 const table = {
   checkKey: null,
@@ -119,11 +130,27 @@ const table = {
   }
 }
 const tableData = ref([])
+const onLoadChildren = (row) => {
+  console.log('onLoadChildren')
+  return new Promise((resolve) => {
+    getBaseDictChildren(row.dictId).then(res => {
+      row.children = res.data
+      if (res.data.length === 0)
+        window.$message.success('当前字典分组没有数据')
+      resolve()
+    })
+
+  })
+}
+
 
 /** 查询字典数据 **/
 const getData = () => {
   searchFrom.value.params = formRangeTime(rangeDate.value)
   getBaseDictList(searchFrom.value).then(res => {
+    res.data.forEach(row => {
+      row.isLeaf = false
+    })
     tableData.value = res.data
   })
 }
@@ -138,7 +165,6 @@ const formConfig = ref({
     getData()
   }
 })
-
 const handle = (key) => {
   formConfig.value.type = key
   switch (key) {
@@ -162,10 +188,18 @@ const handle = (key) => {
     case 'delete': {
       deleteBaseDict(checkRow.value.dictId).then(res => {
         if (res.data) {
+          checkRow.value = {}
           window.$message.success('成功删除数据')
           getData()
         }
       })
+      break
+    }
+    case 'addChildren': {
+      formConfig.value.show = true
+      formConfig.value.title = '新增字典数据'
+      console.log(checkRow.value)
+      formData.value = {parentId: checkRow.value.dictId, dictType: checkRow.value.dictType}
       break
     }
   }

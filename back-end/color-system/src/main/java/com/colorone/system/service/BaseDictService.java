@@ -53,4 +53,12 @@ public interface BaseDictService {
      */
     List<Map<String, Object>> getSelectDictByType(String type);
 
+
+    /**
+     * 查询子字典数据列表
+     *
+     * @param dictId 字典父ID
+     * @return 字典列表
+     */
+    List<BaseDict> getBaseDictChildren(Long dictId);
 }

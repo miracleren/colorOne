@@ -37,12 +37,20 @@ public class BaseDictServiceImpl implements BaseDictService {
 
     @Override
     public Integer deleteBaseDict(Long dictId) {
-        return baseDictMapper.deleteById(dictId);
+        int res = baseDictMapper.deleteById(dictId);
+        if (res > 0)
+            baseDictMapper.deleteChildrenById(dictId);
+        return res;
     }
 
     @Override
     public List<Map<String, Object>> getSelectDictByType(String type) {
         return baseDictMapper.selectComDictByType(type);
+    }
+
+    @Override
+    public List<BaseDict> getBaseDictChildren(Long dictId) {
+        return baseDictMapper.selectBaseDictChildren(dictId);
     }
 
 }

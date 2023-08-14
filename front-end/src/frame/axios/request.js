@@ -10,7 +10,7 @@ axios.defaults.headers['Content-Type'] = 'application/json'
 const service = axios.create({
     baseURL: '/api', //管理后台要使用的接口的基地址
     timeout: 8000, //超时时间
-    paramsSerializer: (params) => qs.stringify(params, {indices: false})
+    paramsSerializer: (params) => qs.stringify(params, {indices: false, skipNulls: true})
 })
 
 //3. 定义前置拦截器，请求拦截器，请求发送出去之前触发的
@@ -33,10 +33,11 @@ service.interceptors.response.use((response) => {
     const code = response.data.code || 200
     if (code === 401) {
         //登录状态已过期，您可以继续留在该页面，或者重新登录
-        window.$message.error(response.data.msg)
+        window.$message.error("401："+response.data.msg)
+        return Promise.reject('error 401')
     } else if (code !== 200) {
-        window.$message.error(response.data.msg)
-        return Promise.reject('error')
+        window.$message.error("！200："+response.data.msg)
+        return Promise.reject('error 200')
     } else
         //响应回来的数据操作
         return response.data
