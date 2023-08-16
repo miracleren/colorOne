@@ -53,7 +53,7 @@
           :pagination="table.pagination"
           style="height: 100%"
           :row-key="(row)=>row.dictId"
-          v-model:checked-row-keys="(key,rows)=>{checkRow=rows[0]}"
+          @update:checked-row-keys="(key,rows)=>{checkRow=rows[0]}"
           allow-checking-not-loaded
           @load="onLoadChildren"
       />
