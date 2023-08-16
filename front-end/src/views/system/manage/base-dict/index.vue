@@ -52,9 +52,8 @@
           :data="tableData"
           :pagination="table.pagination"
           style="height: 100%"
-          flex-height
           :row-key="(row)=>row.dictId"
-          @update:checked-row-keys="(key,rows)=>{checkRow=rows[0]}"
+          v-model:checked-row-keys="(key,rows)=>{checkRow=rows[0]}"
           allow-checking-not-loaded
           @load="onLoadChildren"
       />
@@ -107,6 +106,10 @@ const table = {
     {
       title: '字典类型',
       key: 'dictType'
+    },
+    {
+      title: '字典键值',
+      key: 'dictValue'
     },
     {
       title: '字典排序',

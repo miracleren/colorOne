@@ -5,8 +5,9 @@
       label-placement="top"
   >
     <n-grid :cols="24" :x-gap="24">
-      <n-form-item-gi :span="12" label="标签组名" v-bind="validator.required('dictLabel','请输入标签组名')">
-        <n-input v-model:value="model.dictLabel" placeholder="请输入标签组名"/>
+      <n-form-item-gi :span="12" :label="props.config.type==='addChildren'? '字典名称':'字典分组名称'"
+                      v-bind="validator.required('dictLabel','请输入名称')">
+        <n-input v-model:value="model.dictLabel" placeholder="请输入名称"/>
       </n-form-item-gi>
       <n-form-item-gi :span="12" label="类型" v-bind="validator.required('dictType','请输入类型')">
         <n-input v-model:value="model.dictType" placeholder="请输入类型" :disabled="props.config.type==='addChildren'"/>
@@ -14,11 +15,14 @@
       <n-form-item-gi :span="12" label="排序" v-bind="validator.number('dictSort','请输入小于 999 数字序号',null,999)">
         <n-input-number v-model:value="model.dictSort" placeholder="请输入排序"/>
       </n-form-item-gi>
-      <!--      <n-form-item-gi :span="12" label="状态">-->
       <n-form-item-gi :span="12" label="状态" v-bind="validator.selectRequired('status','请选择状态',true)">
         <select-dict type="base_status" value-type="number"
                      v-model:value="model.status"
                      class="input-140"></select-dict>
+      </n-form-item-gi>
+      <n-form-item-gi label="字典键值" v-if="props.config.type==='addChildren'" :span="12"
+                      v-bind="validator.required('dictValue','请输入字典键值')">
+        <n-input v-model:value="model.dictValue" placeholder="请输入字典键值"/>
       </n-form-item-gi>
       <n-form-item-gi :span="24" label="备注">
         <n-input v-model:value="model.remark" placeholder="请输入备注"/>
@@ -78,8 +82,6 @@ const handlePost = () => {
       }
     }
   })
-
-
 }
 </script>
 
