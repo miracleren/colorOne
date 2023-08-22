@@ -1,6 +1,7 @@
 package com.colorone.system.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.colorone.common.domain.core.BaseEntity;
@@ -58,14 +59,14 @@ public class BaseMenu extends BaseEntity {
     String path;
 
     /**
-     * comment '菜单是否显示（0显示 1隐藏）'    varchar(1)   default '0'
+     * comment '菜单是否显示（0显示 1隐藏）'    bigint(1)   default 0
      */
-    String visible;
+    Integer visible;
 
     /**
-     * comment '菜单状态（0正常 1停用）'  varchar(1)   default '0'
+     * comment '菜单状态（0正常 1停用）'  bigint(1)   default 0
      */
-    String status;
+    Integer status;
 
     /**
      * comment '菜单图标'   varchar(100) default '#'
@@ -78,4 +79,15 @@ public class BaseMenu extends BaseEntity {
     String remark;
 
 
+    /**
+     * 状态名称
+     */
+    @TableField(exist = false)
+    private String statusName;
+
+    /**
+     * 菜单类型名称
+     */
+    @TableField(exist = false)
+    private String menuTypeName;
 }

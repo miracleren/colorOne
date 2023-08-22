@@ -1,5 +1,7 @@
 package com.colorone.common.utils.data;
 
+import java.util.List;
+
 /**
  * @author： lee
  * @email：miracleren@gmail.com
@@ -9,6 +11,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     /**
      * 转换为字符串
+     *
      * @param value
      * @return
      */
@@ -19,5 +22,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
             return (String) value;
         return value.toString();
     }
+
+
 
 }

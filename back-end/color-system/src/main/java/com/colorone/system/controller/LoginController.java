@@ -7,12 +7,15 @@ import com.colorone.common.domain.core.RequestResult;
 import com.colorone.common.frame.security.web.TokenService;
 import com.colorone.common.utils.HttpServletUtils;
 import com.colorone.system.domain.entity.BaseUser;
+import com.colorone.system.service.BaseMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 /**
  * @author： lee
@@ -28,6 +31,7 @@ public class LoginController {
 
     @Autowired
     private TokenService tokenService;
+
 
     /**
      * 登录接口
@@ -65,20 +69,10 @@ public class LoginController {
     @GetMapping("/user/info")
     public RequestResult loginUserInfo() {
         LoginUser loginUser = tokenService.getLoginUser(HttpServletUtils.getRequest());
-//        SysUser user = loginUser.getUser();
-//        // 角色集合
-//        Set<String> roles = permissionService.getRolePermission(user);
-//        // 权限集合
-//        Set<String> permissions = permissionService.getMenuPermission(user);
-//        AjaxResult ajax = AjaxResult.success();
-//        ajax.put("user", user);
-//        ajax.put("roles", roles);
-//        ajax.put("permissions", permissions);
-        User user = loginUser.getUser();
-
         RequestResult res = RequestResult.success();
-        res.setData("user",user);
-        res.setData("roles","123");
+        res.setData("user", loginUser.getUser());
+        res.setData("roles", loginUser.getRoles());
+        res.setData("permits", loginUser.getPermits());
         return res;
     }
 }

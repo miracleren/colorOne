@@ -61,4 +61,12 @@ public interface BaseDictService {
      * @return 字典列表
      */
     List<BaseDict> getBaseDictChildren(Long dictId);
+
+    /**
+     * 查询字典树数据
+     *
+     * @param dict dict 字典实体类
+     * @return 字典列表
+     */
+    List<Map> getDictTreeList(BaseDict dict);
 }

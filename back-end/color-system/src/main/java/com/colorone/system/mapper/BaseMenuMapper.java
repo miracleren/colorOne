@@ -24,10 +24,17 @@ public interface BaseMenuMapper extends BaseMapper<BaseMenu> {
     List<BaseMenu> selectMenuListByRoles(Long[] roles);
 
     /**
-     * 查询菜单列表
+     * 查询管理员菜单列表
      *
      * @return
      */
-    List<BaseMenu> selectMenuList();
+    List<BaseMenu> selectAdminMenuList();
 
+    /**
+     * 查询菜单列表信息，带参
+     *
+     * @param menu
+     * @return
+     */
+    List<BaseMenu> selectMenuList(BaseMenu menu);
 }

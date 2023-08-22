@@ -89,7 +89,7 @@ public class TreeBuildUtils {
             }
         }
         if (treeList.isEmpty()) {
-            treeList = data;
+            treeList = data == null ? new ArrayList<>() : data;
         }
         return treeList;
     }

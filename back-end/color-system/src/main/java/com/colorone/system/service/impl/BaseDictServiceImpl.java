@@ -1,11 +1,13 @@
 package com.colorone.system.service.impl;
 
+import com.colorone.common.utils.TreeBuildUtils;
 import com.colorone.system.domain.entity.BaseDict;
 import com.colorone.system.mapper.BaseDictMapper;
 import com.colorone.system.service.BaseDictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +40,7 @@ public class BaseDictServiceImpl implements BaseDictService {
     @Override
     public Integer deleteBaseDict(Long dictId) {
         int res = baseDictMapper.deleteById(dictId);
+        //删除字典子表数据
         if (res > 0)
             baseDictMapper.deleteChildrenById(dictId);
         return res;
@@ -51,6 +54,18 @@ public class BaseDictServiceImpl implements BaseDictService {
     @Override
     public List<BaseDict> getBaseDictChildren(Long dictId) {
         return baseDictMapper.selectBaseDictChildren(dictId);
+    }
+
+    @Override
+    public List<Map> getDictTreeList(BaseDict dict) {
+        List<BaseDict> dicts = baseDictMapper.selectDictList(dict);
+        dicts.addAll(baseDictMapper.selectDictChildrenList(dicts));
+
+        List<Map> dictTree = TreeBuildUtils.init().
+                setKey("dictId", "parentId", null).
+                toListMap(dicts).build();
+
+        return dictTree;
     }
 
 }

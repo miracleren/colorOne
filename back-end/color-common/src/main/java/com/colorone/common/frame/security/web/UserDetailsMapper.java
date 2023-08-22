@@ -4,6 +4,8 @@ import com.colorone.common.domain.auth.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.Set;
+
 /**
  * @author： lee
  * @email：miracleren@gmail.com
@@ -29,4 +31,15 @@ public interface UserDetailsMapper {
      */
     @Select("select role_id from base_user_role where del_flag = 0 and user_id = #{userId}")
     Long[] selectUserRoleByUserId(Long userId);
+
+    /**
+     * 通过用户角色根据菜单生成权限标识
+     *
+     * @param roles
+     * @return
+     */
+    @Select("select distinct path from base_menu bm " +
+            "left join base_role_menu brm on bm.menu_id = brm.menu_id " +
+            "where bm.del_flag = 0 and brm.del_flag = 0 and bm.status = 0 and path is not null and brm.role_id in (${roles})")
+    String[] selectUserRolePermits(String roles);
 }

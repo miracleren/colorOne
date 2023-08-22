@@ -19,12 +19,12 @@ public class ExceptionMsg {
     public static final String LOGIN_USER_DISABLED = "登录失败，当前登陆的的用户账号被禁用！";
 
     /**
-     * 账号被禁用提示
+     * 无权限提示
      */
-    public static final String ACCESS_DENIED = "问失败，当前登录的账号无此权限！";
+    public static final String ACCESS_DENIED = "访问失败，当前登录的账号无此权限！";
 
     /**
      * 账号已经过期
      */
-    public static final String ACCOUNT_EXPIRED = "问失败，当前登录的账号已经过期！";
+    public static final String ACCOUNT_EXPIRED = "访问失败，当前登录的账号已经过期！";
 }

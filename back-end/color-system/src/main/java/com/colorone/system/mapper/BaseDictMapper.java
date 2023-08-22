@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.colorone.system.domain.entity.BaseDict;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Map;
 
@@ -45,4 +46,13 @@ public interface BaseDictMapper extends BaseMapper<BaseDict> {
      * @return 执行行数
      */
     Integer deleteChildrenById(Long parentId);
+
+
+    /**
+     * 查询字典子数据
+     *
+     * @param dicts 父数据列表
+     * @return 子数据列表
+     */
+    List<BaseDict> selectDictChildrenList(List<BaseDict> dicts);
 }

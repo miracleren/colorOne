@@ -3,6 +3,9 @@ package com.colorone.common.frame.security.web;
 import com.colorone.common.domain.auth.User;
 import com.colorone.common.domain.auth.LoginUser;
 
+import com.colorone.common.utils.PermitUtils;
+import com.colorone.common.utils.SecurityUtils;
+import com.colorone.common.utils.data.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +52,17 @@ public class SecurityUserDetailsService implements UserDetailsService {
         //返回登录用户信息实体类
         LoginUser loginUser = new LoginUser(user);
         loginUser.setRoles(roles);
+
+        //用户权根标识
+        if (SecurityUtils.isSuperAdmin(user.getUserId()))
+            loginUser.getPermits().add(PermitUtils.AllPermitCode);
+        else {
+            String[] paths = userDetailsMapper.selectUserRolePermits(CollectionUtils.joinLong(roles, ","));
+            for (String path : paths) {
+                loginUser.getPermits().add(PermitUtils.toPermitCode(path));
+            }
+        }
+
         return loginUser;
     }
 }

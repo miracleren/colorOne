@@ -1,0 +1,27 @@
+package com.colorone.common.utils;
+
+import java.util.Set;
+
+/**
+ * @author： lee
+ * @email：miracleren@gmail.com
+ * @date：2023/8/22
+ * @备注：权限管理工具类
+ */
+public class PermitUtils {
+    public static String AllPermitCode = "*:*:*";
+
+    /**
+     * 路径转权限标识
+     *
+     * @param path
+     * @return
+     */
+    public static String toPermitCode(String path) {
+        return path == null ? null : path.replaceFirst("/", "").replace("/", ":");
+    }
+
+    public static boolean checkPermits(Set<String> permits, String permit) {
+        return permits.contains(AllPermitCode) || permits.contains(permit);
+    }
+}

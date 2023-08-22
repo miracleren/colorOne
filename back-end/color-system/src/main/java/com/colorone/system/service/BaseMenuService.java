@@ -12,18 +12,43 @@ import java.util.Map;
  * @date：2022/6/2
  */
 public interface BaseMenuService {
-
-    /**
-     * 获取菜单列表
-     * @param baseMenu
-     * @return
-     */
-    List<BaseMenu> getBasMenusList(BaseMenu baseMenu);
-
     /**
      * 根据角色生成用户菜单树
+     *
      * @param roles
      * @return
      */
     List<Map> getMenuRoleTree(Long[] roles);
+
+    /**
+     * 获取菜单树列表
+     *
+     * @param dict
+     * @return
+     */
+    List<Map> getBaseMenuTreeList(BaseMenu dict);
+
+    /**
+     * 新增菜单数据
+     *
+     * @param menu 菜单实体类
+     * @return 成功失败
+     */
+    Integer addBaseMenu(BaseMenu menu);
+
+    /**
+     * 修改菜单数据
+     *
+     * @param dict 菜单实体类
+     * @return 成功失败
+     */
+    Integer editBaseMenu(BaseMenu dict);
+
+    /**
+     * 删除菜单数据
+     *
+     * @param dictId 菜单键值
+     * @return 成功失败
+     */
+    Integer deleteBaseMenu(Long dictId);
 }

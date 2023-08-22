@@ -45,6 +45,18 @@
           and d.parent_id = #{dictId}
     </select>
 
+    <select id="selectDictChildrenList" resultType="com.colorone.system.domain.entity.BaseDict">
+        select d.*, db.dict_label status_name
+        from base_dict d
+        left join base_dict db on db.dict_value = CONVERT(d.status, char) and db.dict_type = 'base_status'
+        where d.del_flag = 0
+        and d.parent_id in
+        <foreach item="dicts" collection="list" separator="," open="(" close=")" index="">
+            #{dicts.dictId}
+        </foreach>
+        order by dict_sort
+    </select>
+
     <delete id="deleteChildrenById">
         update base_dict
         set del_flag   = 1,

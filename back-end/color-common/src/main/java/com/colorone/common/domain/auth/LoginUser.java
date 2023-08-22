@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author： lee
@@ -53,6 +55,11 @@ public class LoginUser implements UserDetails {
      * 用户角色组
      */
     private Long[] roles;
+
+    /**
+     * 权限标识码，根据地址生成
+     */
+    private Set<String> permits = new HashSet<>();
 
     @JsonIgnore
     @Override

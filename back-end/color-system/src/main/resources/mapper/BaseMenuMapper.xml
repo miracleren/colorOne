@@ -17,11 +17,27 @@
         order by bm.order_num
     </select>
 
-    <select id="selectMenuList" resultType="com.colorone.system.domain.entity.BaseMenu">
+    <select id="selectAdminMenuList" resultType="com.colorone.system.domain.entity.BaseMenu">
         select bm.menu_id,bm.menu_name,bm.parent_id,bm.order_num,bm.icon,
         bm.menu_type, bm.path, bm.component
         from base_menu bm
-        where bm.del_flag = 0 and bm.status = 0
+        where bm.del_flag = 0
+          and bm.status = 0
+        order by bm.order_num
+    </select>
+
+    <select id="selectMenuList" resultType="com.colorone.system.domain.entity.BaseMenu">
+        select bm.*,db.dict_label status_name,mt.dict_label menu_type_name
+        from base_menu bm
+        left join base_dict db on db.dict_value = CONVERT(bm.status,char ) and db.dict_type='base_status'
+        left join base_dict mt on mt.dict_value = bm.menu_type and mt.dict_type='base_menu_type'
+        where bm.del_flag = 0
+        <if test="status != null">
+            and bm.status = #{status}
+        </if>
+        <if test="menuName != null  and menuName != ''">
+            and bm.menu_name like "%"#{menuName}"%"
+        </if>
         order by bm.order_num
     </select>
 </mapper>

@@ -22,7 +22,7 @@ public class MapUtils {
     public static List<Map> toFilter(List<Map> mapList, String key, Object value) {
         List<Map> list = new ArrayList<>();
         for (Map noMap : mapList) {
-            if (noMap.get(key).equals(value)) {
+            if (noMap.containsKey(key) && noMap.get(key).equals(value)) {
                 list.add(noMap);
             }
         }

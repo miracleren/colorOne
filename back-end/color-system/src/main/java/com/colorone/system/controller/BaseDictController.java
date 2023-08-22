@@ -33,6 +33,17 @@ public class BaseDictController {
     }
 
     /**
+     * 查询字典树数据
+     *
+     * @param dict dict 字典实体类
+     * @return 字典列表
+     */
+    @GetMapping("/tree")
+    public RequestResult getBaseDictTreeList(BaseDict dict) {
+        return RequestResult.success(baseDictService.getDictTreeList(dict));
+    }
+
+    /**
      * 新增字典数据
      *
      * @param dict 字典实体类
