@@ -1,11 +1,11 @@
 <template>
-  <n-select
-      v-model:value="selectValue"
-      :placeholder="props.placeholder"
-      :options="options"
-
-      clearable/>
-  <!--    @update:value="changeValue"    -->
+  <n-radio-group v-model:value="selectValue" name="radiogroup">
+    <n-space>
+      <n-radio v-for="song in options" :key="song.value" :value="song.value">
+        {{ song.label }}
+      </n-radio>
+    </n-space>
+  </n-radio-group>
 </template>
 
 <script setup>
@@ -16,9 +16,7 @@ import {getSelectDictList} from '@/api/system/dict'
 const props = defineProps({
   modelValue: String,
   type: String,
-  placeholder: String,
-  valueType: String,
-  disabled: Array
+  valueType: String
 })
 
 const emit = defineEmits(['update:value'])
@@ -32,25 +30,14 @@ const selectValue = computed({
   }
 })
 
-/** 通过字典类型生成选择下接 **/
+/** 通过字典类型生成选择项 **/
 const options = ref([])
 getSelectDictList(props.type).then(res => {
-  //数字类型处理
-  if (props.valueType === 'number') {
+  if (props.valueType === 'number')
     for (let item of res.data)
       item.value = parseInt(item.value)
-  }
-
-  //部分不可选配置
-  if (props.disabled != null && props.disabled.length > 0) {
-    for (let item of res.data) {
-      if (props.disabled.includes(item.value))
-        item.disabled = true
-    }
-  }
 
   options.value = res.data
-  console.log(options.value)
 })
 </script>
 

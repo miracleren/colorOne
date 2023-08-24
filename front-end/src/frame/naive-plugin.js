@@ -13,7 +13,8 @@ import {
     NMessageProvider, NConfigProvider, NAvatar, NPopover, NImage,
     NDialogProvider, NTabPane, NTabs, NLayoutContent, NCollapseTransition,
     NTab, NBreadcrumb, NBreadcrumbItem, NDatePicker, NSelect,
-    NDataTable, NModal, NGrid, NFormItemGi, NInputNumber
+    NDataTable, NModal, NGrid, NFormItemGi, NInputNumber,
+    NTag, NRadioGroup, NRadio
 } from 'naive-ui'
 
 const naive = create({
@@ -22,7 +23,8 @@ const naive = create({
         NMessageProvider, NConfigProvider, NAvatar, NPopover, NImage,
         NDialogProvider, NTabPane, NTabs, NLayoutContent, NCollapseTransition,
         NTab, NBreadcrumb, NBreadcrumbItem, NDatePicker, NSelect,
-        NDataTable, NModal, NGrid, NFormItemGi, NInputNumber]
+        NDataTable, NModal, NGrid, NFormItemGi, NInputNumber,
+        NTag, NRadioGroup, NRadio]
 })
 
 export default naive

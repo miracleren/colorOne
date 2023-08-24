@@ -1,9 +1,16 @@
 package com.colorone.common.frame.security;
 
+import com.colorone.common.constant.Constants;
+import com.colorone.common.domain.auth.PermitUrl;
+import com.colorone.common.frame.aspect.annotation.ApiExtension;
+import com.colorone.common.frame.aspect.enums.PermitType;
+import com.colorone.common.frame.redis.RedisHelper;
 import com.colorone.common.frame.security.filter.AuthenticationTokenFilter;
 import com.colorone.common.frame.security.handle.AuthenticationEntryPointImpl;
 import com.colorone.common.frame.security.handle.LogoutSuccessHandlerImpl;
 import com.colorone.common.frame.security.web.SecurityUserDetailsService;
+import com.colorone.common.utils.PermitUtils;
+import com.colorone.common.utils.spring.SpringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +28,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+
+import java.util.*;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -33,6 +46,9 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    @Autowired
+    private RedisHelper redisHelper;
+
     @Autowired
     private SecurityUserDetailsService securityUserDetailsService;
 
@@ -60,6 +76,8 @@ public class SecurityConfig {
      */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        Set<String> anonymousUrls = getApiConfig();
+
         //CSRF禁用，因为不使用session
         http.csrf(AbstractHttpConfigurer::disable)
                 // 设置异常的EntryPoint，如果不设置，默认使用Http403ForbiddenEntryPoint
@@ -71,9 +89,9 @@ public class SecurityConfig {
                                 // 允许所有OPTIONS请求
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                                 // 允许直接访问授权登录接口
-                                .requestMatchers(HttpMethod.POST, "/web/authenticate").permitAll()
-                                // 允许 SpringMVC 的默认错误地址匿名访问
-                                .requestMatchers("/error", "/login/user", "/common/user/1").permitAll()
+                                //.requestMatchers(HttpMethod.POST, "/web/authenticate").permitAll()
+                                // 允许 SpringMVC 地址匿名访问
+                                .requestMatchers(anonymousUrls.toArray(new String[0])).permitAll()
                                 // 其他所有接口必须有Authority信息，Authority在登录成功后的UserDetailsImpl对象中默认设置“ROLE_USER”
                                 //.requestMatchers("/**").hasAnyAuthority("ROLE_USER")
                                 // 允许任意请求被已登录用户访问，不检查Authority
@@ -140,5 +158,45 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+
+    /**
+     * 扫描Api配置，生成匿名标记接口、缓存权限标识接口
+     *
+     * @return
+     */
+    private Set<String> getApiConfig() {
+        Set<String> anonymousUrls = new HashSet<>();
+        List<PermitUrl> permitUrls = new ArrayList<>();
+
+        Map<RequestMappingInfo, HandlerMethod> handlerMethods = SpringUtils.getBean(RequestMappingHandlerMapping.class).getHandlerMethods();
+        for (Map.Entry<RequestMappingInfo, HandlerMethod> infoEntry : handlerMethods.entrySet()) {
+            HandlerMethod handlerMethod = infoEntry.getValue();
+            ApiExtension api = handlerMethod.getMethodAnnotation(ApiExtension.class);
+            if (api != null) {
+                if (api.permitType() == PermitType.ANONYMOUS)
+                    anonymousUrls.addAll(infoEntry.getKey().getPatternValues());
+                else if (api.permitType() == PermitType.ROLE) {
+                    for (String s : infoEntry.getKey().getPatternValues()) {
+                        PermitUrl url = new PermitUrl();
+                        url.setName(api.name());
+                        url.setPermitCode(PermitUtils.toPermitCode(s));
+                        url.setUrl(s);
+                        url.setController(infoEntry.getValue().getBean().toString());
+                        url.setMethodName(infoEntry.getValue().getMethod().getName());
+                        permitUrls.add(url);
+                    }
+                }
+            }
+        }
+
+        //缓存所有有权限标识的接口
+        redisHelper.setObject(Constants.REDIS_PERMIT_URLS, permitUrls);
+
+        System.out.print("***成功扫描匿名可访问接口" + anonymousUrls.size() + "处***");
+        System.out.print("***成功扫描带权限标识接口" + permitUrls.size() + "处***");
+
+        return anonymousUrls;
     }
 }

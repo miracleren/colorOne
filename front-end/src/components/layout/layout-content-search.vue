@@ -53,6 +53,15 @@ import {useSlots} from 'vue'
   .content-box {
     padding: 12px;
     flex: 1;
+
+    .n-data-table {
+      height: 100%;
+    }
+
+    .select-table-row td {
+      background-color: rgba(182, 221, 184, 0.2);
+      color: var(--n-th-icon-color-active);
+    }
   }
 
 }

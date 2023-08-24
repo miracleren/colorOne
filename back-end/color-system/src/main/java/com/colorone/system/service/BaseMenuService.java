@@ -51,4 +51,12 @@ public interface BaseMenuService {
      * @return 成功失败
      */
     Integer deleteBaseMenu(Long dictId);
+
+    /**
+     * 新增菜单操作接口
+     *
+     * @param urls 操作接口数据
+     * @return 操作数
+     */
+    Integer addPermitUrls(List<BaseMenu> urls);
 }

@@ -7,6 +7,13 @@ export function getBaseDictList(query) {
     })
 }
 
+//查询字典数据树列表
+export function getBaseDictTreeList(query) {
+    return request({
+        url: '/dict/tree', method: 'get', params: query
+    })
+}
+
 //新增字典数据
 export function addBaseDict(data) {
     return request({
@@ -21,7 +28,7 @@ export function editBaseDict(data) {
     })
 }
 
-//新增字典数据
+//删除字典数据
 export function deleteBaseDict(dictId) {
     return request({
         url: `/dict/delete/${dictId}`, method: 'delete'

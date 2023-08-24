@@ -3,6 +3,7 @@ import qs from 'qs'
 //1. 先引入axios依赖包
 import axios from 'axios'
 import {getToken} from '@/utils/system/token'
+import store from '@/frame/store'
 
 axios.defaults.headers['Content-Type'] = 'application/json'
 
@@ -33,16 +34,28 @@ service.interceptors.response.use((response) => {
     const code = response.data.code || 200
     if (code === 401) {
         //登录状态已过期，您可以继续留在该页面，或者重新登录
-        window.$message.error("401："+response.data.msg)
+        //window.$message.error('401：' + response.data.msg)
+        window.$dialog.warning({
+            title: '警告',
+            content: '当前登录状态已过期，是否重新登录？',
+            positiveText: '确定',
+            negativeText: '关闭',
+            onPositiveClick: () => {
+                store.dispatch('userLoginOut').then(() => {
+                    location.reload()
+                })
+            }
+        })
         return Promise.reject('error 401')
     } else if (code !== 200) {
-        window.$message.error("！200："+response.data.msg)
-        return Promise.reject('error 200')
+        window.$message.error('!200：' + response.data.msg)
+        return Promise.reject('error !200')
     } else
         //响应回来的数据操作
         return response.data
 }, (error) => {
     //报错的是时候抛出一个报错的信息
+    window.$message.error('interceptors：' + error)
     return Promise.reject(error)
 })
 

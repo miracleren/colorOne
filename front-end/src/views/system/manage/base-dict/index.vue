@@ -32,16 +32,16 @@
         <icon icon="Add"/>
         新增分组
       </n-button>
-      <n-button :disabled="!!checkRow.parentId || !ObjectIsEmpty(checkRow)" dashed type="success"
+      <n-button :disabled="!(ObjectIsNotEmpty(checkRow) && !checkRow.parentId)" dashed type="success"
                 @click="handle('addChildren')">
         <icon icon="Tree"/>
         新增字典数据
       </n-button>
-      <n-button :disabled="!ObjectIsEmpty(checkRow)" dashed type="success" @click="handle('edit')">
+      <n-button :disabled="ObjectIsEmpty(checkRow)" dashed type="success" @click="handle('edit')">
         <icon icon="Edit"/>
         修改
       </n-button>
-      <n-button :disabled="!ObjectIsEmpty(checkRow)" dashed type="warning" @click="handle('delete')">
+      <n-button :disabled="ObjectIsEmpty(checkRow)" dashed type="warning" @click="handle('delete')">
         <icon icon="Delete"/>
         删除
       </n-button>
@@ -51,11 +51,10 @@
           :columns="table.columns"
           :data="tableData"
           :pagination="table.pagination"
-          style="height: 100%"
           :row-key="(row)=>row.dictId"
-          @update:checked-row-keys="(key,rows)=>{checkRow=rows[0]}"
-          allow-checking-not-loaded
-          @load="onLoadChildren"
+          :row-props="table.rowProps"
+          :row-class-name="table.rowClassName"
+          default-expand-all
       />
     </template>
   </layout-table-search>
@@ -69,9 +68,9 @@
 import {onMounted, ref} from 'vue'
 import LayoutTableSearch from '@/components/layout/layout-content-search.vue'
 import icon from '@/components/icon/index.vue'
-import {deleteBaseDict, getBaseDictChildren, getBaseDictList} from '@/api/system/dict'
+import {deleteBaseDict, getBaseDictTreeList} from '@/api/system/dict'
 import FormDict from '@/views/system/manage/base-dict/form-dict.vue'
-import {ObjectIsEmpty} from '@/utils/ObjectUtils'
+import {ObjectIsEmpty, ObjectIsNotEmpty} from '@/utils/ObjectUtils'
 import {formRangeTime} from '@/utils/DateUtils'
 
 /** 查询参数 **/
@@ -82,19 +81,13 @@ const rangeDate = ref(null)
 
 /** 初始化相关数据 **/
 onMounted(() => {
-
   getData()
 })
 
-/** 表格数据、事件 **/
+/** 表格数据、事件、配置 **/
 let checkRow = ref({})
 const table = {
-  checkKey: null,
   columns: [
-    {
-      type: 'selection',
-      multiple: false
-    },
     {
       title: '字典主键',
       key: 'dictId'
@@ -128,29 +121,39 @@ const table = {
       key: 'remark'
     }
   ],
+  rowClassName(row) {
+    return row === checkRow.value ? 'select-table-row' : ''
+  },
+  rowProps: (row) => {
+    return {
+      onClick: (e) => {
+        row === checkRow.value ? checkRow.value = {} : checkRow.value = row
+      }
+    }
+  },
   pagination: {
     pageSize: 15
   }
 }
 const tableData = ref([])
-const onLoadChildren = (row) => {
-  console.log('onLoadChildren')
-  return new Promise((resolve) => {
-    getBaseDictChildren(row.dictId).then(res => {
-      row.children = res.data
-      if (res.data.length === 0)
-        window.$message.success('当前字典分组没有数据')
-      resolve()
-    })
-
-  })
-}
+// const onLoadChildren = (row) => {
+//   console.log('onLoadChildren')
+//   return new Promise((resolve) => {
+//     getBaseDictChildren(row.dictId).then(res => {
+//       row.children = res.data
+//       if (res.data.length === 0)
+//         window.$message.success('当前字典分组没有数据')
+//       resolve()
+//     })
+//
+//   })
+// }
 
 
 /** 查询字典数据 **/
 const getData = () => {
   searchFrom.value.params = formRangeTime(rangeDate.value)
-  getBaseDictList(searchFrom.value).then(res => {
+  getBaseDictTreeList(searchFrom.value).then(res => {
     res.data.forEach(row => {
       row.isLeaf = false
     })
@@ -207,5 +210,4 @@ const handle = (key) => {
     }
   }
 }
-
 </script>

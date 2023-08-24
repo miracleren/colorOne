@@ -7,6 +7,7 @@ import com.colorone.common.frame.security.web.TokenService;
 import com.colorone.common.utils.HttpServletUtils;
 
 import com.colorone.common.utils.PermitUtils;
+import com.colorone.common.utils.SecurityUtils;
 import com.colorone.common.utils.data.CollectionUtils;
 import com.colorone.common.utils.data.ObjectUtils;
 import org.aspectj.lang.JoinPoint;

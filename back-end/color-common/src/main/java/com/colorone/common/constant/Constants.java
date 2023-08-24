@@ -12,7 +12,6 @@ public class Constants {
     public static final String UTF8 = "UTF-8";
 
 
-
     /**
      * 逻辑删除已删除
      */
@@ -22,4 +21,10 @@ public class Constants {
      * 逻辑删除未删除
      */
     public static final Integer LOGIC_DELETE_FALSE = 0;
+
+
+    /**
+     * 缓存在redis的api权限配置信息名称
+     */
+    public static final String REDIS_PERMIT_URLS = "permit_urls";
 }

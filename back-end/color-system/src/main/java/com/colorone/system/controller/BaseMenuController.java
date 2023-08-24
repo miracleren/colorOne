@@ -1,13 +1,17 @@
 package com.colorone.system.controller;
 
+import com.colorone.common.constant.Constants;
 import com.colorone.common.domain.core.RequestResult;
 import com.colorone.common.frame.aspect.annotation.ApiExtension;
 import com.colorone.common.frame.aspect.enums.PermitType;
+import com.colorone.common.frame.redis.RedisHelper;
 import com.colorone.common.utils.SecurityUtils;
 import com.colorone.system.domain.entity.BaseMenu;
 import com.colorone.system.service.BaseMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -22,13 +26,19 @@ public class BaseMenuController {
     @Autowired
     private BaseMenuService baseMenuService;
 
+
+    @Autowired
+    private RedisHelper redisHelper;
+
     /**
      * 用户角色菜单树
      */
     @GetMapping("/role/tree")
+    @ApiExtension(name = "用户角色菜单树", permitType = PermitType.LOGIN)
     public RequestResult getMenuRoleTree() {
         Long[] roles = SecurityUtils.getLoginUser().getRoles();
         return RequestResult.success(baseMenuService.getMenuRoleTree(roles));
+
     }
 
     /**
@@ -50,6 +60,7 @@ public class BaseMenuController {
      * @return 成功失败
      */
     @PostMapping("/add")
+    @ApiExtension(name = "新增菜单数据", permitType = PermitType.ROLE)
     public RequestResult addBaseMenu(@RequestBody BaseMenu menu) {
         return RequestResult.success(baseMenuService.addBaseMenu(menu) > 0);
     }
@@ -61,6 +72,7 @@ public class BaseMenuController {
      * @return 成功失败
      */
     @PutMapping("/edit")
+    @ApiExtension(name = "修改菜单数据", permitType = PermitType.ROLE)
     public RequestResult editBaseMenu(@RequestBody BaseMenu menu) {
         return RequestResult.success(baseMenuService.editBaseMenu(menu) > 0);
     }
@@ -72,8 +84,26 @@ public class BaseMenuController {
      * @return 成功失败
      */
     @DeleteMapping("/delete/{menuId}")
+    @ApiExtension(name = "删除菜单数据", permitType = PermitType.ROLE)
     public RequestResult deleteBaseMenu(@PathVariable Long menuId) {
         return RequestResult.success(baseMenuService.deleteBaseMenu(menuId) > 0);
     }
 
+    /**
+     * 获取系统操作权限接口列表
+     */
+    @GetMapping("/permit/url")
+    @ApiExtension(name = "获取系统操作权限接口列表", permitType = PermitType.ROLE)
+    public RequestResult getPermitUrl() {
+        return RequestResult.success(redisHelper.getObject(Constants.REDIS_PERMIT_URLS));
+    }
+
+    /**
+     * 新增菜单操作接口
+     */
+    @PostMapping("/permit/add")
+    @ApiExtension(name = "新增菜单操作接口", permitType = PermitType.ROLE)
+    public RequestResult addPermitUrls(@RequestBody List<BaseMenu> urls) {
+        return RequestResult.success(baseMenuService.addPermitUrls(urls));
+    }
 }

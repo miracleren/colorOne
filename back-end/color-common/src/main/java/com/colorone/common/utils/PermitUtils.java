@@ -1,5 +1,7 @@
 package com.colorone.common.utils;
 
+import com.colorone.common.utils.data.StringUtils;
+
 import java.util.Set;
 
 /**
@@ -18,7 +20,12 @@ public class PermitUtils {
      * @return
      */
     public static String toPermitCode(String path) {
-        return path == null ? null : path.replaceFirst("/", "").replace("/", ":");
+        if (StringUtils.isNoneEmpty(path)) {
+            path = path.replaceFirst("/", "");
+            path = path.replaceAll("\\{|\\}", "").replace("/", ":");
+            return path;
+        }
+        return null;
     }
 
     public static boolean checkPermits(Set<String> permits, String permit) {

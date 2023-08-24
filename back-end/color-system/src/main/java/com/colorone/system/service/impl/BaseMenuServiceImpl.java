@@ -75,4 +75,14 @@ public class BaseMenuServiceImpl implements BaseMenuService {
     public Integer deleteBaseMenu(Long dictId) {
         return baseMenuMapper.deleteById(dictId);
     }
+
+    @Override
+    public Integer addPermitUrls(List<BaseMenu> urls) {
+        int i = 0;
+        for (BaseMenu m : urls) {
+            m.setMenuType("b");
+            i += baseMenuMapper.insert(m);
+        }
+        return i;
+    }
 }

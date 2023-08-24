@@ -4,6 +4,8 @@ import com.colorone.common.domain.auth.LoginBody;
 import com.colorone.common.domain.auth.LoginUser;
 import com.colorone.common.domain.auth.User;
 import com.colorone.common.domain.core.RequestResult;
+import com.colorone.common.frame.aspect.annotation.ApiExtension;
+import com.colorone.common.frame.aspect.enums.PermitType;
 import com.colorone.common.frame.security.web.TokenService;
 import com.colorone.common.utils.HttpServletUtils;
 import com.colorone.system.domain.entity.BaseUser;
@@ -39,6 +41,7 @@ public class LoginController {
      * @return
      */
     @PostMapping("/user")
+    @ApiExtension(name = "登录接口", permitType = PermitType.ANONYMOUS)
     public RequestResult login(@RequestBody LoginBody loginBody) {
 
         String username = loginBody.getUserName();
@@ -67,6 +70,7 @@ public class LoginController {
      * @return
      */
     @GetMapping("/user/info")
+    @ApiExtension(name = "获取登录用户信息")
     public RequestResult loginUserInfo() {
         LoginUser loginUser = tokenService.getLoginUser(HttpServletUtils.getRequest());
         RequestResult res = RequestResult.success();

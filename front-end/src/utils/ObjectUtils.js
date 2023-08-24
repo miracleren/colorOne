@@ -22,11 +22,22 @@ export function deepClone(source) {
 }
 
 /**
+ * 判断对象是否不为空
+ * @param data
+ * @returns {boolean}
+ * @constructor
+ */
+export function ObjectIsNotEmpty(data) {
+    return !ObjectIsEmpty(data)
+}
+
+/**
  * 判断对象是否为空
  * @param data
  * @returns {boolean}
  * @constructor
  */
 export function ObjectIsEmpty(data) {
-    return !(data === null || Object.keys(data).length === 0);
+    console.log('ObjectIsEmpty', !(data === null || Object.keys(data).length === 0))
+    return data === null || Object.keys(data).length === 0
 }
