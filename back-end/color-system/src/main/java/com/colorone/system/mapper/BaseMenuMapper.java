@@ -5,6 +5,7 @@ import com.colorone.system.domain.entity.BaseMenu;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -37,4 +38,12 @@ public interface BaseMenuMapper extends BaseMapper<BaseMenu> {
      * @return
      */
     List<BaseMenu> selectMenuList(BaseMenu menu);
+
+    /**
+     * 查询菜单列表，简易数据结构
+     *
+     * @return
+     */
+    List<Map> selectMenuListLittle();
+
 }

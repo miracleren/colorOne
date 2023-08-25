@@ -39,7 +39,7 @@ public class BaseMenu extends BaseEntity {
     Integer parentId;
 
     /**
-     * comment '显示顺序'   bigint(10)    default 0
+     * comment '显示顺序'   int(4)    default 0
      */
     Integer orderNum;
 
@@ -59,12 +59,12 @@ public class BaseMenu extends BaseEntity {
     String path;
 
     /**
-     * comment '菜单是否显示（0显示 1隐藏）'    bigint(1)   default 0
+     * comment '菜单是否显示（0显示 1隐藏）'    int(1)   default 0
      */
     Integer visible;
 
     /**
-     * comment '菜单状态（0正常 1停用）'  bigint(1)   default 0
+     * comment '菜单状态（0正常 1停用）'  int(1)   default 0
      */
     Integer status;
 

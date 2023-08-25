@@ -59,4 +59,11 @@ public interface BaseMenuService {
      * @return 操作数
      */
     Integer addPermitUrls(List<BaseMenu> urls);
+
+    /**
+     * 查询菜单权限树（Tree组件）
+     *
+     * @return
+     */
+    List<Map> getBaseMenuTreeSelect();
 }

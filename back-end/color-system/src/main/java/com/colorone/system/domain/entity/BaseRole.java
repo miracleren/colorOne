@@ -1,12 +1,15 @@
 package com.colorone.system.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.colorone.common.domain.core.BaseEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.Map;
 
 /**
  * @author： lee
@@ -17,14 +20,14 @@ import lombok.ToString;
 @Data
 @ToString
 @NoArgsConstructor
-@TableName("baseRole")
+@TableName("base_role")
 public class BaseRole extends BaseEntity {
 
     /**
      * comment '角色ID'   bigint(20)      not null autoIncrement
      */
     @TableId(value = "role_id", type = IdType.AUTO)
-    Integer roleId;
+    Long roleId;
 
     /**
      * comment '角色名称'   varchar(30)     not null
@@ -42,13 +45,19 @@ public class BaseRole extends BaseEntity {
     Integer roleSort;
 
     /**
-     * comment '角色状态（0正常 1停用）'  char(1)         not null
+     * comment '角色状态（0正常 1停用）'  int(1)         not null
      */
-    String roleStatus;
+    Integer status;
 
     /**
      * comment '备注' varchar(500)    default null
      */
     String remark;
+
+    /**
+     * 状态名称
+     */
+    @TableField(exist = false)
+    private String statusName;
 
 }

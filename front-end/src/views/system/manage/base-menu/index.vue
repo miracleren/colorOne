@@ -182,13 +182,22 @@ const handle = (key) => {
       break
     }
     case 'delete': {
-      deleteBaseMenu(checkRow.value.menuId).then(res => {
-        if (res.data) {
-          checkRow.value = {}
-          window.$message.success('成功删除数据')
-          getData()
-        }
-      })
+      window.$dialog.warning(
+          {
+            title: '警告',
+            content: '你确定删除该角色吗？',
+            positiveText: '确定',
+            negativeText: '关闭',
+            onPositiveClick: () => {
+              deleteBaseMenu(checkRow.value.menuId).then(res => {
+                if (res.data) {
+                  checkRow.value = {}
+                  window.$message.success('成功删除数据')
+                  getData()
+                }
+              })
+            }
+          })
       break
     }
     case 'add_api': {

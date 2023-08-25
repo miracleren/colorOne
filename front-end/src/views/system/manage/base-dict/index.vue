@@ -136,19 +136,6 @@ const table = {
   }
 }
 const tableData = ref([])
-// const onLoadChildren = (row) => {
-//   console.log('onLoadChildren')
-//   return new Promise((resolve) => {
-//     getBaseDictChildren(row.dictId).then(res => {
-//       row.children = res.data
-//       if (res.data.length === 0)
-//         window.$message.success('当前字典分组没有数据')
-//       resolve()
-//     })
-//
-//   })
-// }
-
 
 /** 查询字典数据 **/
 const getData = () => {
@@ -192,13 +179,22 @@ const handle = (key) => {
       break
     }
     case 'delete': {
-      deleteBaseDict(checkRow.value.dictId).then(res => {
-        if (res.data) {
-          checkRow.value = {}
-          window.$message.success('成功删除数据')
-          getData()
-        }
-      })
+      window.$dialog.warning(
+          {
+            title: '警告',
+            content: '你确定删除该角色吗？',
+            positiveText: '确定',
+            negativeText: '关闭',
+            onPositiveClick: () => {
+              deleteBaseDict(checkRow.value.dictId).then(res => {
+                if (res.data) {
+                  checkRow.value = {}
+                  window.$message.success('成功删除数据')
+                  getData()
+                }
+              })
+            }
+          })
       break
     }
     case 'addChildren': {

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.colorone.system.mapper.BaseRoleMapper">
+    <select id="selectBaseRoleList" resultType="com.colorone.system.domain.entity.BaseRole">
+        select br.* ,db.dict_label status_name
+        from base_role br
+        left join base_dict db on db.dict_value = CONVERT(br.status,char ) and db.dict_type='base_status'
+        where br.del_flag = 0
+        <if test="status != null">
+            and br.status = #{status}
+        </if>
+        <if test="roleName != null  and roleName != ''">
+            and br.role_name like "%"#{roleName}"%"
+        </if>
+        order by br.role_sort
+    </select>
+</mapper>

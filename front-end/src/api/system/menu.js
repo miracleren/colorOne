@@ -52,18 +52,9 @@ export function addPermitUrls(data) {
     })
 }
 
-
-//
-// //通过菜单类型获取菜单数据
-// export function getSelectMenuList(type) {
-//     return request({
-//         url: `/menu/select/${type}`, method: 'get',
-//     })
-// }
-//
-// //查询子菜单数据列表
-// export function getBaseMenuChildren(menuId) {
-//     return request({
-//         url: `/menu/children/${menuId}`, method: 'get'
-//     })
-// }
+//查询菜单权限树（Tree组件）
+export function getBaseMenuTreeSelect() {
+    return request({
+        url: '/menu/select/tree', method: 'get'
+    })
+}

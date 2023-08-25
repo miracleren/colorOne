@@ -5,12 +5,14 @@
 
     <select id="selectMenuListByRoles" resultType="com.colorone.system.domain.entity.BaseMenu">
         select bm.menu_id,bm.menu_name,bm.parent_id,bm.order_num,bm.icon,
-             bm.menu_type, bm.path, bm.component
+            bm.menu_type, bm.path, bm.component,bm.visible
         from base_menu bm
-        left join base_role_menu brm on bm.menu_id = brm.menu_id
-        left join base_user_role bur on brm.role_id = bur.role_id
-        where bm.del_flag = 0 and brm.del_flag = 0 and bur.del_flag = 0 and bm.status = 0
-        and brm.role_id in
+            left join base_role_menu brm on bm.menu_id = brm.menu_id
+            left join base_user_role bur on brm.role_id = bur.role_id
+        where bm.del_flag = 0 and brm.del_flag = 0
+            and bur.del_flag = 0 and bm.status = 0
+            and bm.menu_type <![CDATA[<>]]> 'b'
+            and brm.role_id in
         <foreach item="role" collection="array" separator="," open="(" close=")" index="">
             #{role}
         </foreach>
@@ -19,10 +21,10 @@
 
     <select id="selectAdminMenuList" resultType="com.colorone.system.domain.entity.BaseMenu">
         select bm.menu_id,bm.menu_name,bm.parent_id,bm.order_num,bm.icon,
-        bm.menu_type, bm.path, bm.component
+            bm.menu_type, bm.path, bm.component,bm.visible
         from base_menu bm
         where bm.del_flag = 0
-          and bm.status = 0
+          and bm.status = 0 and bm.menu_type <![CDATA[<>]]> 'b'
         order by bm.order_num
     </select>
 
@@ -38,6 +40,14 @@
         <if test="menuName != null  and menuName != ''">
             and bm.menu_name like "%"#{menuName}"%"
         </if>
+        order by bm.order_num
+    </select>
+
+    <select id="selectMenuListLittle" resultType="java.util.Map">
+        select bm.menu_id as 'key',CONCAT(bm.menu_name, ' # ', mt.dict_label) as label, bm.parent_id
+        from base_menu bm
+        left join base_dict mt on mt.dict_value = bm.menu_type and mt.dict_type='base_menu_type'
+        where bm.del_flag = 0
         order by bm.order_num
     </select>
 </mapper>

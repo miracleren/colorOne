@@ -1,13 +1,8 @@
 package com.colorone.system.service.impl;
 
-import com.alibaba.fastjson2.JSON;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.colorone.common.domain.auth.LoginUser;
 import com.colorone.common.frame.security.web.TokenService;
 import com.colorone.common.utils.SecurityUtils;
 import com.colorone.common.utils.TreeBuildUtils;
-import com.colorone.system.domain.SelectTree;
 import com.colorone.system.domain.entity.BaseMenu;
 import com.colorone.system.mapper.BaseMenuMapper;
 import com.colorone.system.service.BaseMenuService;
@@ -18,8 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 
 /**
@@ -29,11 +22,8 @@ import java.util.stream.Collectors;
  */
 @Service
 public class BaseMenuServiceImpl implements BaseMenuService {
-    @Resource
-    private BaseMenuMapper baseMenuMapper;
-
     @Autowired
-    private TokenService tokenService;
+    private BaseMenuMapper baseMenuMapper;
 
     @Override
     public List<Map> getMenuRoleTree(Long[] roles) {
@@ -81,8 +71,18 @@ public class BaseMenuServiceImpl implements BaseMenuService {
         int i = 0;
         for (BaseMenu m : urls) {
             m.setMenuType("b");
+            m.setVisible(1);
             i += baseMenuMapper.insert(m);
         }
         return i;
+    }
+
+    @Override
+    public List<Map> getBaseMenuTreeSelect() {
+        List<Map> menus = baseMenuMapper.selectMenuListLittle();
+        List<Map> menuTree = TreeBuildUtils.init().
+                setKey("key", "parentId", null).build(menus);
+
+        return menuTree;
     }
 }

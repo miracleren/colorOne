@@ -39,6 +39,11 @@ const menuTree = computed(() => store.state.routerMenu.menuTree)
 let menus = deepClone(menuTree.value)
 traverseTree(menus, (node) => {
   console.log(node)
+  if (node.menuType === 'b') {
+    console.log('node.menuType === \'b\'')
+    node = {}
+    return
+  }
   node.icon = renderIcon(node.icon)
   //菜单按钮,通过RouterLink切换路由
   if (node.menuType === 'm') {
@@ -54,6 +59,7 @@ traverseTree(menus, (node) => {
         )
   } else
     node.label = node.menuName
+  node.show = !node.visible
 
   //初始化当前路由页面对应标签
   let curPath = router.currentRoute.value.fullPath
@@ -69,6 +75,7 @@ traverseTree(menus, (node) => {
 
 })
 menuOptions.value = menus
+console.log('menuOptions.value', menuOptions.value)
 
 /*菜单选定触发事件*/
 const selectMenu = (key, item) => {

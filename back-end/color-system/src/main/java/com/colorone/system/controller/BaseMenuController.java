@@ -106,4 +106,15 @@ public class BaseMenuController {
     public RequestResult addPermitUrls(@RequestBody List<BaseMenu> urls) {
         return RequestResult.success(baseMenuService.addPermitUrls(urls));
     }
+
+    /**
+     * 查询菜单权限树（Tree组件）
+     *
+     * @return 菜单树
+     */
+    @GetMapping("/select/tree")
+    @ApiExtension(name = "查询菜单权限树（Tree组件）", permitType = PermitType.LOGIN)
+    public RequestResult getBaseMenuTreeSelect() {
+        return RequestResult.success(baseMenuService.getBaseMenuTreeSelect());
+    }
 }

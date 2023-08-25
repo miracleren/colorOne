@@ -14,7 +14,7 @@ import {
     NDialogProvider, NTabPane, NTabs, NLayoutContent, NCollapseTransition,
     NTab, NBreadcrumb, NBreadcrumbItem, NDatePicker, NSelect,
     NDataTable, NModal, NGrid, NFormItemGi, NInputNumber,
-    NTag, NRadioGroup, NRadio
+    NTag, NRadioGroup, NRadio, NTree
 } from 'naive-ui'
 
 const naive = create({
@@ -24,7 +24,7 @@ const naive = create({
         NDialogProvider, NTabPane, NTabs, NLayoutContent, NCollapseTransition,
         NTab, NBreadcrumb, NBreadcrumbItem, NDatePicker, NSelect,
         NDataTable, NModal, NGrid, NFormItemGi, NInputNumber,
-        NTag, NRadioGroup, NRadio]
+        NTag, NRadioGroup, NRadio, NTree]
 })
 
 export default naive

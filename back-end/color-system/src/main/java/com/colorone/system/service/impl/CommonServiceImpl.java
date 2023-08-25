@@ -2,7 +2,7 @@ package com.colorone.system.service.impl;
 
 import com.colorone.system.mapper.CommonMapper;
 import com.colorone.system.service.CommonService;
-import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -14,7 +14,7 @@ import java.util.Map;
  */
 @Service
 public class CommonServiceImpl implements CommonService {
-    @Resource
+    @Autowired
     private CommonMapper commonMapper;
 
     @Override

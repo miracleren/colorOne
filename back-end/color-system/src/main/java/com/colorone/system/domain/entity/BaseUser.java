@@ -63,7 +63,7 @@ public class BaseUser extends BaseEntity {
     String password;
 
     /**
-     * comment '帐号状态（0正常 1停用）'  bigint(1)      default 0
+     * comment '帐号状态（0正常 1停用）'  int(1)      default 0
      */
     Integer status;
 

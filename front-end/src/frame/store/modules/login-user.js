@@ -1,8 +1,8 @@
 /**
  * 用户登录信息
  */
-import {removeToken, setToken} from "@/utils/system/token"
-import {loginUser, loginUserInfo} from "@/api/system/login"
+import {removeToken, setToken} from '@/utils/system/token'
+import {loginUser, loginUserInfo} from '@/api/system/login'
 
 const state = () => ({
     id: '',
@@ -10,6 +10,7 @@ const state = () => ({
     nickName: '',
     token: '',
     roles: [],
+    permits: []
 })
 
 // mutations
@@ -28,6 +29,9 @@ const mutations = {
     },
     userSetRoles(state, roles) {
         state.roles = roles
+    },
+    userSetPermits(state, permits) {
+        state.permits = permits
     }
 }
 
@@ -42,8 +46,8 @@ const actions = {
                 let token = res.data
                 if (token) {
                     setToken(token)
-                    commit("userSetToken", token)
-                    console.log("handleLogin-resolve")
+                    commit('userSetToken', token)
+                    console.log('handleLogin-resolve')
                     resolve()
                 }
             }).catch(() => {
@@ -55,11 +59,13 @@ const actions = {
     userInfoSet({commit}) {
         return new Promise((resolve, reject) => {
             loginUserInfo().then(res => {
-                console.log("loginUserInfo", res)
+                console.log('loginUserInfo', res)
                 let user = res.data.user
-                commit("userSetId", user.userId)
-                commit("userSetName", user.userName)
-                commit("userSetNickName", user.nickName)
+                commit('userSetId', user.userId)
+                commit('userSetName', user.userName)
+                commit('userSetNickName', user.nickName)
+                commit('userSetRoles', res.data.roles)
+                commit('userSetPermits', res.data.permits)
                 resolve()
             }).catch(() => {
                 reject()
@@ -69,10 +75,10 @@ const actions = {
     userLoginOut({commit}) {
         removeToken()
 
-        commit("userSetId", '')
-        commit("userSetName", '')
-        commit("userSetNickName", '')
-        commit("userSetToken", '')
+        commit('userSetId', '')
+        commit('userSetName', '')
+        commit('userSetNickName', '')
+        commit('userSetToken', '')
     }
 
 }

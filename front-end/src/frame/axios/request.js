@@ -48,8 +48,8 @@ service.interceptors.response.use((response) => {
         })
         return Promise.reject('error 401')
     } else if (code !== 200) {
-        window.$message.error('!200：' + response.data.msg)
-        return Promise.reject('error !200')
+        window.$message.error('异常：' + response.data.msg)
+        return Promise.reject('error 200')
     } else
         //响应回来的数据操作
         return response.data

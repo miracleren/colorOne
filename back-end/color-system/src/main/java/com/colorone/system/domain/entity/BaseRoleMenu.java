@@ -9,23 +9,22 @@ import lombok.ToString;
 /**
  * @author： lee
  * @email：miracleren@gmail.com
- * @date：2023/6/29
+ * @date：2023/8/25
  * @备注：
  */
 @Data
 @ToString
 @NoArgsConstructor
-@TableName("base_user_role")
-public class BaseUserRole extends BaseEntity {
+@TableName("base_role_menu")
+public class BaseRoleMenu extends BaseEntity {
 
     /**
-     * comment '用户ID'  bigint(20) not null
+     * comment '角色ID' bigint(20) not null
      */
-    Integer userId;
+    Long roleId;
 
     /**
-     * comment '角色ID'  bigint(20) not null
+     * comment '菜单ID' bigint(20) not null
      */
-    Integer roleId;
-
+    Long menuId;
 }

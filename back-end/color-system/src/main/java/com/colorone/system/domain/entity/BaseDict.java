@@ -47,7 +47,7 @@ public class BaseDict extends BaseEntity {
     private String dictValue;
 
     /**
-     * comment '字典排序' bigint(4)    default 0
+     * comment '字典排序' int(4)    default 0
      */
     private Integer dictSort;
 
@@ -57,7 +57,7 @@ public class BaseDict extends BaseEntity {
     private String style;
 
     /**
-     * comment '状态（0正常 1停用）' bigint(1)    default 0
+     * comment '状态（0正常 1停用）' int(1)    default 0
      */
     private Integer status;
 
