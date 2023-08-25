@@ -23,7 +23,7 @@ public interface BaseRoleService {
     /**
      * 新增角色数据
      *
-     * @param menu 角色实体类
+     * @param role 角色实体类
      * @return 成功失败
      */
     Integer addBaseRole(BaseRole role);
