@@ -28,20 +28,22 @@
       </n-form>
     </template>
     <template #tool>
-      <n-button dashed type="success" @click="handle('add')">
+      <n-button secondary type="success" @click="handle('add')">
         <icon icon="Add"/>
         新增分组
       </n-button>
-      <n-button :disabled="!(ObjectIsNotEmpty(checkRow) && !checkRow.parentId)" dashed type="success"
-                @click="handle('addChildren')">
+      <n-button v-permit="['role:add']" :disabled="!(ObjectIsNotEmpty(checkRow) && !checkRow.parentId)" secondary
+                type="success" @click="handle('addChildren')">
         <icon icon="Tree"/>
         新增字典数据
       </n-button>
-      <n-button :disabled="ObjectIsEmpty(checkRow)" dashed type="success" @click="handle('edit')">
+      <n-button v-permit="['role:edit']" :disabled="ObjectIsEmpty(checkRow)" secondary type="success"
+                @click="handle('edit')">
         <icon icon="Edit"/>
         修改
       </n-button>
-      <n-button :disabled="ObjectIsEmpty(checkRow)" dashed type="warning" @click="handle('delete')">
+      <n-button v-permit="['role:delete:roleId']" :disabled="ObjectIsEmpty(checkRow)" secondary type="warning"
+                @click="handle('delete')">
         <icon icon="Delete"/>
         删除
       </n-button>

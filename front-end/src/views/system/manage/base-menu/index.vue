@@ -25,19 +25,22 @@
       </n-form>
     </template>
     <template #tool>
-      <n-button dashed type="success" @click="handle('add')">
+      <n-button v-permit="['menu:add']" secondary type="success" @click="handle('add')">
         <icon icon="Add"/>
         新增
       </n-button>
-      <n-button :disabled="ObjectIsEmpty(checkRow)" dashed type="success" @click="handle('add_api')">
+      <n-button :disabled="ObjectIsEmpty(checkRow)" v-permit="['menu:permit:add']" secondary type="success"
+                @click="handle('add_api')">
         <icon icon="Add"/>
-        新增操作
+        新增操作权限
       </n-button>
-      <n-button :disabled="ObjectIsEmpty(checkRow)" dashed type="success" @click="handle('edit')">
+      <n-button :disabled="ObjectIsEmpty(checkRow)" v-permit="['menu:edit']" secondary type="success"
+                @click="handle('edit')">
         <icon icon="Edit"/>
         修改
       </n-button>
-      <n-button :disabled="ObjectIsEmpty(checkRow)" dashed type="warning" @click="handle('delete')">
+      <n-button :disabled="ObjectIsEmpty(checkRow)" v-permit="['menu:delete:menuId']" secondary type="warning"
+                @click="handle('delete')">
         <icon icon="Delete"/>
         删除
       </n-button>

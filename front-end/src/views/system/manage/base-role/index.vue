@@ -24,15 +24,17 @@
       </n-form>
     </template>
     <template #tool>
-      <n-button secondary type="success" @click="handle('add')">
+      <n-button v-permit="['role:add']" secondary type="success" @click="handle('add')">
         <icon icon="Add"/>
         新增
       </n-button>
-      <n-button :disabled="ObjectIsEmpty(checkRow)" secondary type="success" @click="handle('edit')">
+      <n-button :disabled="ObjectIsEmpty(checkRow)" v-permit="['role:edit']" secondary type="success"
+                @click="handle('edit')">
         <icon icon="Edit"/>
         修改
       </n-button>
-      <n-button :disabled="ObjectIsEmpty(checkRow)" secondary type="warning" @click="handle('delete')">
+      <n-button :disabled="ObjectIsEmpty(checkRow)" v-permit="['role:delete:roleId']" secondary type="warning"
+                @click="handle('delete')">
         <icon icon="Delete"/>
         删除
       </n-button>
@@ -61,7 +63,6 @@ import icon from '@/components/icon/index.vue'
 import FormRole from '@/views/system/manage/base-role/form-role.vue'
 import {ObjectIsEmpty} from '@/utils/ObjectUtils'
 import SelectDict from '@/components/select-dict'
-import {deleteBaseMenu} from '@/api/system/menu'
 import {deleteBaseRole, getBaseRoleList} from '@/api/system/role'
 
 

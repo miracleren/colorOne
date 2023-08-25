@@ -24,12 +24,12 @@ import '@/assets/styles/global.scss'
  * 创建应用程序
  */
 const app = createApp(App)
-
 app.use(router)
     .use(naive)
     .use(directive)
     .use(store)
     .mount('#app')
+
 
 
 
