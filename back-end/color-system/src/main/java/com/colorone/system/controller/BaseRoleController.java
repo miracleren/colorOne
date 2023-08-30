@@ -82,5 +82,26 @@ public class BaseRoleController {
         return RequestResult.success(baseRoleService.getRoleMenuIds(roleId));
     }
 
+    /**
+     * 查询角色列表，数据类型关联select组件
+     *
+     * @return 角色列表
+     */
+    @GetMapping("/select/list")
+    @ApiExtension(name = "查询角色列表，数据类型关联select组件", permitType = PermitType.LOGIN)
+    public RequestResult getSelectRoleList() {
+        return RequestResult.success(baseRoleService.getSelectRoleList());
+    }
+
+    /**
+     * 查询用户角色数组数据
+     *
+     * @return 角色列表
+     */
+    @GetMapping("/user/{userId}")
+    @ApiExtension(name = "查询用户角色数组数据", permitType = PermitType.LOGIN)
+    public RequestResult getUserRoles(@PathVariable Long userId) {
+        return RequestResult.success(baseRoleService.getUserRoles(userId));
+    }
 
 }

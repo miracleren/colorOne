@@ -16,7 +16,7 @@
         <n-input-number v-model:value="model.dictSort" placeholder="请输入排序"/>
       </n-form-item-gi>
       <n-form-item-gi :span="12" label="状态" v-bind="validator.selectRequired('status','请选择状态',true)">
-        <select-dict type="base_status" value-type="number"
+        <select-dict type="base_status"
                      v-model:value="model.status"
                      class="input-140"></select-dict>
       </n-form-item-gi>

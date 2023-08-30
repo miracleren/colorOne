@@ -1,6 +1,7 @@
 package com.colorone.system.service.impl;
 
 import com.colorone.common.utils.TreeBuildUtils;
+import com.colorone.system.domain.LabelItem;
 import com.colorone.system.domain.entity.BaseDict;
 import com.colorone.system.mapper.BaseDictMapper;
 import com.colorone.system.service.BaseDictService;
@@ -46,7 +47,7 @@ public class BaseDictServiceImpl implements BaseDictService {
     }
 
     @Override
-    public List<Map<String, Object>> getSelectDictByType(String type) {
+    public List<LabelItem> getSelectDictByType(String type) {
         return baseDictMapper.selectComDictByType(type);
     }
 

@@ -1,6 +1,7 @@
 package com.colorone.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.colorone.system.domain.LabelItem;
 import com.colorone.system.domain.entity.BaseDict;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -21,7 +22,7 @@ public interface BaseDictMapper extends BaseMapper<BaseDict> {
      *
      * @return
      */
-    List<Map<String, Object>> selectComDictByType(String type);
+    List<LabelItem> selectComDictByType(String type);
 
     /**
      * 查询字典表数据

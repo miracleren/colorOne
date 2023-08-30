@@ -3,30 +3,28 @@
       v-model:value="selectValue"
       :placeholder="props.placeholder"
       :options="options"
-
       clearable/>
-  <!--    @update:value="changeValue"    -->
 </template>
 
 <script setup>
-import {computed, ref, watch} from 'vue'
+import {computed, ref} from 'vue'
 import {getSelectDictList} from '@/api/system/dict'
 
 
 const props = defineProps({
-  modelValue: String,
+  value: [String, Number],
   type: String,
   placeholder: String,
-  valueType: String,
   disabled: Array
 })
 
 const emit = defineEmits(['update:value'])
 const selectValue = computed({
   get: () => {
-    return props.modelValue
+    return props.value
   },
   set: (val) => {
+    console.log(typeof val)
     if (val !== selectValue.value)
       emit('update:value', val)
   }
@@ -36,7 +34,8 @@ const selectValue = computed({
 const options = ref([])
 getSelectDictList(props.type).then(res => {
   //数字类型处理
-  if (props.valueType === 'number') {
+  console.log('typeof props.value ', typeof props.value)
+  if (typeof props.value === 'number') {
     for (let item of res.data)
       item.value = parseInt(item.value)
   }
@@ -50,7 +49,6 @@ getSelectDictList(props.type).then(res => {
   }
 
   options.value = res.data
-  console.log(options.value)
 })
 </script>
 

@@ -12,4 +12,9 @@ public class RedisPrefix {
      * 登录用户缓存前缀
      */
     public static final String LOGIN_USER = "login_user:";
+
+    /**
+     * 缓存在redis的api权限配置信息标记
+     */
+    public static final String REDIS_PERMIT_URLS = "permit_urls";
 }

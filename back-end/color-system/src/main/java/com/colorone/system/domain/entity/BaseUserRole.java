@@ -21,11 +21,11 @@ public class BaseUserRole extends BaseEntity {
     /**
      * comment '用户ID'  bigint(20) not null
      */
-    Integer userId;
+    Long userId;
 
     /**
      * comment '角色ID'  bigint(20) not null
      */
-    Integer roleId;
+    Long roleId;
 
 }

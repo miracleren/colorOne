@@ -38,12 +38,12 @@
         <n-input v-model:value="model.icon" placeholder="请输入菜单图标"/>
       </n-form-item-gi>
 
-      <n-form-item-gi :span="12" label="状态" v-bind="validator.selectRequired('status','请选择状态',true)">
-        <radio-dict type="base_status" v-model:value="model.status" value-type="number"></radio-dict>
+      <n-form-item-gi :span="12" label="状态" v-bind="validator.selectRequired('status','请选择状态')">
+        <radio-dict type="base_status" v-model:value="model.status"></radio-dict>
       </n-form-item-gi>
 
-      <n-form-item-gi :span="12" label="是否显示" v-bind="validator.selectRequired('visible','请选择是否显示',true)">
-        <radio-dict type="base_visible" v-model:value="model.visible" value-type="number"></radio-dict>
+      <n-form-item-gi :span="12" label="是否显示" v-bind="validator.selectRequired('visible','请选择是否显示')">
+        <radio-dict type="base_visible" v-model:value="model.visible"></radio-dict>
       </n-form-item-gi>
 
       <n-form-item-gi :span="24" label="备注">

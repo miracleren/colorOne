@@ -9,22 +9,22 @@
 </template>
 
 <script setup>
-import {computed, ref, watch} from 'vue'
+import {computed, ref} from 'vue'
 import {getSelectDictList} from '@/api/system/dict'
 
 
 const props = defineProps({
-  modelValue: String,
-  type: String,
-  valueType: String
+  value: [String, Number],
+  type: String
 })
 
 const emit = defineEmits(['update:value'])
 const selectValue = computed({
   get: () => {
-    return props.modelValue
+    return props.value
   },
   set: (val) => {
+    console.log(typeof val)
     if (val !== selectValue.value)
       emit('update:value', val)
   }
@@ -33,7 +33,7 @@ const selectValue = computed({
 /** 通过字典类型生成选择项 **/
 const options = ref([])
 getSelectDictList(props.type).then(res => {
-  if (props.valueType === 'number')
+  if (typeof props.value === 'number')
     for (let item of res.data)
       item.value = parseInt(item.value)
 

@@ -10,7 +10,7 @@
           <n-input v-model:value="searchFrom.menuName" class="input-220" clearable/>
         </n-form-item>
         <n-form-item label="状态">
-          <select-dict type="base_status" value-type="number"
+          <select-dict type="base_status"
                        v-model:value="searchFrom.status"
                        class="input-140">
           </select-dict>
@@ -111,7 +111,8 @@ const table = {
   rowProps: (row) => {
     return {
       onClick: (e) => {
-        row === checkRow.value ? checkRow.value = {} : checkRow.value = row
+        if (e.target.localName === 'td')
+          row === checkRow.value ? checkRow.value = {} : checkRow.value = row
       }
     }
   },

@@ -10,7 +10,7 @@
  * @param message
  * @returns {{path, rule: {trigger: string[], message: string, required: boolean}}}
  */
-const required = (path, message) => {
+const required = (path, message = null) => {
     return {
         path: path,
         rule: {
@@ -29,7 +29,7 @@ const required = (path, message) => {
  * @param max
  * @returns {{path, rule: {trigger: string[], type: string, message: string}}}
  */
-const number = (path, message, min = null, max = null) => {
+const number = (path, message = null, min = null, max = null) => {
     return {
         path: path,
         rule: {
@@ -48,7 +48,7 @@ const number = (path, message, min = null, max = null) => {
 }
 
 
-const selectRequired = (path, message, isNumber = false) => {
+const selectRequired = (path, message = null, isNumber = false) => {
     return {
         path: path,
         rule: {
@@ -60,7 +60,76 @@ const selectRequired = (path, message, isNumber = false) => {
     }
 }
 
+/**
+ * 验证是否邮箱
+ * @param path
+ * @param message
+ * @param required
+ * @returns {{path, rule: {trigger: string[], message: string, required: boolean}}}
+ */
+const email = (path, message = null, required = true) => {
+    return {
+        path: path,
+        rule: {
+            required: required,
+            message: message || '请输入有效的邮箱地址',
+            trigger: ['blur', 'input'],
+            validator(rule, value) {
+                console.log('check email')
+                let reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
+                return reg.test(value)
+            },
+        }
+    }
+}
+
+/**
+ * 验证是否手机
+ * @param path
+ * @param message
+ * @param required
+ * @returns {{path, rule: {trigger: string[], message: string, required: boolean}}}
+ */
+const phone = (path, message = null, required = true) => {
+    return {
+        path: path,
+        rule: {
+            required: required,
+            message: message || '请输入有效的手机号码',
+            trigger: ['blur', 'input'],
+            validator(rule, value) {
+                console.log('check phone')
+                let reg = /^1[3456789]\d{9}$/
+                return reg.test(value)
+            },
+        }
+    }
+}
+
+/**
+ * 验证密码格式
+ * @param path
+ * @param message
+ * @param required
+ * @returns {{path, rule: {trigger: string[], message: string, required: boolean}}}
+ */
+const password = (path, message = null, required = true) => {
+    return {
+        path: path,
+        rule: {
+            required: required,
+            message: message || '密码不能为空且长度在8到30个字符,必须包含数字、字母及符号！',
+            trigger: ['blur', 'input'],
+            validator(rule, value) {
+                console.log('check password')
+                let reg = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,30}/
+                return reg.test(value)
+            },
+        }
+    }
+}
+
 let validator = {
-    required, number, selectRequired
+    required, number, selectRequired, email, phone, password
 }
 export default validator

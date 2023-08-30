@@ -1,6 +1,6 @@
 package com.colorone.common.frame.security;
 
-import com.colorone.common.constant.Constants;
+import com.colorone.common.constant.RedisPrefix;
 import com.colorone.common.domain.auth.PermitUrl;
 import com.colorone.common.frame.aspect.annotation.ApiExtension;
 import com.colorone.common.frame.aspect.enums.PermitType;
@@ -28,7 +28,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -192,7 +191,7 @@ public class SecurityConfig {
         }
 
         //缓存所有有权限标识的接口
-        redisHelper.setObject(Constants.REDIS_PERMIT_URLS, permitUrls);
+        redisHelper.setObject(RedisPrefix.REDIS_PERMIT_URLS, permitUrls);
 
         System.out.print("***成功扫描匿名可访问接口" + anonymousUrls.size() + "处***");
         System.out.print("***成功扫描带权限标识接口" + permitUrls.size() + "处***");

@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.colorone.system.mapper.BaseUserMapper">
-    <select id="selectUserByUserName" resultType="com.colorone.system.domain.entity.BaseUser">
-        select *
-        from base_user
-        where user_name = #{userName}
+    <update id="updateUserStatus">
+        update base_user
+        set status     = #{status},
+            update_time = #{updateTime},
+            update_by = #{updateBy}
+        where user_id = #{userId}
+    </update>
+    <select id="selectBaseUserList" resultType="com.colorone.system.domain.entity.BaseUser">
+        select bu.*, db.dict_label status_name
+        from base_user bu
+        left join base_dict db on db.dict_value = CONVERT(bu.status, char) and db.dict_type = 'base_status'
+        where bu.del_flag = 0
+        <if test="userName != null  and userName != ''">
+            and ( bu.user_name like "%"#{userName}"%" or bu.nick_name like "%"#{userName}"%" )
+        </if>
+        <if test="phone != null  and phone != ''">
+            and bu.phone like "%"#{phone}"%"
+        </if>
+        <if test="status != null  and status != ''">
+            and bu.status = #{status}
+        </if>
+        <if test="params != null and params.startTime != null ">
+            and bu.create_time > FROM_UNIXTIME(#{params.startTime}/1000)
+        </if>
+        <if test="params != null and params.endTime != null">
+            and bu.create_time <![CDATA[<=]]> adddate(FROM_UNIXTIME(#{params.endTime}/1000),1)
+        </if>
     </select>
 </mapper>

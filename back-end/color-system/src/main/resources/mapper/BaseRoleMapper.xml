@@ -14,4 +14,10 @@
         </if>
         order by br.role_sort
     </select>
+    <select id="selectUserRolesByUserId" resultType="java.lang.Long">
+        select role_id
+        from base_user_role
+        where del_flag = 0
+          and user_id = #{userId}
+    </select>
 </mapper>

@@ -3,7 +3,7 @@
 <mapper namespace="com.colorone.system.mapper.BaseDictMapper">
 
 
-    <select id="selectComDictByType" resultType="java.util.Map">
+    <select id="selectComDictByType" resultType="com.colorone.system.domain.LabelItem">
         select dict_label label,
                dict_value value,
                style

@@ -1,6 +1,7 @@
 package com.colorone.system.service.impl;
 
 import com.colorone.common.utils.SecurityUtils;
+import com.colorone.system.domain.LabelItem;
 import com.colorone.system.domain.entity.BaseRole;
 import com.colorone.system.domain.entity.BaseRoleMenu;
 import com.colorone.system.mapper.BaseRoleMapper;
@@ -79,5 +80,15 @@ public class BaseRoleServiceImpl implements BaseRoleService {
     @Override
     public List<Integer> getRoleMenuIds(Long roleId) {
         return baseRoleMenuMapper.selectRoleMenuIds(roleId);
+    }
+
+    @Override
+    public List<LabelItem> getSelectRoleList() {
+        return baseRoleMenuMapper.selectRoleListLittle();
+    }
+
+    @Override
+    public List<Long> getUserRoles(Long userId) {
+        return baseRoleMapper.selectUserRolesByUserId(userId);
     }
 }

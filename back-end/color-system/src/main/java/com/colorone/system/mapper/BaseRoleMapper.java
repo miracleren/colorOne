@@ -3,6 +3,7 @@ package com.colorone.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.colorone.system.domain.entity.BaseRole;
 import org.apache.ibatis.annotations.Mapper;
+
 import java.util.List;
 
 /**
@@ -20,4 +21,12 @@ public interface BaseRoleMapper extends BaseMapper<BaseRole> {
      * @return 数据列表
      */
     List<BaseRole> selectBaseRoleList(BaseRole role);
+
+    /**
+     * 查询用户关联的角色
+     *
+     * @param userId 用户ID
+     * @return list
+     */
+    List<Long> selectUserRolesByUserId(Long userId);
 }

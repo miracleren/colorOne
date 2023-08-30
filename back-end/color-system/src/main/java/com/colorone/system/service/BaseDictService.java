@@ -1,5 +1,6 @@
 package com.colorone.system.service;
 
+import com.colorone.system.domain.LabelItem;
 import com.colorone.system.domain.entity.BaseDict;
 
 import java.util.List;
@@ -51,7 +52,7 @@ public interface BaseDictService {
      * @param type 字典类型标识
      * @return 字典select数据
      */
-    List<Map<String, Object>> getSelectDictByType(String type);
+    List<LabelItem> getSelectDictByType(String type);
 
 
     /**

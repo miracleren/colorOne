@@ -1,8 +1,10 @@
 package com.colorone.system.service;
 
+import com.colorone.system.domain.LabelItem;
 import com.colorone.system.domain.entity.BaseRole;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author： lee
@@ -51,4 +53,19 @@ public interface BaseRoleService {
      * @return 菜单ID数组
      */
     List<Integer> getRoleMenuIds(Long roleId);
+
+    /**
+     * 查询角色列表，数据类型关联select组件
+     *
+     * @return item
+     */
+    List<LabelItem> getSelectRoleList();
+
+    /**
+     * 查询用户角色数组数据
+     *
+     * @param userId 用户ID
+     * @return 数组
+     */
+    List<Long> getUserRoles(Long userId);
 }

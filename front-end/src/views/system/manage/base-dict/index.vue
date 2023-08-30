@@ -129,7 +129,8 @@ const table = {
   rowProps: (row) => {
     return {
       onClick: (e) => {
-        row === checkRow.value ? checkRow.value = {} : checkRow.value = row
+        if (e.target.localName === 'td')
+          row === checkRow.value ? checkRow.value = {} : checkRow.value = row
       }
     }
   },

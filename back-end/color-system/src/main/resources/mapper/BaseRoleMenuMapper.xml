@@ -24,4 +24,11 @@
         where del_flag = 0
           and role_id = #{roleId}
     </select>
+
+    <select id="selectRoleListLittle" resultType="com.colorone.system.domain.LabelItem">
+        select role_id   as value,
+               role_name as label
+        from base_role
+        where del_flag = 0
+    </select>
 </mapper>

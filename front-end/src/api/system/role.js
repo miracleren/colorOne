@@ -34,3 +34,17 @@ export function getRoleMenuIds(roleId) {
         url: `/role/menus/${roleId}`, method: 'get'
     })
 }
+
+//查询角色列表，数据类型关联select组件
+export function getSelectRoleList() {
+    return request({
+        url: '/role/select/list', method: 'get'
+    })
+}
+
+//查询用户角色数组数据
+export function getUserRoles(userId) {
+    return request({
+        url: `/role/user/${userId}`, method: 'get'
+    })
+}

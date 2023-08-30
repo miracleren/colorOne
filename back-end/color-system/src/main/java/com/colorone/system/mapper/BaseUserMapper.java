@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.colorone.system.domain.entity.BaseUser;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @author： lee
  * @email：miracleren@gmail.com
@@ -13,9 +15,18 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface BaseUserMapper extends BaseMapper<BaseUser> {
     /**
-     * 通用用户名称查询用户信息
-     * @param userName
+     * 查询用户列表
+     *
+     * @param user 参数
+     * @return 数据列表
+     */
+    List<BaseUser> selectBaseUserList(BaseUser user);
+
+    /**
+     * 更新用户状态
+     *
+     * @param user
      * @return
      */
-    BaseUser selectUserByUserName(String userName);
+    Integer updateUserStatus(BaseUser user);
 }

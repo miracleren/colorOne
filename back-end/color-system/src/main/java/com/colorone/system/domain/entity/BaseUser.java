@@ -1,9 +1,11 @@
 package com.colorone.system.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.colorone.common.domain.core.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -60,6 +62,7 @@ public class BaseUser extends BaseEntity {
     /**
      * comment '密码' varchar(100) default ''
      */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String password;
 
     /**
@@ -70,16 +73,25 @@ public class BaseUser extends BaseEntity {
     /**
      * comment '最后登录IP' varchar(128) default ''
      */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String loginIp;
 
     /**
      * comment '最后登录时间' datetime
      */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     Date loginDate;
 
     /**
      * comment '备注' varchar(500) default null
      */
     String remark;
+
+
+    /**
+     * 用户角色组
+     */
+    @TableField(exist = false)
+    private Long[] roles;
 
 }

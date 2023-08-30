@@ -1,6 +1,6 @@
 package com.colorone.system.controller;
 
-import com.colorone.common.constant.Constants;
+import com.colorone.common.constant.RedisPrefix;
 import com.colorone.common.domain.core.RequestResult;
 import com.colorone.common.frame.aspect.annotation.ApiExtension;
 import com.colorone.common.frame.aspect.enums.PermitType;
@@ -95,7 +95,7 @@ public class BaseMenuController {
     @GetMapping("/permit/url")
     @ApiExtension(name = "获取系统操作权限接口列表", permitType = PermitType.ROLE)
     public RequestResult getPermitUrl() {
-        return RequestResult.success(redisHelper.getObject(Constants.REDIS_PERMIT_URLS));
+        return RequestResult.success(redisHelper.getObject(RedisPrefix.REDIS_PERMIT_URLS));
     }
 
     /**

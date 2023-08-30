@@ -1,6 +1,7 @@
 package com.colorone.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.colorone.system.domain.LabelItem;
 import com.colorone.system.domain.entity.BaseRoleMenu;
 import io.lettuce.core.dynamic.annotation.Param;
 import org.apache.ibatis.annotations.Mapper;
@@ -39,4 +40,10 @@ public interface BaseRoleMenuMapper extends BaseMapper<BaseRoleMenu> {
      * @return 变更数据
      */
     Integer updateDelRoleMenuExist(BaseRoleMenu roleMenu);
+
+    /**
+     * 查询角色列表
+     * @return
+     */
+    List<LabelItem> selectRoleListLittle();
 }

@@ -7,12 +7,13 @@ import store from '@/frame/store'
  */
 const permit = {
     mounted(el, binding) {
+        console.log("v-permit")
         // value 获取用户使用自定义指令绑定的内容
         const {value} = binding
         // 用户所有的权限标识
         const permission = store._state.data.loginUser.permits
         //超级管理员越过权限
-        if (permission.includes('[*:*:*]'))
+        if (permission.includes('*:*:*'))
             return
         // 判断用户使用自定义指令，是否使用正确了
         if (!!value && value.length > 0) {
