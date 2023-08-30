@@ -51,7 +51,7 @@ const loginOut = () => {
       loginUserOut().then(res => {
         store.dispatch('userLoginOut')
         window.$message.success(res.msg)
-        router.push('/')
+        router.push('/login')
       })
     }
   })

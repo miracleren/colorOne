@@ -17,4 +17,9 @@ public class RedisPrefix {
      * 缓存在redis的api权限配置信息标记
      */
     public static final String REDIS_PERMIT_URLS = "permit_urls";
+
+     /**
+     * 缓存在redis的验证码
+     */
+    public static final String REDIS_CAPTCHA_CODE = "captcha_code:";
 }

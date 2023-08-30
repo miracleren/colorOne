@@ -1,3 +1,18 @@
+# 项目相关配置
+colorOne:
+  # 名称
+  name: ColorOne
+  # 版本
+  version: 1.0.0
+
+
+# 验证码配置
+captcha:
+  # 验证码类型 math 数组计算 char 字符验证
+  type: math
+  # 是否开启验证码
+  enabled: true
+
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为8181
@@ -17,12 +32,12 @@ server:
 
 # token配置
 token:
-    # 令牌自定义标识
-    header: Authorization
-    # 令牌秘钥
-    secret: cuAihCz53DZRjZwbsGcZJ2Ai6At+T142uphtJMsk7iQ=
-    # 令牌有效期（默认30分钟）
-    expireTime: 30
+  # 令牌自定义标识
+  header: Authorization
+  # 令牌秘钥
+  secret: cuAihCz53DZRjZwbsGcZJ2Ai6At+T142uphtJMsk7iQ=
+  # 令牌有效期（默认30分钟）
+  expireTime: 30
 
 # 数据库配置
 spring:

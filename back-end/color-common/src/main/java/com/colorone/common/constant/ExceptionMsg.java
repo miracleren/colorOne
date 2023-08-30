@@ -27,4 +27,9 @@ public class ExceptionMsg {
      * 账号已经过期
      */
     public static final String ACCOUNT_EXPIRED = "访问失败，当前登录的账号已经过期！";
+
+    /**
+     * 验证码无效
+     */
+    public static final String CAPTCHA_INVALID = "验证码无效或已过期，请重新输入！";
 }

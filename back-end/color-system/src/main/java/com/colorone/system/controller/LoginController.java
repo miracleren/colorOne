@@ -1,23 +1,33 @@
 package com.colorone.system.controller;
 
+import com.colorone.common.constant.ExceptionMsg;
+import com.colorone.common.constant.RedisPrefix;
 import com.colorone.common.domain.auth.LoginBody;
 import com.colorone.common.domain.auth.LoginUser;
-import com.colorone.common.domain.auth.User;
 import com.colorone.common.domain.core.RequestResult;
 import com.colorone.common.frame.aspect.annotation.ApiExtension;
 import com.colorone.common.frame.aspect.enums.PermitType;
+import com.colorone.common.frame.captcha.CaptchaText;
+import com.colorone.common.frame.redis.RedisHelper;
 import com.colorone.common.frame.security.web.TokenService;
 import com.colorone.common.utils.HttpServletUtils;
-import com.colorone.system.domain.entity.BaseUser;
-import com.colorone.system.service.BaseMenuService;
+import com.colorone.common.utils.data.IdUtils;
+import com.google.code.kaptcha.Producer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Base64;
+import java.util.concurrent.TimeUnit;
+
 
 /**
  * @author： lee
@@ -34,6 +44,23 @@ public class LoginController {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    RedisHelper redisHelper;
+
+    @Autowired
+    Producer producer;
+
+    /**
+     * 验证码类型
+     */
+    @Value("${captcha.type}")
+    private String captchaType;
+
+    /**
+     * 验证码是否开启
+     */
+    @Value("${captcha.enabled}")
+    private String captchaEnabled;
 
     /**
      * 登录接口
@@ -43,6 +70,14 @@ public class LoginController {
     @PostMapping("/user")
     @ApiExtension(name = "登录接口", permitType = PermitType.ANONYMOUS)
     public RequestResult login(@RequestBody LoginBody loginBody) {
+        //验证码是否有效
+        if ("true".equals(captchaEnabled)) {
+            String codeValue = redisHelper.getObject(RedisPrefix.REDIS_CAPTCHA_CODE + loginBody.getCode());
+            if (codeValue == null || !codeValue.equals(loginBody.getCaptcha()))
+                return RequestResult.error(ExceptionMsg.CAPTCHA_INVALID);
+            //验证完成清除缓存的验证码
+            redisHelper.clearObject(RedisPrefix.REDIS_CAPTCHA_CODE + loginBody.getCode());
+        }
 
         String username = loginBody.getUserName();
         String password = loginBody.getPassword();
@@ -77,6 +112,48 @@ public class LoginController {
         res.setData("user", loginUser.getUser());
         res.setData("roles", loginUser.getRoles());
         res.setData("permits", loginUser.getPermits());
+        return res;
+    }
+
+
+    /**
+     * 获取登录验证码
+     *
+     * @return 验证码
+     */
+    @GetMapping("/captcha/image")
+    @ApiExtension(name = "获取登录验证码", permitType = PermitType.ANONYMOUS)
+    public RequestResult getVerifyCode() {
+        RequestResult res = new RequestResult();
+        if ("true".equals(captchaEnabled)) {
+            String text = "", codeValue = "";
+            String uuid = IdUtils.randomNoSignUUID();
+            BufferedImage image;
+            if ("math".equals(captchaType)) {
+                String[] math = CaptchaText.creatMathCaptchaText().split("=");
+                text = math[0];
+                codeValue = math[1];
+            } else {
+                text = producer.createText();
+                codeValue = text;
+            }
+            image = producer.createImage(text);
+
+            // 转换流信息写出
+            FastByteArrayOutputStream os = new FastByteArrayOutputStream();
+            try {
+                ImageIO.write(image, "jpg", os);
+            } catch (IOException e) {
+                return RequestResult.error(e.getMessage());
+            }
+
+            redisHelper.setObject(RedisPrefix.REDIS_CAPTCHA_CODE + uuid, codeValue, 3, TimeUnit.MINUTES);
+
+            res.setData("image", Base64.getEncoder().encodeToString(os.toByteArray()));
+            res.setData("code", uuid);
+        } else
+            res.setData("code", null);
+
         return res;
     }
 }

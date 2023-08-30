@@ -22,9 +22,25 @@
               :maxlength="18"
           />
         </n-form-item>
+
+        <n-form-item v-if="!!loginInfo.code">
+          <n-grid :cols="12" :x-gap="12">
+            <n-form-item-gi :span="7">
+              <n-input v-model:value="loginInfo.captcha" placeholder="验证码">
+                <template #suffix>
+                  <component :is="CIcon" :icon="'QrCode'" color="rgb(224,224,230)"></component>
+                </template>
+              </n-input>
+            </n-form-item-gi>
+            <n-form-item-gi :span="5">
+              <img :src="codeUrl" @click="getCaptchaCode" alt="验证码一枚"/>
+            </n-form-item-gi>
+          </n-grid>
+        </n-form-item>
+
         <n-form-item>
           <n-button
-              :disabled="loginInfo.userName==='' || loginInfo.password ===''"
+              :disabled="!loginInfo.userName|| !loginInfo.password || !loginInfo.captcha"
               @click="handleLogin"
               class="login-button" type="success">
             登录
@@ -37,30 +53,53 @@
 
 <script setup>
 import CIcon from '@/components/icon/index.vue'
-import {reactive} from "vue"
+import {onMounted, ref} from 'vue'
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'
-import {formatDate} from "@/utils/DateUtils"
+import {formatDate} from '@/utils/DateUtils'
+import {captchaImage} from '@/api/system/login'
+
+/** 初始化相关数据 **/
+onMounted(() => {
+  getCaptchaCode()
+})
 
 //region 用户登录
-let loginInfo = reactive({
-  userName: "OneAdmin",
-  password: "Color@123"
+let loginInfo = ref({
+  userName: 'OneAdmin',
+  password: 'Color@123',
+  captcha: '',
+  code:''
 })
 
 //登录获取token，用户息通过路由守卫获取，并校验限权
 const store = useStore()
 const router = useRouter()
 const handleLogin = () => {
-  store.dispatch("userLogin", loginInfo).then(() => {
-    console.log("handleLogin")
-    window.$message.success(`欢迎${loginInfo.userName}，当前登录日期是 ${formatDate(new Date())}`)
-    router.push("/")
+
+  store.dispatch('userLogin', loginInfo.value).then(() => {
+    console.log('handleLogin')
+    window.$message.success(`欢迎${loginInfo.value.userName}，当前登录日期是 ${formatDate(new Date())}`)
+    router.push('/')
   }).catch(() => {
     //登录失败处理
+    getCaptchaCode()
+    loginInfo.value.captcha = ''
   })
 }
 //endregion
+
+/** 验证码 **/
+const codeUrl = ref(null)
+const getCaptchaCode = () => {
+  captchaImage().then(res => {
+    if (res.data.code) {
+      codeUrl.value = 'data:image/gif;base64,' + res.data.image
+      loginInfo.value.code = res.data.code
+    }
+  })
+
+}
 
 </script>
 
@@ -70,18 +109,17 @@ const handleLogin = () => {
   background-image: url("../../assets/image/login-bg.jpeg");
   background-size: cover;
   position: relative;
+  display: flex;
 
   .login-box {
     background-color: rgba(255, 255, 255, 0.6);
     width: 330px;
-    position: absolute;
     padding: 38px;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     margin: auto;
-    height: 260px;
 
     .login-title {
       margin-bottom: 28px;
