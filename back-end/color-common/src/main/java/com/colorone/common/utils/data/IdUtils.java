@@ -17,4 +17,13 @@ public class IdUtils {
     public static String randomUUID() {
         return UUID.randomUUID().toString();
     }
+
+    /**
+     * 获取随机UUID,不带横杆
+     *
+     * @return 随机UUID
+     */
+    public static String randomNoSignUUID() {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
 }
