@@ -25,7 +25,7 @@ import CIcon from '@/components/icon/index.vue'
 import {RouterLink} from 'vue-router'
 import {useStore} from 'vuex'
 import {deepClone} from '@/utils/ObjectUtils'
-import router from '@/router'
+import router from '@/frame/router'
 
 //region 菜单相关
 const menuOptions = ref([])

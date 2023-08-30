@@ -12,25 +12,25 @@ const routes = [
         //基础父路由
         path: '/',
         name: 'bas-layout',
-        component: () => import('@/views/frame/home'),
+        component: () => import('@/views/frame/home/index.vue'),
         redirect: '/index',
         children: [
             {
                 path: '/index',
                 name: 'dashboard',
-                component: () => import('@/views/frame/home/dashboard'),
+                component: () => import('@/views/frame/home/dashboard/index.vue'),
             }
         ]
     },
     {
         path: '/login',
         name: 'login',
-        component: () => import('@/views/frame/login'),
+        component: () => import('@/views/frame/login.vue'),
     },
     {
         path: '/404',
         name: 'not-found',
-        component: () => import('@/views/frame/error/404'),
+        component: () => import('@/views/frame/error/404.vue'),
         hidden: true
     }
 ]

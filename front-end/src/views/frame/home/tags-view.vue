@@ -21,7 +21,7 @@
 
 import {useStore} from 'vuex'
 import {computed, ref, watch} from 'vue'
-import router from '@/router'
+import router from '@/frame/router'
 import icon from '@/components/icon/index.vue'
 
 /*动态生成菜单*/

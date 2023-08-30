@@ -25,7 +25,7 @@
 import {computed, defineEmits, ref} from 'vue'
 import {useStore} from 'vuex'
 import icon from '@/components/icon/index.vue'
-import router from '@/router'
+import router from '@/frame/router'
 import {loginUserOut} from '@/api/system/login'
 
 /*更换主题*/

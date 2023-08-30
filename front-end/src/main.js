@@ -3,7 +3,7 @@ import App from './App.vue'
 import store from '@/frame/store'
 
 //路由配置
-import router from '@/router/index'
+import router from '@/frame/router/index'
 //naive 按需全局引入组件
 import naive from '@/frame/naive-plugin'
 //icons svg 图标引入

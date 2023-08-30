@@ -1,4 +1,4 @@
-import router, {addError} from '@/router/index'
+import router, {addError} from '@/frame/router/index'
 import store from '@/frame/store'
 import {getToken} from '@/utils/system/token'
 
