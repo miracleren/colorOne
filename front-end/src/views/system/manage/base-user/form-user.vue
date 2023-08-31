@@ -6,9 +6,14 @@
   >
     <n-grid :cols="24" :x-gap="24">
       <n-form-item-gi :span="24" label="部门" v-bind="validator.selectRequired('deptId','请选择部门',true)">
-        <select-dict type="base_user_sex"
-                     v-model:value="model.deptId"
-                     class="input-p100"></select-dict>
+        <n-tree-select
+            :options="deptsOptions"
+            :default-value="model.deptId"
+            label-field="deptName"
+            key-field="deptId"
+            children-field="children"
+            v-model:value="model.deptId"
+        />
       </n-form-item-gi>
 
       <n-form-item-gi :span="12" label="用户账号"
@@ -63,6 +68,7 @@ import SelectDict from '@/components/select-dict'
 import validator from '@/utils/ValidatorUtils'
 import {addBaseUser, editBaseUser} from '@/api/system/user'
 import {getSelectRoleList, getUserRoles} from '@/api/system/role'
+import {getBaseDeptTreeList} from '@/api/system/dept'
 
 
 const props = defineProps({
@@ -71,6 +77,7 @@ const props = defineProps({
 })
 const formRef = ref(null)
 const rolesOptions = ref([])        //用户角色选择数据
+const deptsOptions = ref([])      //部门选择数据
 
 /** 初始化相关数据 **/
 const model = ref({})
@@ -78,6 +85,7 @@ onMounted(() => {
   console.log(props.modelValue)
   //拷贝数据，编辑时不影响行数据
   model.value = Object.assign({}, props.modelValue)
+
 
   //加载角色选择列表
   getSelectRoleList().then(res => {
@@ -88,6 +96,11 @@ onMounted(() => {
       })
     }
   })
+
+  getBaseDeptTreeList({status: 0}).then(d => {
+    deptsOptions.value = d.data
+  })
+
 
 })
 

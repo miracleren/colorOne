@@ -1,5 +1,5 @@
 <template>
-  <layout-table-search>
+  <layout-left-content>
     <template #search>
       <n-form
           label-placement="left"
@@ -29,6 +29,20 @@
         </n-button>
       </n-form>
     </template>
+    <template #leftBar>
+      <n-card title="📖部门结构" :bordered="false">
+        <n-tree
+            block-line
+            :data="deptOptions"
+            key-field="deptId"
+            label-field="deptName"
+            children-field="children"
+            selectable
+            default-expand-all
+            @update:selected-keys="checkDept"
+        />
+      </n-card>
+    </template>
     <template #tool>
       <n-button v-permit="['user:add']" secondary type="success" @click="handle('add')">
         <icon icon="Add"/>
@@ -39,7 +53,7 @@
         <icon icon="Edit"/>
         修改
       </n-button>
-      <n-button :disabled="ObjectIsEmpty(checkRow)" v-permit="['user:delete:userId']" secondary type="info"
+      <n-button :disabled="ObjectIsEmpty(checkRow)" v-permit="['user:reset:password']" secondary type="info"
                 @click="handle('reset')">
         <icon icon="Key"/>
         重置密码
@@ -60,7 +74,7 @@
           :row-class-name="table.rowClassName"
       />
     </template>
-  </layout-table-search>
+  </layout-left-content>
 
   <n-modal v-model:show="formConfig.show" preset="card" :title="formConfig.title" class="edit-from">
     <form-user v-if="formConfig.type !== 'reset'" v-model="formData" :config="formConfig"/>
@@ -70,7 +84,7 @@
 
 <script setup>
 import {h, onMounted, ref} from 'vue'
-import LayoutTableSearch from '@/components/layout/layout-content-search.vue'
+import LayoutLeftContent from '@/components/layout/layout-left-content.vue'
 import icon from '@/components/icon/index.vue'
 import {ObjectIsEmpty} from '@/utils/ObjectUtils'
 import SelectDict from '@/components/select-dict'
@@ -79,13 +93,16 @@ import {deleteBaseUser, getBaseUserList, switchBaseUserStatus} from '@/api/syste
 import {NSwitch} from 'naive-ui'
 import FormUser from '@/views/system/manage/base-user/form-user.vue'
 import FormPassword from '@/views/system/manage/base-user/form-password.vue'
+import {getBaseDeptTreeList} from '@/api/system/dept'
+import {traverseTree} from '@/utils/TreeUtils'
 
 
 /** 查询参数 **/
 const searchFrom = ref({
-  userName: null, phone: null, status: null
+  userName: null, phone: null, status: null, deptId: null
 })
 const rangeDate = ref(null)
+const deptOptions = ref([])
 
 /** 初始化相关数据 **/
 onMounted(() => {
@@ -161,6 +178,20 @@ const getData = () => {
     tableData.value = res.data
     console.log('tableData.value ', tableData.value)
   })
+
+  getBaseDeptTreeList().then(d => {
+    traverseTree(d.data, (row) => {
+      if (row.status === 1)
+        row.deptName = row.deptName + ' (停用)'
+    })
+    deptOptions.value = d.data
+  })
+}
+
+/** 部门树触发事件 **/
+const checkDept = (v) => {
+  searchFrom.value.deptId = v.length > 0 ? v[0] : null
+  getData()
 }
 
 /**数据操作事件**/

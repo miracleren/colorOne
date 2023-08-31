@@ -1,4 +1,5 @@
 <template>
+
   <layout-table-search>
     <template #search>
       <n-form
@@ -6,13 +7,11 @@
           inline
           :show-feedback="false"
       >
-        <n-form-item label="角色名称">
-          <n-input v-model:value="searchFrom.menuName" class="input-220" clearable/>
+        <n-form-item label="部门名称">
+          <n-input v-model:value="searchFrom.deptName" class="input-220" clearable/>
         </n-form-item>
         <n-form-item label="状态">
-          <select-dict type="base_status"
-                       v-model:value="searchFrom.status"
-                       class="input-140">
+          <select-dict type="base_status" v-model:value="searchFrom.status" class="input-140">
           </select-dict>
         </n-form-item>
         <n-button type="primary" @click="handle('search')">
@@ -24,16 +23,22 @@
       </n-form>
     </template>
     <template #tool>
-      <n-button v-permit="['role:add']" secondary type="success" @click="handle('add')">
+      <n-button secondary type="success" @click="handle('add')">
         <icon icon="Add"/>
         新增
       </n-button>
-      <n-button :disabled="ObjectIsEmpty(checkRow)" v-permit="['role:edit']" secondary type="success"
+      <n-button v-permit="['dept:edit']" :disabled="ObjectIsEmpty(checkRow)" secondary type="success"
                 @click="handle('edit')">
         <icon icon="Edit"/>
         修改
       </n-button>
-      <n-button :disabled="ObjectIsEmpty(checkRow)" v-permit="['role:delete:roleId']" secondary type="warning"
+      <n-button :disabled="ObjectIsEmpty(checkRow)" v-permit="['dept:set:status']" secondary
+                :type="checkRow.status === 0 ? 'error' : 'info'"
+                @click="handle('status')">
+        <icon icon="Stop"/>
+        {{ checkRow.status === 0 ? '停用' : '启用' }}
+      </n-button>
+      <n-button v-permit="['dept:delete:deptId']" :disabled="ObjectIsEmpty(checkRow)" secondary type="warning"
                 @click="handle('delete')">
         <icon icon="Delete"/>
         删除
@@ -44,15 +49,16 @@
           :columns="table.columns"
           :data="tableData"
           :pagination="table.pagination"
-          :row-key="(row)=>row.roleId"
+          :row-key="(row)=>row.deptId"
           :row-props="table.rowProps"
           :row-class-name="table.rowClassName"
+          default-expand-all
       />
     </template>
   </layout-table-search>
 
   <n-modal v-model:show="formConfig.show" preset="card" :title="formConfig.title" class="edit-from">
-    <form-role v-model="formData" :config="formConfig"/>
+    <form-dept v-model="formData" :config="formConfig"/>
   </n-modal>
 </template>
 
@@ -60,16 +66,16 @@
 import {onMounted, ref} from 'vue'
 import LayoutTableSearch from '@/components/layout/layout-content-search.vue'
 import icon from '@/components/icon/index.vue'
-import FormRole from '@/views/system/manage/base-role/form-role.vue'
-import {ObjectIsEmpty} from '@/utils/ObjectUtils'
+import {deleteBaseDept, getBaseDeptTreeList, setBaseDeptStatus} from '@/api/system/dept'
+import FormDept from '@/views/system/manage/base-dept/form-dept.vue'
+import {ObjectIsEmpty, ObjectIsNotEmpty} from '@/utils/ObjectUtils'
 import SelectDict from '@/components/select-dict'
-import {deleteBaseRole, getBaseRoleList} from '@/api/system/role'
-
 
 /** 查询参数 **/
 const searchFrom = ref({
-  roleName: null, roleStatus: null
+  deptName: null, status: null
 })
+const setStatus = ref(1)
 
 /** 初始化相关数据 **/
 onMounted(() => {
@@ -81,24 +87,26 @@ let checkRow = ref({})
 const table = {
   columns: [
     {
-      title: '角色编号',
-      key: 'roleId'
+      title: '部门主键',
+      key: 'deptId'
     },
     {
-      title: '角色名称',
-      key: 'roleName',
-    },
-    {
-      title: '角色标识',
-      key: 'roleKey'
-    },
-    {
-      title: '排序',
-      key: 'roleSort'
+      title: '部门名称',
+      key: 'deptName'
     },
     {
       title: '状态',
       key: 'statusName'
+    },
+
+    {
+      title: '排序',
+      key: 'deptSort'
+    },
+
+    {
+      title: '创建时间',
+      key: 'createTime'
     },
     {
       title: '备注',
@@ -115,18 +123,14 @@ const table = {
           row === checkRow.value ? checkRow.value = {} : checkRow.value = row
       }
     }
-  },
-  pagination: {
-    pageSize: 15
   }
 }
 const tableData = ref([])
 
-/** 查询角色数据 **/
+/** 查询部门数据 **/
 const getData = () => {
-  getBaseRoleList(searchFrom.value).then(res => {
+  getBaseDeptTreeList(searchFrom.value).then(res => {
     tableData.value = res.data
-    console.log('tableData.value ', tableData.value)
   })
 }
 
@@ -140,7 +144,6 @@ const formConfig = ref({
     getData()
   }
 })
-
 const handle = (key) => {
   formConfig.value.type = key
   switch (key) {
@@ -150,13 +153,18 @@ const handle = (key) => {
     }
     case 'add': {
       formConfig.value.show = true
-      formConfig.value.title = '新增角色'
-      formData.value = {}
+      formConfig.value.title = '新增部门'
+      //新增子部门
+      console.log(formData.value)
+      if (ObjectIsNotEmpty(checkRow.value))
+        formData.value = {parentName: checkRow.value.deptName, parentId: checkRow.value.deptId}
+      else
+        formData.value = {}
       break
     }
     case 'edit': {
       formConfig.value.show = true
-      formConfig.value.title = checkRow.value.menuName + '-修改角色'
+      formConfig.value.title = checkRow.value.deptName + '-修改部门'
       formData.value = checkRow.value
       console.log('formData.value', formData.value)
       break
@@ -165,11 +173,11 @@ const handle = (key) => {
       window.$dialog.warning(
           {
             title: '警告',
-            content: '你确定删除该角色吗？',
+            content: '你确定删除该部门吗？',
             positiveText: '确定',
             negativeText: '关闭',
             onPositiveClick: () => {
-              deleteBaseRole(checkRow.value.roleId).then(res => {
+              deleteBaseDept(checkRow.value.deptId).then(res => {
                 if (res.data) {
                   checkRow.value = {}
                   window.$message.success('成功删除数据')
@@ -180,7 +188,25 @@ const handle = (key) => {
           })
       break
     }
+    case 'status': {
+      let msg = checkRow.value.status === 0 ? '停用' : '启用'
+      window.$dialog.warning(
+          {
+            title: '警告',
+            content: `${msg}当前部门后，会同步${msg}部门下的所有用户，你确定进行该操作吗？`,
+            positiveText: '确定',
+            negativeText: '关闭',
+            onPositiveClick: () => {
+              checkRow.value.status = checkRow.value.status === 0 ? 1 : 0
+              setBaseDeptStatus(checkRow.value).then(res => {
+                if (res.data) {
+                  checkRow.value = {}
+                  window.$message.success('成功变更部门的状态')
+                }
+              })
+            }
+          })
+    }
   }
 }
-
 </script>

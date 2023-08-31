@@ -32,17 +32,17 @@
         <icon icon="Add"/>
         新增分组
       </n-button>
-      <n-button v-permit="['role:add']" :disabled="!(ObjectIsNotEmpty(checkRow) && !checkRow.parentId)" secondary
+      <n-button v-permit="['dict:add']" :disabled="!(ObjectIsNotEmpty(checkRow) && !checkRow.parentId)" secondary
                 type="success" @click="handle('addChildren')">
         <icon icon="Tree"/>
         新增字典数据
       </n-button>
-      <n-button v-permit="['role:edit']" :disabled="ObjectIsEmpty(checkRow)" secondary type="success"
+      <n-button v-permit="['dict:edit']" :disabled="ObjectIsEmpty(checkRow)" secondary type="success"
                 @click="handle('edit')">
         <icon icon="Edit"/>
         修改
       </n-button>
-      <n-button v-permit="['role:delete:roleId']" :disabled="ObjectIsEmpty(checkRow)" secondary type="warning"
+      <n-button v-permit="['dict:delete:dictId']" :disabled="ObjectIsEmpty(checkRow)" secondary type="warning"
                 @click="handle('delete')">
         <icon icon="Delete"/>
         删除
@@ -144,9 +144,6 @@ const tableData = ref([])
 const getData = () => {
   searchFrom.value.params = formRangeTime(rangeDate.value)
   getBaseDictTreeList(searchFrom.value).then(res => {
-    res.data.forEach(row => {
-      row.isLeaf = false
-    })
     tableData.value = res.data
   })
 }
