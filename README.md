@@ -3,6 +3,13 @@
         <img width="100" src="front-end/src/assets/logo.png" alt="colorOne logo">
     </a>
 </p>
+<h1 align="center">颜一简易管理系统</h1>
+<p align="center">
+    <img src="https://img.shields.io/badge/PHP-7.3-green" />
+    <img src="https://img.shields.io/badge/MySQL-5.7-green" />
+    <img src="https://img.shields.io/badge/Node.js-12.18.2-green" />
+</p>
+
 
 #（正在从虚无中开垦.........................................................）
         
