@@ -8,6 +8,17 @@
             update_by = #{updateBy}
         where user_id = #{userId}
     </update>
+
+    <update id="setUserStatusByDept">
+        update base_user
+        set status      = #{status},
+            update_time = #{updateTime},
+            update_by   = #{updateBy}
+        where dept_id = #{deptId}
+          and del_flag = 0
+          and status <![CDATA[<>]]> #{status}
+    </update>
+
     <select id="selectBaseUserList" resultType="com.colorone.system.domain.entity.BaseUser">
         select bu.*, db.dict_label status_name
         from base_user bu
@@ -21,6 +32,9 @@
         </if>
         <if test="status != null  and status != ''">
             and bu.status = #{status}
+        </if>
+        <if test="deptId != null  and deptId != ''">
+            and bu.dept_id = #{deptId}
         </if>
         <if test="params != null and params.startTime != null ">
             and bu.create_time > FROM_UNIXTIME(#{params.startTime}/1000)

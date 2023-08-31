@@ -165,4 +165,29 @@ create table base_dict
     primary key (dict_id)
 ) engine = innodb
   auto_increment = 1000 comment = '字典数据表';
-;
+
+
+-------------------------------
+-- 7、部门数据表
+-------------------------------
+create table base_dept
+(
+    dept_id     bigint(20) not null auto_increment comment '部门主键',
+    parent_id   bigint(20) comment '父主键',
+    dept_name   varchar(64) not null comment '部门名称',
+    leader      varchar(64) comment '负责人',
+    contact     varchar(64) comment '联系方式',
+    dept_sort   int(4)       default 0 comment '部门排序',
+    scope_type  int(2) comment '数据权限范围',
+    status      int(1)       default 0 comment '状态（0正常 1停用）',
+    remark      varchar(200) default null comment '备注',
+
+    del_flag    int(1)       default 0 comment '删除标志（0代表存在 1代表删除）',
+    create_by   varchar(64)  default '' comment '创建者',
+    create_time datetime comment '创建时间',
+    update_by   varchar(64)  default '' comment '更新者',
+    update_time datetime comment '更新时间',
+
+    primary key (dept_id)
+) engine = innodb
+  auto_increment = 1000 comment = '部门数据表';

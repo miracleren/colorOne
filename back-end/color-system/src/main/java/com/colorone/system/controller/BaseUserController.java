@@ -114,4 +114,6 @@ public class BaseUserController {
 
         return RequestResult.success(baseUserService.resetUserPassword(user) > 0);
     }
+
+
 }

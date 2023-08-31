@@ -1,6 +1,7 @@
 package com.colorone.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.colorone.system.domain.entity.BaseDept;
 import com.colorone.system.domain.entity.BaseUser;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -29,4 +30,12 @@ public interface BaseUserMapper extends BaseMapper<BaseUser> {
      * @return
      */
     Integer updateUserStatus(BaseUser user);
+
+    /**
+     * 通过部门更新部门下的用户状态
+     *
+     * @param newDept 部门实体类
+     * @return
+     */
+    Integer setUserStatusByDept(BaseDept newDept);
 }

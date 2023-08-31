@@ -24,4 +24,9 @@ public class LabelItem {
      * 样式
      */
     private String style;
+
+    /**
+     * 状态
+     */
+    private Integer disabled;
 }
