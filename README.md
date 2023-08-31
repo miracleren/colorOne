@@ -1,4 +1,8 @@
-# 颜一简易管理系统
+<p align="center">
+    <a href="https://vuejs.org" target="_blank">
+        <img width="100" src="https://vuejs.org/images/logo.png" alt="colorOne logo">
+    </a>
+</p>
 
 #（正在从虚无中开垦.........................................................）
         
