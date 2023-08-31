@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://vuejs.org" target="_blank">
-        <img width="100" src="https://vuejs.org/images/logo.png" alt="colorOne logo">
+        <img width="100" src="front-end/src/assets/logo.png" alt="colorOne logo">
     </a>
 </p>
 
