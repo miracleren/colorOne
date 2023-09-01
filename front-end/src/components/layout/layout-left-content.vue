@@ -25,18 +25,16 @@
 <script setup>
 import {useSlots} from 'vue'
 
+/**
+ * 查询顶、操作表格与右操作区三角形结构
+ */
+
 const props = defineProps({
   leftPercent: {
     type: Number,
     default: 20
   }
 })
-
-
-console.log(props)
-/**
- * 查询顶、操作表格与右操作区三角形结构
- */
 
 </script>
 
@@ -69,7 +67,7 @@ console.log(props)
       box-sizing: border-box;
 
       .left-tool-box {
-        border: 1px solid #efeff5;
+        border: 1px solid #7f7f7f3d;
         height: 100%;
         box-sizing: border-box;
         overflow: auto;

@@ -174,11 +174,8 @@ const tableData = ref([])
 /** 查询用户数据 **/
 const getData = () => {
   searchFrom.value.params = formRangeTime(rangeDate.value)
-  getBaseUserList(searchFrom.value).then(res => {
-    tableData.value = res.data
-    console.log('tableData.value ', tableData.value)
-  })
 
+  //构建左侧选择树
   getBaseDeptTreeList().then(d => {
     traverseTree(d.data, (row) => {
       if (row.status === 1)
@@ -186,6 +183,12 @@ const getData = () => {
     })
     deptOptions.value = d.data
   })
+
+  getBaseUserList(searchFrom.value).then(res => {
+    tableData.value = res.data
+    console.log('tableData.value ', tableData.value)
+  })
+
 }
 
 /** 部门树触发事件 **/
