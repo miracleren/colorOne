@@ -1,0 +1,59 @@
+# 项目相关配置
+colorOne:
+  # 名称
+  name: ColorOne
+  # 版本
+  version: 1.0.0
+
+
+# 验证码配置
+captcha:
+  # 验证码类型 math 数组计算 char 字符验证
+  type: math
+  # 是否开启验证码
+  enabled: true
+
+# 开发环境配置
+server:
+  # 服务器的HTTP端口，默认为8181
+  port: 8181
+  servlet:
+    # 应用的访问路径
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    max-swallow-size: -1MB
+    threads:
+      # tomcat最大线程数，默认为200
+      max: 200
+      # Tomcat启动初始化的线程数，默认值25
+      min-spare: 25
+
+# token配置
+token:
+  # 令牌自定义标识
+  header: Authorization
+  # 令牌秘钥
+  secret: cuAihCz53DZRjZwbsGcZJ2Ai6At+T142uphtJMsk7iQ=
+  # 令牌有效期（默认30分钟）
+  expireTime: 30
+
+# 数据库配置
+spring:
+  #springboot多环境配置
+  profiles:
+    active: dev
+
+
+# MyBatis配置
+mybatis-plus:
+  # 对应的 XML 文件位置
+  mapper-locations: classpath*:mapper/**.xml
+  # 实体扫描，多个package用逗号或者分号分隔
+  type-aliases-package: com.colorone.**.domain
+  configuration:
+    #是否开启自动驼峰命名规则（camel case）映射，即从经典数据库列名 A_COLUMN（下划线命名） 到经典 Java 属性名 aColumn（驼峰命名） 的类似映射。
+    map-underscore-to-camel-case: true
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl

@@ -1,0 +1,11 @@
+com\colorone\system\service\BaseMenuService.class
+com\colorone\system\domain\BaseEntity.class
+com\colorone\system\domain\BaseMenu.class
+com\colorone\system\mapper\BaseMenuMapper.class
+com\colorone\system\domain\BaseUser.class
+com\colorone\system\mapper\CommonMapper.class
+com\colorone\system\controller\CommonController.class
+com\colorone\system\service\impl\BaseMenuServiceImpl.class
+com\colorone\system\service\impl\CommonServiceImpl.class
+com\colorone\system\domain\SelectTree.class
+com\colorone\system\service\CommonService.class

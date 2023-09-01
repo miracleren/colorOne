@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.colorone.system.mapper.BaseUserRoleMapper">
+
+    <update id="updateDelUserRoleExist">
+        update base_user_role
+        set del_flag    = 0,
+            update_by   = #{updateBy},
+            update_time = sysdate()
+        where role_id = #{roleId}
+          and user_id = #{userId}
+    </update>
+
+    <delete id="deleteRoleByUserId">
+        update base_user_role
+        set del_flag    = 1,
+            update_by   = #{updateBy},
+            update_time = sysdate()
+        where user_id = #{userId}
+          and del_flag = 0
+    </delete>
+</mapper>
