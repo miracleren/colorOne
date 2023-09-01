@@ -40,6 +40,8 @@
 colorOne一套开源的权限管理系统，相关功能将持续开发更新。
 基于SpringBoot3，java17，Spring Security，MybatisPlus，Vue3， naiveUi，MySql 实现的前后端分离权限管理简易系统。
 
+注意：目前系统还在开发期
+
 ## 🏁 功能模块 <a name = "功能模块"></a>
 
 1、用户管理
@@ -50,10 +52,16 @@ colorOne一套开源的权限管理系统，相关功能将持续开发更新。
 6、等等吧
 
 ### 功能实例
+![demo1.png](attachment%2Fimages%2Fdemo1.png)
+![demo2.png](attachment%2Fimages%2Fdemo2.png)
+![demo3.png](attachment%2Fimages%2Fdemo3.png)
+![demo4.png](attachment%2Fimages%2Fdemo4.png)
+![demo5.png](attachment%2Fimages%2Fdemo5.png)
+![demo6.png](attachment%2Fimages%2Fdemo6.png)
 
 ## 🚀 开发说明 <a name = "开发说明"></a>
 
-规范代码结构
+根据功能规范代码、目录结构
 
 ### 前端
 - 1、建议套用layout模板开发，菜单、功能为目录开发更界面，结构统一好维护。
