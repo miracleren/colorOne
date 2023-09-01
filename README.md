@@ -88,7 +88,7 @@ SpringBoot3，java17，Spring Security，MybatisPlus，Vue3， naiveUi，nodejs�
 
 ## ✍️ 开发者 <a name = "开发者"></a>
 
-- [@miracleren](https://https://github.com/miracleren) - Idea & Initial work，Only the lonely one in this project.
+- [@miracleren](https://github.com/miracleren) - Idea & Initial work，Only the lonely one in this project.
 
 ## 🎉 感谢 <a name = "感谢"></a>
 
