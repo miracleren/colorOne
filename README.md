@@ -5,8 +5,6 @@
 
 <h3 align="center">颜一简易管理系统</h3>
 
-<div align="center">
-
 <p align="center">
     <img src="https://img.shields.io/badge/Java-17-red" />
     <img src="https://img.shields.io/badge/SpringBoot-3.1-orange" />
@@ -17,13 +15,11 @@
     <img src="https://img.shields.io/badge/ColorOne-1.0.0-purple" />
 </p>
 
-</div>
-
----
-
-<p align="center">"颜"，取于女儿名中字，代表着生活的五彩缤纷与多样性，而"一"则是简，化繁为简而归一。这是一个简单易用而且不失美观的系统。
+<p style="font-size:12px;color:#8BC34A;">"颜"，取于女儿名中字，代表着生活的五彩缤纷与多样性，而"一"则是简，化繁为简而归一。这是一个简单易用而且不失美观的系统。
+    <br> 
     <br> 
 </p>
+
 
 ## 📝 目录
 
@@ -40,16 +36,16 @@
 colorOne一套开源的权限管理系统，相关功能将持续开发更新。
 基于SpringBoot3，java17，Spring Security，MybatisPlus，Vue3， naiveUi，MySql 实现的前后端分离权限管理简易系统。
 
-注意：目前系统还在开发期
+<font color=#F44336>注意：目前系统还在开发期，部分功能还没完善！</font>
 
 ## 🏁 功能模块 <a name = "功能模块"></a>
 
-1、用户管理
-2、部门管理
-3、角色管理
-4、菜单管理
-5、字典管理
-6、等等吧
+- 1、用户管理
+- 2、部门管理
+- 3、角色管理
+- 4、菜单管理
+- 5、字典管理
+- 6、等等吧
 
 ### 功能实例
 ![demo1.png](attachment%2Fimages%2Fdemo1.png)
@@ -66,11 +62,10 @@ colorOne一套开源的权限管理系统，相关功能将持续开发更新。
 ### 前端
 - 1、建议套用layout模板开发，菜单、功能为目录开发更界面，结构统一好维护。
 - 2、简单的新增修改删除功能，套用已有模块，便可快速开发。
-- 3、建议样式多套naiveui的动态样式，界面统一。
+
 ### 后端
 - 1、建议单一功能controller、service、mapper多层结构开发（套用原系统结构可快速开）。
 - 2、系统二次开发，建议新增model开发，便于后期维护。
-- 3、多写实体类、变量命名规范、多注解，好维护。
 
 ## 🔧 运行与测试 <a name = "运行与测试"></a>
 
