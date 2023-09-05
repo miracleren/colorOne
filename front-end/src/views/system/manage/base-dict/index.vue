@@ -57,8 +57,8 @@
           :row-props="table.rowProps"
           :row-class-name="table.rowClassName"
           default-expand-all
-          flex-height
           :remote="true"
+          flex-height
       />
     </template>
   </layout-table-search>

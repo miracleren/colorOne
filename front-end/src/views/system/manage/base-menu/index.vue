@@ -91,7 +91,7 @@ const table = {
   columns: [
     {
       title: '菜单名称',
-      key: 'menuName',
+      key: 'menuName'
     },
     {
       title: '图标',

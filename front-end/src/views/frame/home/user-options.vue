@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import {computed, defineEmits, ref} from 'vue'
+import {computed, defineEmits} from 'vue'
 import {useStore} from 'vuex'
 import icon from '@/components/icon/index.vue'
 import router from '@/frame/router'
