@@ -7,7 +7,7 @@
           :show-feedback="false"
       >
         <n-form-item label="角色名称">
-          <n-input v-model:value="searchFrom.menuName" class="input-220" clearable/>
+          <n-input v-model:value="searchFrom.roleName" class="input-220" clearable/>
         </n-form-item>
         <n-form-item label="状态">
           <select-dict type="base_status"
@@ -43,10 +43,12 @@
       <n-data-table
           :columns="table.columns"
           :data="tableData"
-          :pagination="table.pagination"
+          :pagination="pagination"
           :row-key="(row)=>row.roleId"
           :row-props="table.rowProps"
           :row-class-name="table.rowClassName"
+          flex-height
+          :remote="true"
       />
     </template>
   </layout-table-search>
@@ -64,6 +66,7 @@ import FormRole from '@/views/system/manage/base-role/form-role.vue'
 import {ObjectIsEmpty} from '@/utils/ObjectUtils'
 import SelectDict from '@/components/select-dict'
 import {deleteBaseRole, getBaseRoleList} from '@/api/system/role'
+import {paginationOption} from '@/utils/system/plugin-config'
 
 
 /** 查询参数 **/
@@ -115,17 +118,20 @@ const table = {
           row === checkRow.value ? checkRow.value = {} : checkRow.value = row
       }
     }
-  },
-  pagination: {
-    pageSize: 15
   }
 }
 const tableData = ref([])
+const pagination = paginationOption(() => getData())
 
 /** 查询角色数据 **/
 const getData = () => {
+  searchFrom.value.params = {
+    page: pagination.value.page,
+    pageSize: pagination.value.pageSize,
+  }
   getBaseRoleList(searchFrom.value).then(res => {
-    tableData.value = res.data
+    tableData.value = res.data.rows
+    pagination.value.itemCount = 0 || res.data.total
     console.log('tableData.value ', tableData.value)
   })
 }
@@ -156,7 +162,7 @@ const handle = (key) => {
     }
     case 'edit': {
       formConfig.value.show = true
-      formConfig.value.title = checkRow.value.menuName + '-修改角色'
+      formConfig.value.title = checkRow.value.roleName + '-修改角色'
       formData.value = checkRow.value
       console.log('formData.value', formData.value)
       break

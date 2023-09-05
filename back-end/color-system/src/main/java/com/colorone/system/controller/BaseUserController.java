@@ -30,7 +30,7 @@ public class BaseUserController {
     @GetMapping("/list")
     @ApiExtension(name = "查询用户数据列表", permitType = PermitType.ROLE)
     public RequestResult getBaseUserTreeList(BaseUser user) {
-        return RequestResult.success(baseUserService.getBaseUserList(user));
+        return RequestResult.page(baseUserService.getBaseUserList(user));
     }
 
     /**

@@ -57,7 +57,7 @@
 <script setup>
 import {onBeforeMount, onMounted, ref} from 'vue'
 import SelectDict from '@/components/select-dict'
-import validator from '@/utils/ValidatorUtils'
+import validator from '@/utils/system/validator'
 import {editBaseDict} from '@/api/system/dict'
 import {getBaseMenuTreeSelect} from '@/api/system/menu'
 import {addBaseRole, editBaseRole, getRoleMenuIds} from '@/api/system/role'

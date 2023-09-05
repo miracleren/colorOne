@@ -32,7 +32,7 @@ public class BaseDictController {
     @GetMapping("/list")
     @ApiExtension(name = "查询字典数据列表", permitType = PermitType.ROLE)
     public RequestResult getBaseDictList(BaseDict dict) {
-        return RequestResult.success(baseDictService.getDictList(dict));
+        return RequestResult.page(baseDictService.getDictList(dict));
     }
 
     /**

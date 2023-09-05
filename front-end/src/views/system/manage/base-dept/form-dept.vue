@@ -46,7 +46,7 @@
 <script setup>
 import {onMounted, ref} from 'vue'
 import SelectDict from '@/components/select-dict'
-import validator from '@/utils/ValidatorUtils'
+import validator from '@/utils/system/validator'
 import {addBaseDept, editBaseDept} from '@/api/system/dept'
 
 

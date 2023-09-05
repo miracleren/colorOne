@@ -69,5 +69,5 @@ public interface BaseDictService {
      * @param dict dict 字典实体类
      * @return 字典列表
      */
-    List<Map> getDictTreeList(BaseDict dict);
+    Map getDictTreeList(BaseDict dict);
 }

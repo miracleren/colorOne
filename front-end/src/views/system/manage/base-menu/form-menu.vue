@@ -61,7 +61,7 @@
 import {onMounted, ref} from 'vue'
 import SelectDict from '@/components/select-dict'
 import RadioDict from '@/components/radio-dict'
-import validator from '@/utils/ValidatorUtils'
+import validator from '@/utils/system/validator'
 import {editBaseDict} from '@/api/system/dict'
 import {addBaseMenu, editBaseMenu} from '@/api/system/menu'
 

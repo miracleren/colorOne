@@ -29,7 +29,7 @@ public class BaseRoleController {
     @GetMapping("/list")
     @ApiExtension(name = "查询角色数据列表", permitType = PermitType.ROLE)
     public RequestResult getBaseRoleTreeList(BaseRole role) {
-        return RequestResult.success(baseRoleService.getBaseRoleList(role));
+        return RequestResult.page(baseRoleService.getBaseRoleList(role));
     }
 
     /**

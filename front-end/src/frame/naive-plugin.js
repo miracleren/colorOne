@@ -15,7 +15,7 @@ import {
     NTab, NBreadcrumb, NBreadcrumbItem, NDatePicker, NSelect,
     NDataTable, NModal, NGrid, NFormItemGi, NInputNumber,
     NTag, NRadioGroup, NRadio, NTree, NTooltip,
-    NTreeSelect, NGi
+    NTreeSelect, NGi, NPagination
 } from 'naive-ui'
 
 const naive = create({
@@ -26,7 +26,7 @@ const naive = create({
         NTab, NBreadcrumb, NBreadcrumbItem, NDatePicker, NSelect,
         NDataTable, NModal, NGrid, NFormItemGi, NInputNumber,
         NTag, NRadioGroup, NRadio, NTree, NTooltip,
-        NTreeSelect, NGi]
+        NTreeSelect, NGi, NPagination]
 })
 
 export default naive

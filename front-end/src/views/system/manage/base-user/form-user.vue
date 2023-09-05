@@ -65,7 +65,7 @@
 <script setup>
 import {onMounted, ref} from 'vue'
 import SelectDict from '@/components/select-dict'
-import validator from '@/utils/ValidatorUtils'
+import validator from '@/utils/system/validator'
 import {addBaseUser, editBaseUser} from '@/api/system/user'
 import {getSelectRoleList, getUserRoles} from '@/api/system/role'
 import {getBaseDeptTreeList} from '@/api/system/dept'

@@ -1,8 +1,8 @@
 package com.colorone.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.colorone.common.utils.PageUtils;
 import com.colorone.common.utils.SecurityUtils;
-import com.colorone.common.utils.data.ObjectUtils;
 import com.colorone.system.domain.entity.BaseUser;
 import com.colorone.system.domain.entity.BaseUserRole;
 import com.colorone.system.mapper.BaseUserMapper;
@@ -29,6 +29,7 @@ public class BaseUserServiceImpl implements BaseUserService {
 
     @Override
     public List<BaseUser> getBaseUserList(BaseUser user) {
+        PageUtils.start();
         return baseUserMapper.selectBaseUserList(user);
     }
 

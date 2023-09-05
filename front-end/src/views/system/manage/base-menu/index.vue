@@ -49,10 +49,10 @@
       <n-data-table
           :columns="table.columns"
           :data="tableData"
-          :pagination="table.pagination"
           :row-key="(row)=>row.menuId"
           :row-props="table.rowProps"
           :row-class-name="table.rowClassName"
+          flex-height
       />
     </template>
   </layout-table-search>

@@ -48,11 +48,11 @@
       <n-data-table
           :columns="table.columns"
           :data="tableData"
-          :pagination="table.pagination"
           :row-key="(row)=>row.deptId"
           :row-props="table.rowProps"
           :row-class-name="table.rowClassName"
           default-expand-all
+          flex-height
       />
     </template>
   </layout-table-search>

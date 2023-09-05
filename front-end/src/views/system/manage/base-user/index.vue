@@ -34,11 +34,14 @@
         <n-tree
             block-line
             :data="deptOptions"
+            :pagination="pagination"
             key-field="deptId"
             label-field="deptName"
             children-field="children"
             selectable
             default-expand-all
+            flex-height
+            :remote="true"
             @update:selected-keys="checkDept"
         />
       </n-card>
@@ -68,10 +71,12 @@
       <n-data-table
           :columns="table.columns"
           :data="tableData"
-          :pagination="table.pagination"
+          :pagination="pagination"
           :row-key="(row)=>row.userId"
           :row-props="table.rowProps"
           :row-class-name="table.rowClassName"
+          flex-height
+          :remote="true"
       />
     </template>
   </layout-left-content>
@@ -95,6 +100,7 @@ import FormUser from '@/views/system/manage/base-user/form-user.vue'
 import FormPassword from '@/views/system/manage/base-user/form-password.vue'
 import {getBaseDeptTreeList} from '@/api/system/dept'
 import {traverseTree} from '@/utils/TreeUtils'
+import {paginationOption} from '@/utils/system/plugin-config'
 
 
 /** 查询参数 **/
@@ -106,6 +112,15 @@ const deptOptions = ref([])
 
 /** 初始化相关数据 **/
 onMounted(() => {
+  //构建左侧选择树
+  getBaseDeptTreeList().then(d => {
+    traverseTree(d.data, (row) => {
+      if (row.status === 1)
+        row.deptName = row.deptName + ' (停用)'
+    })
+    deptOptions.value = d.data
+  })
+
   getData()
 })
 
@@ -164,28 +179,20 @@ const table = {
           row === checkRow.value ? checkRow.value = {} : checkRow.value = row
       }
     }
-  },
-  pagination: {
-    pageSize: 15
   }
 }
 const tableData = ref([])
+const pagination = paginationOption(() => getData())
 
 /** 查询用户数据 **/
 const getData = () => {
-  searchFrom.value.params = formRangeTime(rangeDate.value)
-
-  //构建左侧选择树
-  getBaseDeptTreeList().then(d => {
-    traverseTree(d.data, (row) => {
-      if (row.status === 1)
-        row.deptName = row.deptName + ' (停用)'
-    })
-    deptOptions.value = d.data
+  searchFrom.value.params = Object.assign(formRangeTime(rangeDate.value), {
+    page: pagination.value.page,
+    pageSize: pagination.value.pageSize,
   })
-
   getBaseUserList(searchFrom.value).then(res => {
-    tableData.value = res.data
+    tableData.value = res.data.rows
+    pagination.value.itemCount = 0 || res.data.total
     console.log('tableData.value ', tableData.value)
   })
 

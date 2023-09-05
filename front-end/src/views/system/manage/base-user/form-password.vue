@@ -27,7 +27,7 @@
 
 <script setup>
 import {onMounted, ref} from 'vue'
-import validator from '@/utils/ValidatorUtils'
+import validator from '@/utils/system/validator'
 import {resetUserPassword} from '@/api/system/user'
 import {randomPassword} from '@/utils/RandomUtils'
 

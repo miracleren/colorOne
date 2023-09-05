@@ -52,11 +52,13 @@
       <n-data-table
           :columns="table.columns"
           :data="tableData"
-          :pagination="table.pagination"
+          :pagination="pagination"
           :row-key="(row)=>row.dictId"
           :row-props="table.rowProps"
           :row-class-name="table.rowClassName"
           default-expand-all
+          flex-height
+          :remote="true"
       />
     </template>
   </layout-table-search>
@@ -74,6 +76,8 @@ import {deleteBaseDict, getBaseDictTreeList} from '@/api/system/dict'
 import FormDict from '@/views/system/manage/base-dict/form-dict.vue'
 import {ObjectIsEmpty, ObjectIsNotEmpty} from '@/utils/ObjectUtils'
 import {formRangeTime} from '@/utils/DateUtils'
+import {paginationOption} from '@/utils/system/plugin-config'
+
 
 /** 查询参数 **/
 const searchFrom = ref({
@@ -83,6 +87,7 @@ const rangeDate = ref(null)
 
 /** 初始化相关数据 **/
 onMounted(() => {
+
   getData()
 })
 
@@ -139,12 +144,17 @@ const table = {
   }
 }
 const tableData = ref([])
+const pagination = paginationOption(() => getData())
 
 /** 查询字典数据 **/
 const getData = () => {
-  searchFrom.value.params = formRangeTime(rangeDate.value)
+  searchFrom.value.params = Object.assign(formRangeTime(rangeDate.value), {
+    page: pagination.value.page,
+    pageSize: pagination.value.pageSize,
+  })
   getBaseDictTreeList(searchFrom.value).then(res => {
-    tableData.value = res.data
+    tableData.value = res.data.rows
+    pagination.value.itemCount = 0 || res.data.total
   })
 }
 

@@ -1,5 +1,6 @@
 package com.colorone.system.service.impl;
 
+import com.colorone.common.utils.PageUtils;
 import com.colorone.common.utils.SecurityUtils;
 import com.colorone.system.domain.LabelItem;
 import com.colorone.system.domain.entity.BaseRole;
@@ -28,6 +29,7 @@ public class BaseRoleServiceImpl implements BaseRoleService {
 
     @Override
     public List<BaseRole> getBaseRoleList(BaseRole role) {
+        PageUtils.start();
         return baseRoleMapper.selectBaseRoleList(role);
     }
 

@@ -1,13 +1,16 @@
 package com.colorone.system.service.impl;
 
+import com.colorone.common.utils.PageUtils;
 import com.colorone.common.utils.TreeBuildUtils;
 import com.colorone.system.domain.LabelItem;
 import com.colorone.system.domain.entity.BaseDict;
 import com.colorone.system.mapper.BaseDictMapper;
 import com.colorone.system.service.BaseDictService;
+import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +27,7 @@ public class BaseDictServiceImpl implements BaseDictService {
 
     @Override
     public List<BaseDict> getDictList(BaseDict dict) {
+        PageUtils.start();
         return baseDictMapper.selectDictList(dict);
     }
 
@@ -57,15 +61,23 @@ public class BaseDictServiceImpl implements BaseDictService {
     }
 
     @Override
-    public List<Map> getDictTreeList(BaseDict dict) {
+    public Map getDictTreeList(BaseDict dict) {
+        PageUtils.start();
         List<BaseDict> dicts = baseDictMapper.selectDictList(dict);
-        dicts.addAll(baseDictMapper.selectDictChildrenList(dicts));
+        if (dicts.size() > 0)
+            dicts.addAll(baseDictMapper.selectDictChildrenList(dicts));
 
         List<Map> dictTree = TreeBuildUtils.init().
                 setKey("dictId", "parentId", null).
                 toListMap(dicts).build();
 
-        return dictTree;
+        //结果直接返回分页，因返回的dictTree重建后无分页信息
+        Map<String, Object> res = new HashMap<>() {{
+            put("total", ((Page) dicts).getTotal());
+            put("rows", dictTree);
+        }};
+
+        return res;
     }
 
 }

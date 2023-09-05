@@ -1,6 +1,6 @@
 package com.colorone.common.domain.core;
 
-import lombok.Builder;
+import com.github.pagehelper.Page;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
@@ -29,6 +29,10 @@ public class RequestResult {
      * 数据对象
      */
     private Object data;
+
+    public void setData(Object data) {
+        this.data = data;
+    }
 
     /**
      * 初始化一个新创建的 RequestResult 对象，使其表示一个空消息。
@@ -75,6 +79,21 @@ public class RequestResult {
      * @return 成功消息
      */
     public static RequestResult success(Object data) {
+        return RequestResult.success("操作成功", data);
+    }
+
+    /**
+     * 返回分页数据
+     *
+     * @return 成功消息
+     */
+    public static RequestResult page(Object data) {
+        if (data instanceof Page) {
+            PageResult pageResult = new PageResult();
+            pageResult.setRows(data);
+            pageResult.setTotal(((Page) data).getTotal());
+            return RequestResult.success("操作成功", pageResult);
+        }
         return RequestResult.success("操作成功", data);
     }
 
