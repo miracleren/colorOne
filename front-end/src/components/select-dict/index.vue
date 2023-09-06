@@ -9,13 +9,15 @@
 <script setup>
 import {computed, ref} from 'vue'
 import {getSelectDictList} from '@/api/system/dict'
+import {ObjectIsEmpty} from '@/utils/ObjectUtils'
 
 
 const props = defineProps({
   value: [String, Number],
   type: String,
   placeholder: String,
-  disabled: Array
+  disabled: Array,
+  number: {type: Boolean, default: false},
 })
 
 const emit = defineEmits(['update:value'])
@@ -25,8 +27,9 @@ const selectValue = computed({
   },
   set: (val) => {
     console.log(typeof val)
-    if (val !== selectValue.value)
+    if (val !== selectValue.value) {
       emit('update:value', val)
+    }
   }
 })
 
@@ -34,8 +37,8 @@ const selectValue = computed({
 const options = ref([])
 getSelectDictList(props.type).then(res => {
   //数字类型处理
-  console.log('typeof props.value ', typeof props.value)
-  if (typeof props.value === 'number') {
+  console.log('typeof props.value ', props.number)
+  if (props.number) {
     for (let item of res.data)
       item.value = parseInt(item.value)
   }

@@ -97,6 +97,8 @@ public class BaseUserController {
     @PutMapping("/status/switch")
     @ApiExtension(name = "切换用户账号状态", permitType = PermitType.ROLE)
     public RequestResult switchBaseUserStatus(@RequestBody BaseUser user) {
+        if (1L == user.getUserId())
+            return RequestResult.error("不能切换系统超级管理员用户账号状态！");
         return RequestResult.success(baseUserService.switchBaseUserStatus(user) > 0);
     }
 

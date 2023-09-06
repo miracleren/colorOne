@@ -166,7 +166,8 @@ const table = {
     },
     {
       title: '创建时间',
-      key: 'createTime'
+      key: 'createTime',
+      width:180
     }
   ],
   rowClassName(row) {
@@ -225,7 +226,7 @@ const handle = (key) => {
     case 'add': {
       formConfig.value.show = true
       formConfig.value.title = '新增用户'
-      formData.value = {}
+      formData.value = {deptId: searchFrom.value.deptId}
       break
     }
     case 'edit': {

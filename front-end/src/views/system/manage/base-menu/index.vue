@@ -91,7 +91,8 @@ const table = {
   columns: [
     {
       title: '菜单名称',
-      key: 'menuName'
+      key: 'menuName',
+      width: 250
     },
     {
       title: '图标',
@@ -113,7 +114,8 @@ const table = {
     },
     {
       title: '组件路径',
-      key: 'component'
+      key: 'component',
+      width: 250
     },
     {
       title: '地址',

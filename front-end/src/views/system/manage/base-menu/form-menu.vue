@@ -11,7 +11,8 @@
         </n-tag>
       </n-form-item-gi>
 
-      <n-form-item-gi :span="12" label="菜单类型" v-bind="validator.selectRequired('menuType','请选择菜单类型')">
+      <n-form-item-gi v-if="model.menuType !== 'b'" :span="12" label="菜单类型"
+                      v-bind="validator.selectRequired('menuType','请选择菜单类型')">
         <select-dict type="base_menu_type" v-model:value="model.menuType" class="input-220"
                      :disabled="['b']"></select-dict>
       </n-form-item-gi>
@@ -25,7 +26,7 @@
         <n-input-number v-model:value="model.orderNum" placeholder="请输入排序"/>
       </n-form-item-gi>
 
-      <n-form-item-gi :span="12" label="组件路径"
+      <n-form-item-gi v-if="model.menuType !== 'b'" :span="12" label="组件路径"
                       v-bind="validator.required('component','请输入组件路径')">
         <n-input v-model:value="model.component" placeholder="请输入组件路径"/>
       </n-form-item-gi>
@@ -34,15 +35,16 @@
         <n-input v-model:value="model.path" placeholder="请输入path"/>
       </n-form-item-gi>
 
-      <n-form-item-gi label="菜单图标" :span="12">
+      <n-form-item-gi v-if="model.menuType !== 'b'" label="菜单图标" :span="12">
         <n-input v-model:value="model.icon" placeholder="请输入菜单图标"/>
       </n-form-item-gi>
 
-      <n-form-item-gi :span="12" label="状态" v-bind="validator.selectRequired('status','请选择状态')">
-        <radio-dict type="base_status" v-model:value="model.status"></radio-dict>
+      <n-form-item-gi :span="12" label="状态" v-bind="validator.selectRequired('status','请选择状态',true)">
+        <radio-dict type="base_status" :number="true" v-model:value="model.status"></radio-dict>
       </n-form-item-gi>
 
-      <n-form-item-gi :span="12" label="是否显示" v-bind="validator.selectRequired('visible','请选择是否显示')">
+      <n-form-item-gi v-if="model.menuType !== 'b'" :span="12" label="是否显示"
+                      v-bind="validator.selectRequired('visible','请选择是否显示')">
         <radio-dict type="base_visible" v-model:value="model.visible"></radio-dict>
       </n-form-item-gi>
 

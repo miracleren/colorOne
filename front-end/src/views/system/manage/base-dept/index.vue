@@ -23,7 +23,7 @@
       </n-form>
     </template>
     <template #tool>
-      <n-button secondary type="success" @click="handle('add')">
+      <n-button secondary v-permit="['dept:add']" type="success" @click="handle('add')">
         <icon icon="Add"/>
         新增
       </n-button>
@@ -87,8 +87,8 @@ let checkRow = ref({})
 const table = {
   columns: [
     {
-      title: '部门主键',
-      key: 'deptId'
+      title: '部门编号',
+      key: 'deptId',
     },
     {
       title: '部门名称',

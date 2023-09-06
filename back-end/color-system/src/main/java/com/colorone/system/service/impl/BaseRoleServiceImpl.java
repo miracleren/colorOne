@@ -55,12 +55,12 @@ public class BaseRoleServiceImpl implements BaseRoleService {
         baseRoleMenuMapper.deleteMenuByRoleId(role.getRoleId(), SecurityUtils.getUsername());
         //新增或更新存在的关联数据
         if (i > 0 && role.getParams().containsKey("permits")) {
-            List<Long> permits = (List<Long>) role.getParams().get("permits");
+            List<Integer> permits = (List<Integer>) role.getParams().get("permits");
 
-            for (Long p : permits) {
+            for (Integer p : permits) {
                 BaseRoleMenu roleMenu = new BaseRoleMenu();
                 roleMenu.setRoleId(role.getRoleId());
-                roleMenu.setMenuId(p);
+                roleMenu.setMenuId(p.longValue());
                 roleMenu.setUpdateBy(SecurityUtils.getUsername());
                 int u = baseRoleMenuMapper.updateDelRoleMenuExist(roleMenu);
                 if (u == 0)

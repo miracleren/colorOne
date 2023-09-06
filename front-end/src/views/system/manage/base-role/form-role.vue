@@ -14,8 +14,9 @@
       <n-form-item-gi :span="12" label="排序" v-bind="validator.number('roleSort','请输入小于 999 数字序号',null,999)">
         <n-input-number v-model:value="model.roleSort" placeholder="请输入排序"/>
       </n-form-item-gi>
-      <n-form-item-gi :span="12" label="状态" v-bind="validator.selectRequired('status','请选择状态')">
+      <n-form-item-gi :span="12" label="状态" v-bind="validator.selectRequired('status','请选择状态',true)">
         <select-dict type="base_status"
+                     :number="true"
                      v-model:value="model.status"
                      class="input-140"></select-dict>
       </n-form-item-gi>
