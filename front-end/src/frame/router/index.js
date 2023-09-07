@@ -18,7 +18,7 @@ const routes = [
             {
                 path: '/index',
                 name: 'dashboard',
-                component: () => import('@/views/frame/home/dashboard/index.vue'),
+                component: () => import('@/views/frame/dashboard/index.vue'),
             }
         ]
     },

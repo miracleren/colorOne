@@ -24,14 +24,16 @@
       <!--中部-->
       <n-layout class="body-center" has-sider>
         <sidebar-menu></sidebar-menu>
-        <n-layout class="section-body">
-          <router-view v-slot="{ Component ,route }">
-            <keep-alive>
-              <component :is="Component" v-if="defaultSetting.keepAlive" :key="route.name"/>
-            </keep-alive>
-            <component :is="Component" v-if="!defaultSetting.keepAlive" :key="route.name"/>
-          </router-view>
-        </n-layout>
+        <transition :name="defaultSetting.routerTransition" mode="out-in">
+          <n-layout class="section-body" :key="$route.path">
+            <router-view v-slot="{ Component ,route }">
+              <keep-alive>
+                <component :is="Component" v-if="defaultSetting.keepAlive" :key="route.path"/>
+              </keep-alive>
+              <component :is="Component" v-if="!defaultSetting.keepAlive" :key="route.path"/>
+            </router-view>
+          </n-layout>
+        </transition>
       </n-layout>
 
       <!--底部-->
