@@ -36,7 +36,8 @@
       </n-form-item-gi>
 
       <n-form-item-gi v-if="model.menuType !== 'b'" label="菜单图标" :span="12">
-        <n-input v-model:value="model.icon" placeholder="请输入菜单图标"/>
+        <!--        <n-input v-model:value="model.icon" placeholder="请输入菜单图标"/>-->
+        <select-icon v-model:value="model.icon"></select-icon>
       </n-form-item-gi>
 
       <n-form-item-gi :span="12" label="状态" v-bind="validator.selectRequired('status','请选择状态',true)">
@@ -44,8 +45,8 @@
       </n-form-item-gi>
 
       <n-form-item-gi v-if="model.menuType !== 'b'" :span="12" label="是否显示"
-                      v-bind="validator.selectRequired('visible','请选择是否显示')">
-        <radio-dict type="base_visible" v-model:value="model.visible"></radio-dict>
+                      v-bind="validator.selectRequired('visible','请选择是否显示',true)">
+        <radio-dict type="base_visible" :number="true" v-model:value="model.visible"></radio-dict>
       </n-form-item-gi>
 
       <n-form-item-gi :span="24" label="备注">
@@ -66,7 +67,7 @@ import RadioDict from '@/components/radio-dict'
 import validator from '@/utils/system/validator'
 import {editBaseDict} from '@/api/system/dict'
 import {addBaseMenu, editBaseMenu} from '@/api/system/menu'
-
+import SelectIcon from '@/components/select-icon'
 
 const props = defineProps({
   modelValue: Object,
