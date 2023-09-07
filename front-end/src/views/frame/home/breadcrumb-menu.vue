@@ -1,11 +1,13 @@
 <template>
-  <n-breadcrumb separator=">">
-    <n-breadcrumb-item
-        :clickable="false" v-for="item in breadcrumb"
-        :key="item.menuId ">
-      <icon :icon="item.icon" :color="'#607D8B'" size="18"></icon>
-      {{ item.menuName }}
-    </n-breadcrumb-item>
+  <n-breadcrumb separator=">" class="router-breadcrumb">
+    <transition-group name="switch">
+      <n-breadcrumb-item
+          :clickable="false" v-for="item in breadcrumb"
+          :key="item.menuId ">
+        <icon :icon="item.icon" :color="'#607D8B'" size="18"></icon>
+        {{ item.menuName }}
+      </n-breadcrumb-item>
+    </transition-group>
   </n-breadcrumb>
 </template>
 

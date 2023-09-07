@@ -72,6 +72,7 @@ body {
 
 
 /** 动画样式 **/
+//fade 渐隐
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;
@@ -82,6 +83,7 @@ body {
   opacity: 0;
 }
 
+//scale缩放
 .scale-enter-active,
 .scale-leave-active {
   transition: all 0.5s ease;
@@ -93,3 +95,21 @@ body {
   transform: scale(0.9);
 }
 
+//切换
+.switch-enter-active {
+  transition: transform  0.4s !important;
+}
+
+.switch-leave-active {
+  transition: transform  0.3s !important;
+}
+
+.switch-enter-from,
+.switch-leave-active {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.switch-leave-active {
+  position: absolute;
+}

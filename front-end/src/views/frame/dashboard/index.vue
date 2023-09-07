@@ -1,34 +1,21 @@
 <template>
   还在研究
   <button @click="toggle">Toggle</button>
-  <transition name="fade">
-    <h1 v-show="show">显示测试</h1>
+  <transition name="switch">
+    <span :key="data[3]">{{ '<' + data[3] }}</span>
   </transition>
-
 </template>
 
 <script setup>
 import {ref} from 'vue'
 
-const show = ref(false)
-
+const data = ref(['AAA', 'BBB', 'CCC'])
 const toggle = () => {
-
-  show.value = !show.value
+  data.value[3] = Math.random()
 }
 </script>
 
 <style lang="scss">
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
 
-.fade-enter-to, .fade-leave {
-  opacity: 1;
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 1.5s
-}
 
 </style>
