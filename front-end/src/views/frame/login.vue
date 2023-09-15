@@ -42,6 +42,7 @@
           <n-button
               :disabled="!loginInfo.userName|| !loginInfo.password || !loginInfo.captcha"
               @click="handleLogin"
+              @keyup.enter="handleLogin"
               class="login-button" type="success">
             登录
           </n-button>
@@ -69,7 +70,7 @@ let loginInfo = ref({
   userName: 'OneAdmin',
   password: 'Color@123',
   captcha: '',
-  code:''
+  code: ''
 })
 
 //登录获取token，用户息通过路由守卫获取，并校验限权

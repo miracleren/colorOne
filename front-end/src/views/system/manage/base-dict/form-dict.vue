@@ -21,7 +21,7 @@
                      v-model:value="model.status"
                      class="input-140"></select-dict>
       </n-form-item-gi>
-      <n-form-item-gi label="字典键值" v-if="props.config.type==='addChildren'" :span="12"
+      <n-form-item-gi label="字典键值" v-if="props.config.type==='addChildren' || props.config.type==='edit'" :span="12"
                       v-bind="validator.required('dictValue','请输入字典键值')">
         <n-input v-model:value="model.dictValue" placeholder="请输入字典键值"/>
       </n-form-item-gi>

@@ -11,7 +11,8 @@
       <n-form-item-gi :span="12" label="角色标识" v-bind="validator.required('roleKey','请输入角色标识')">
         <n-input v-model:value="model.roleKey" placeholder="请输入角色标识"/>
       </n-form-item-gi>
-      <n-form-item-gi :span="12" label="排序" v-bind="validator.number('roleSort','请输入小于 999 数字序号',null,999)">
+      <n-form-item-gi :span="12" label="排序"
+                      v-bind="validator.number('roleSort','请输入小于 999 数字序号',null,999)">
         <n-input-number v-model:value="model.roleSort" placeholder="请输入排序"/>
       </n-form-item-gi>
       <n-form-item-gi :span="12" label="状态" v-bind="validator.selectRequired('status','请选择状态',true)">
@@ -21,7 +22,7 @@
                      class="input-140"></select-dict>
       </n-form-item-gi>
 
-      <n-form-item-gi :span="24" label="菜单权限">
+      <n-form-item-gi :span="12" label="菜单权限">
         <n-space vertical style="width: 100%">
           <n-switch v-model:value="cascade">
             <template #checked>
@@ -32,7 +33,7 @@
             </template>
           </n-switch>
           <n-tree
-              style="height: 300px;overflow: auto;width: 100%;"
+              style="height: 250px;overflow: auto;width: 100%;"
               block-line
               :cascade="cascade"
               checkable
@@ -42,6 +43,13 @@
               @update:checked-keys="updateCheckedKeys"
           />
         </n-space>
+      </n-form-item-gi>
+
+      <n-form-item-gi :span="12" label="数据权限">
+        <select-dict type="role_data_scope"
+                     :multiple="true"
+                     v-model:value="scopeList"
+                     class="input-220"></select-dict>
       </n-form-item-gi>
 
       <n-form-item-gi :span="24" label="备注">
@@ -72,6 +80,7 @@ const formRef = ref(null)
 
 /** 菜单权限树 **/
 const cascade = ref(false)
+const scopeList = ref([])
 const menuData = ref([])
 let checkPermits = []
 const defaultCheckedKeys = ref([])
@@ -86,6 +95,7 @@ const model = ref({})
 onMounted(() => {
   //拷贝数据，编辑时不影响行数据
   model.value = Object.assign({}, props.modelValue)
+  scopeList.value = model.value.scope ? model.value.scope.split(' or ') : []
 
   //加载菜单权限树数据
   getBaseMenuTreeSelect().then(res => {
@@ -107,6 +117,7 @@ const handlePost = () => {
   formRef.value?.validate((errors) => {
     if (!errors) {
       model.value.params = {permits: checkPermits}
+      model.value.scope = scopeList.value.join(' or ')
       //新增数据
       if (props.config.type === 'add') {
         addBaseRole(model.value).then(res => {

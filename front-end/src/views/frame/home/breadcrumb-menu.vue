@@ -1,6 +1,7 @@
 <template>
   <n-breadcrumb separator=">" class="router-breadcrumb">
     <transition-group name="switch">
+      <!-- 需要覆盖 n-breadcrumb-item 原动画效果-->
       <n-breadcrumb-item
           :clickable="false" v-for="item in breadcrumb"
           :key="item.menuId ">

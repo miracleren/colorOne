@@ -3,17 +3,17 @@
       v-model:value="selectValue"
       :placeholder="props.placeholder"
       :options="options"
+      :multiple="multiple"
       clearable/>
 </template>
 
 <script setup>
 import {computed, ref} from 'vue'
 import {getSelectDictList} from '@/api/system/dict'
-import {ObjectIsEmpty} from '@/utils/ObjectUtils'
-
 
 const props = defineProps({
-  value: [String, Number],
+  value: [String, Number, Array],
+  multiple: {type: Boolean, default: false},
   type: String,
   placeholder: String,
   disabled: Array,

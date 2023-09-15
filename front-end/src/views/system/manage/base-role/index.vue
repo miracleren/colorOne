@@ -53,7 +53,7 @@
     </template>
   </layout-table-search>
 
-  <n-modal v-model:show="formConfig.show" preset="card" :title="formConfig.title" class="edit-from">
+  <n-modal v-model:show="formConfig.show" preset="card" :title="formConfig.title" class="edit-from" style="width: 900px">
     <form-role v-model="formData" :config="formConfig"/>
   </n-modal>
 </template>
