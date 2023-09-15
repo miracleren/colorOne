@@ -86,6 +86,7 @@ create table base_role (
   role_key             varchar(100)    not null                   comment '角色标识',
   role_sort            int(4)          not null                   comment '显示顺序',
   status      		   int(1)   default 0  not null       comment '角色状态（0正常 1停用）',
+  scope 				varchar(128) null comment '数据权限',
   remark               varchar(500)    default null               comment '备注',
 
   del_flag    int(1)      default 0 comment '删除标志（0代表存在 1代表删除）',
@@ -175,12 +176,14 @@ create table base_dept
     dept_id     bigint(20) not null auto_increment comment '部门主键',
     parent_id   bigint(20) comment '父主键',
     dept_name   varchar(64) not null comment '部门名称',
+    ancestors   varchar(1024) comment '父级编号',
     leader      varchar(64) comment '负责人',
     contact     varchar(64) comment '联系方式',
     dept_sort   int(4)       default 0 comment '部门排序',
-    scope_type  int(2) comment '数据权限范围',
     status      int(1)       default 0 comment '状态（0正常 1停用）',
     remark      varchar(200) default null comment '备注',
+
+
 
     del_flag    int(1)       default 0 comment '删除标志（0代表存在 1代表删除）',
     create_by   varchar(64)  default '' comment '创建者',
