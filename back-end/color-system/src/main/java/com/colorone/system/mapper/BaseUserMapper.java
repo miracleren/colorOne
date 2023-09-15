@@ -1,6 +1,7 @@
 package com.colorone.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.colorone.common.frame.aspect.annotation.DataScope;
 import com.colorone.system.domain.entity.BaseDept;
 import com.colorone.system.domain.entity.BaseUser;
 import org.apache.ibatis.annotations.Mapper;
@@ -21,6 +22,7 @@ public interface BaseUserMapper extends BaseMapper<BaseUser> {
      * @param user 参数
      * @return 数据列表
      */
+    @DataScope
     List<BaseUser> selectBaseUserList(BaseUser user);
 
     /**

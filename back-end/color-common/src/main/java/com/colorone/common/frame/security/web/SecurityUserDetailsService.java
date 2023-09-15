@@ -1,14 +1,13 @@
 package com.colorone.common.frame.security.web;
 
-import com.colorone.common.domain.auth.User;
 import com.colorone.common.domain.auth.LoginUser;
-
+import com.colorone.common.domain.auth.User;
 import com.colorone.common.utils.PermitUtils;
+import com.colorone.common.utils.ScopeBuild;
 import com.colorone.common.utils.SecurityUtils;
 import com.colorone.common.utils.data.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -62,6 +61,18 @@ public class SecurityUserDetailsService implements UserDetailsService {
                 loginUser.getPermits().add(PermitUtils.toPermitCode(path));
             }
         }
+
+        //用户部门信息,相关子部门
+        loginUser.setDept(userDetailsMapper.selectUserDeptById(user.getDeptId()));
+        loginUser.getDept().setChildren(CollectionUtils.joinLong(userDetailsMapper.selectDeptChildren(user.getDeptId()), ","));
+
+        //加载用户权限过滤条件
+        String[] scopes = userDetailsMapper.selectRolesScopeByIds(CollectionUtils.joinLong(roles, ","));
+        loginUser.setScopes(scopes);
+
+        //生成用户角色权限过滤语句，对开启数据权限的接口有效，注解@DataScope
+        String scopeWhere = ScopeBuild.where(CollectionUtils.joinString(loginUser.getScopes(), " or "), loginUser);
+        loginUser.setScopeWhere(scopeWhere);
 
         return loginUser;
     }

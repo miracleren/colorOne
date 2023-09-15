@@ -20,7 +20,7 @@
         left join base_dict db on db.dict_value = CONVERT(d.status,char ) and db.dict_type='base_status'
         where d.del_flag = 0
         <if test="dictLabel != null  and dictLabel != ''">
-            and d.dict_label like "%"#{dictLabel}"%"
+            and d.dict_label like CONCAT('%', #{dictLabel}, '%')
         </if>
         <if test="dictType != null  and dictType != ''">
             and d.dict_type = #{dictType}
@@ -34,7 +34,7 @@
         <if test="params != null and params.endTime != null">
             and d.create_time <![CDATA[<=]]> adddate(FROM_UNIXTIME(#{params.endTime}/1000),1)
         </if>
-        order by d.create_time
+        order by d.create_time desc
     </select>
 
     <select id="selectBaseDictChildren" resultType="com.colorone.system.domain.entity.BaseDict">

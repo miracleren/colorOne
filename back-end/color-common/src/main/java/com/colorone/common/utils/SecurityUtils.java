@@ -1,7 +1,6 @@
 package com.colorone.common.utils;
 
 import com.colorone.common.domain.auth.LoginUser;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -78,8 +77,7 @@ public class SecurityUtils {
      * @param password 密码
      * @return 加密字符串
      */
-    public static String encryptPassword(String password)
-    {
+    public static String encryptPassword(String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.encode(password);
     }
@@ -87,14 +85,24 @@ public class SecurityUtils {
     /**
      * 判断密码是否相同
      *
-     * @param rawPassword 真实密码
+     * @param rawPassword     真实密码
      * @param encodedPassword 加密后字符
      * @return 结果
      */
-    public static boolean matchesPassword(String rawPassword, String encodedPassword)
-    {
+    public static boolean matchesPassword(String rawPassword, String encodedPassword) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 
+    /**
+     * 获取当前登录用户权限过滤条件
+     **/
+    public static String getUserScopeWhere() {
+        try {
+            return getLoginUser().getScopeWhere();
+        } catch (Exception e) {
+            throw new AccessDeniedException("获取用户权限过滤条件异常");
+        }
+
+    }
 }

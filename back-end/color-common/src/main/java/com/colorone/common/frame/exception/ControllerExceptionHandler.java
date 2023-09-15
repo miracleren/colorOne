@@ -4,7 +4,6 @@ import com.colorone.common.constant.ExceptionMsg;
 import com.colorone.common.domain.core.RequestResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -27,7 +26,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(Exception.class)
     public RequestResult handleException(Exception e) {
         log.error(e.getMessage(), e);
-        return RequestResult.error(e.getMessage());
+        return RequestResult.error(e.toString());
     }
 
 
@@ -35,7 +34,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(UsernameNotFoundException.class)
     public RequestResult handleUsernameNotFoundException(UsernameNotFoundException e) {
         //log.error(e.getMessage(), e);
-        return RequestResult.error(e.getMessage());
+        return RequestResult.error(e.toString());
     }
 
     /**

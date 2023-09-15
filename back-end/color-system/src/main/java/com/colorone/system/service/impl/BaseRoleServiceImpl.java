@@ -37,11 +37,11 @@ public class BaseRoleServiceImpl implements BaseRoleService {
     public Integer addBaseRole(BaseRole role) {
         int i = baseRoleMapper.insert(role);
         if (i > 0 && role.getParams().containsKey("permits")) {
-            List<Long> permits = (List<Long>) role.getParams().get("permits");
-            for (Long p : permits) {
+            List<Integer> permits = (List<Integer>) role.getParams().get("permits");
+            for (Integer p : permits) {
                 BaseRoleMenu roleMenu = new BaseRoleMenu();
                 roleMenu.setRoleId(role.getRoleId());
-                roleMenu.setMenuId(p);
+                roleMenu.setMenuId(p.longValue());
                 i += baseRoleMenuMapper.insert(roleMenu);
             }
         }

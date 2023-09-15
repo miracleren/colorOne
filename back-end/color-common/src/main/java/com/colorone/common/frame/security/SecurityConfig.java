@@ -188,13 +188,14 @@ public class SecurityConfig {
                     }
                 }
             }
+
         }
 
         //缓存所有有权限标识的接口
         redisHelper.setObject(RedisPrefix.REDIS_PERMIT_URLS, permitUrls);
 
-        System.out.print("***成功扫描匿名可访问接口" + anonymousUrls.size() + "处***");
-        System.out.print("***成功扫描带权限标识接口" + permitUrls.size() + "处***");
+        System.out.println("***成功扫描匿名可访问接口" + anonymousUrls.size() + "处***");
+        System.out.println("***成功扫描带权限标识接口" + permitUrls.size() + "处***");
 
         return anonymousUrls;
     }

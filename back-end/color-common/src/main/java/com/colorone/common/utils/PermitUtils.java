@@ -11,7 +11,7 @@ import java.util.Set;
  * @备注：权限管理工具类
  */
 public class PermitUtils {
-    public static String AllPermitCode = "*:*:*";
+    public final static String AllPermitCode = "*:*:*";
 
     /**
      * 路径转权限标识

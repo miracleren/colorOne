@@ -3,6 +3,7 @@ package com.colorone.common.frame.mybatis;
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.MybatisMapWrapperFactory;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,4 +45,23 @@ public class MybatisPlusConfig {
     public MetaObjectHandler metaObjectHandler() {
         return new BaseMetaObjectHandler();
     }
+
+
+    /**
+     * 分页插件, 一缓和二缓遵循mybatis的规则
+     */
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        // 添加数据权限插件
+        DataScopeInterceptor dataScopeInterceptor = new DataScopeInterceptor();
+        // 添加自定义的数据权限处理器
+        dataScopeInterceptor.setDataScopeHandler(new DataScopeHandler());
+        interceptor.addInnerInterceptor(dataScopeInterceptor);
+        //向Mybatis过滤器链中添加分页拦截器
+        //interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+
+        return interceptor;
+    }
+
 }

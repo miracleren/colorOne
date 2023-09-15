@@ -3,7 +3,6 @@ package com.colorone.common.domain.auth;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -15,7 +14,7 @@ import java.util.Date;
  * @author： lee
  * @email：miracleren@gmail.com
  * @date：2022/6/2
- * @备注：用户基础信息表
+ * @备注：登录用户基础信息表
  */
 @Data
 @ToString

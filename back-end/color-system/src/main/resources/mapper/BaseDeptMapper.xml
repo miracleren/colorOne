@@ -11,7 +11,7 @@
             and bd.status = #{status}
         </if>
         <if test="deptName != null  and deptName != ''">
-            and bd.dept_name like "%"#{deptName}"%"
+            and bd.dept_name like CONCAT('%', #{deptName}, '%')
         </if>
         order by bd.dept_sort
     </select>

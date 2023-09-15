@@ -37,7 +37,7 @@
             and bm.status = #{status}
         </if>
         <if test="menuName != null  and menuName != ''">
-            and bm.menu_name like "%"#{menuName}"%"
+            and bm.menu_name like CONCAT('%', #{menuName}, '%')
         </if>
         order by bm.order_num
     </select>

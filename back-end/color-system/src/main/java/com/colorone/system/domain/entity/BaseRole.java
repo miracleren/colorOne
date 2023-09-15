@@ -9,8 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.Map;
-
 /**
  * @author： lee
  * @email：miracleren@gmail.com
@@ -48,6 +46,11 @@ public class BaseRole extends BaseEntity {
      * comment '角色状态（0正常 1停用）'  int(1)         not null
      */
     Integer status;
+
+    /**
+     * comment '数据权限' varchar(128) null
+     */
+    String scope;
 
     /**
      * comment '备注' varchar(500)    default null

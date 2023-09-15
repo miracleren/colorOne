@@ -1,7 +1,6 @@
 package com.colorone.common.utils.data;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author： lee
@@ -20,7 +19,7 @@ public class CollectionUtils extends org.springframework.util.CollectionUtils {
         for (String s : list) {
             res.append(s).append(splitCode);
         }
-        return res.substring(0, res.length() - 1);
+        return res.substring(0, res.length() - splitCode.length());
     }
 
     /**
@@ -33,7 +32,7 @@ public class CollectionUtils extends org.springframework.util.CollectionUtils {
         for (String s : list) {
             res.append(s).append(splitCode);
         }
-        return res.substring(0, res.length() - 1);
+        return res.substring(0, res.length() - splitCode.length());
     }
 
     /**

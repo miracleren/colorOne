@@ -37,6 +37,11 @@ public class BaseDept extends BaseEntity {
     String deptName;
 
     /**
+     * comment '父级编号'  varchar(1024)
+     */
+    String ancestors;
+
+    /**
      * comment '负责人'    varchar(64)
      */
     String leader;
@@ -50,11 +55,6 @@ public class BaseDept extends BaseEntity {
      * comment '部门排序'   int(4)       default 0
      */
     Integer deptSort;
-
-    /**
-     * comment '数据权限范围' int(2)
-     */
-    Integer scopeType;
 
     /**
      * comment '状态（0正常 1停用）'    int(1)       default 0

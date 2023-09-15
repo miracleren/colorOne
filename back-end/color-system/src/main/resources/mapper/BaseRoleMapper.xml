@@ -10,7 +10,7 @@
             and br.status = #{status}
         </if>
         <if test="roleName != null  and roleName != ''">
-            and br.role_name like "%"#{roleName}"%"
+            and br.role_name like CONCAT('%', #{roleName}, '%')
         </if>
         order by br.role_sort
     </select>

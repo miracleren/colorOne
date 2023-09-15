@@ -25,10 +25,10 @@
         left join base_dict db on db.dict_value = CONVERT(bu.status, char) and db.dict_type = 'base_status'
         where bu.del_flag = 0
         <if test="userName != null  and userName != ''">
-            and ( bu.user_name like "%"#{userName}"%" or bu.nick_name like "%"#{userName}"%" )
+            and ( bu.user_name like CONCAT('%', #{userName}, '%') or bu.nick_name like CONCAT('%', #{userName}, '%') )
         </if>
         <if test="phone != null  and phone != ''">
-            and bu.phone like "%"#{phone}"%"
+            and bu.phone like CONCAT('%', #{phone}, '%')
         </if>
         <if test="status != null  and status != ''">
             and bu.status = #{status}
@@ -42,5 +42,6 @@
         <if test="params != null and params.endTime != null">
             and bu.create_time <![CDATA[<=]]> adddate(FROM_UNIXTIME(#{params.endTime}/1000),1)
         </if>
+        order by bu.create_time desc
     </select>
 </mapper>

@@ -42,6 +42,8 @@ public class BaseDeptServiceImpl implements BaseDeptService {
 
     @Override
     public Integer addBaseDept(BaseDept dept) {
+        BaseDept parentDept = baseDeptMapper.selectById(dept.getParentId());
+        dept.setAncestors(parentDept.getAncestors() + "," + dept.getParentId());
         return baseDeptMapper.insert(dept);
     }
 

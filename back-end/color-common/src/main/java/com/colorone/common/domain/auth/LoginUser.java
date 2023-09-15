@@ -30,6 +30,12 @@ public class LoginUser implements UserDetails {
         this.user = user;
     }
 
+
+    /**
+     * 登录用户信息
+     */
+    private Dept dept;
+
     /**
      * 用户登录UUID
      */
@@ -60,6 +66,16 @@ public class LoginUser implements UserDetails {
      * 权限标识码，根据地址生成
      */
     private Set<String> permits = new HashSet<>();
+
+    /**
+     * 数据权限过滤条件
+     */
+    private String[] scopes;
+
+    /**
+     * 数据权限过滤where
+     */
+    private String scopeWhere;
 
     @JsonIgnore
     @Override
