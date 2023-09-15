@@ -20,13 +20,14 @@
               show-password-on="mousedown"
               placeholder="密码"
               :maxlength="18"
+              @keyup.enter="handleLogin"
           />
         </n-form-item>
 
         <n-form-item v-if="!!loginInfo.code">
           <n-grid :cols="12" :x-gap="12">
             <n-form-item-gi :span="7">
-              <n-input v-model:value="loginInfo.captcha" placeholder="验证码">
+              <n-input v-model:value="loginInfo.captcha" placeholder="验证码" @keyup.enter="handleLogin">
                 <template #suffix>
                   <component :is="CIcon" :icon="'QrCode'" color="rgb(224,224,230)"></component>
                 </template>
@@ -40,9 +41,8 @@
 
         <n-form-item>
           <n-button
-              :disabled="!loginInfo.userName|| !loginInfo.password || !loginInfo.captcha"
+              :disabled="!loginInfo.userName|| !loginInfo.password || (!loginInfo.captcha&&!!loginInfo.code)"
               @click="handleLogin"
-              @keyup.enter="handleLogin"
               class="login-button" type="success">
             登录
           </n-button>
@@ -77,6 +77,11 @@ let loginInfo = ref({
 const store = useStore()
 const router = useRouter()
 const handleLogin = () => {
+  console.log('loginInfo.userName', !loginInfo.userName || !loginInfo.password || (!loginInfo.captcha && !!loginInfo.code))
+  if (!loginInfo.value.userName || !loginInfo.value.password || (!loginInfo.value.captcha && !!loginInfo.value.code))
+    return
+
+  console.log('loginInfo.userName')
 
   store.dispatch('userLogin', loginInfo.value).then(() => {
     console.log('handleLogin')
