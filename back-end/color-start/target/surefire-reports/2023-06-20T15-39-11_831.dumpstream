@@ -1,5 +1,0 @@
-# Created at 2023-06-20T15:39:12.493
-Boot Manifest-JAR contains absolute paths in classpath 'E:\_Work\_MyProgram\colorOne\20230616\back-end\colorOne\color-start\target\test-classes'
-Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
-'other' has different root
-

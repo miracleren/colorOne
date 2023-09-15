@@ -1,6 +1,0 @@
-com\colorone\common\utils\SecurityUtils.class
-com\colorone\common\frame\mybatis\BaseMetaObjectHandler.class
-com\colorone\common\constant\Constants.class
-com\colorone\common\domain\core\RequestResult.class
-com\colorone\common\frame\mybatis\MybatisPlusConfig.class
-com\colorone\common\utils\MapUtils.class
