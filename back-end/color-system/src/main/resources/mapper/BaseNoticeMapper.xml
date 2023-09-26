@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.colorone.system.mapper.BaseNoticeMapper">
+
+    <select id="selectBaseNoticeList" resultType="com.colorone.system.domain.entity.BaseNotice">
+        select bn.*, db.dict_label notice_type_name, bu.nick_name create_user_name
+        from base_notice bn
+        left join base_dict db on db.dict_value = bn.notice_type and db.dict_type = 'base_notice_type'
+        left join base_user bu on bu.user_name = bn.create_by
+        where bn.del_flag = 0
+        <if test="noticeType != null">
+            and bn.notice_type = #{noticeType}
+        </if>
+        <if test="noticeTitle != null  and noticeTitle != ''">
+            and bn.notice_title like CONCAT('%', #{noticeTitle}, '%')
+        </if>
+        <if test="params != null and params.startTime != null ">
+            and bn.create_time > FROM_UNIXTIME(#{params.startTime}/1000)
+        </if>
+        <if test="params != null and params.endTime != null">
+            and bn.create_time <![CDATA[<=]]> adddate(FROM_UNIXTIME(#{params.endTime}/1000),1)
+        </if>
+        order by bn.create_time desc
+    </select>
+</mapper>
