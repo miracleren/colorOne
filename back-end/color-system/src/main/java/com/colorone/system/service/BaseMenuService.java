@@ -1,6 +1,5 @@
 package com.colorone.system.service;
 
-import com.colorone.system.domain.SelectTree;
 import com.colorone.system.domain.entity.BaseMenu;
 
 import java.util.List;
@@ -23,10 +22,10 @@ public interface BaseMenuService {
     /**
      * 获取菜单树列表
      *
-     * @param dict
+     * @param menu
      * @return
      */
-    List<Map> getBaseMenuTreeList(BaseMenu dict);
+    List<Map> getBaseMenuTreeList(BaseMenu menu);
 
     /**
      * 新增菜单数据
@@ -39,18 +38,18 @@ public interface BaseMenuService {
     /**
      * 修改菜单数据
      *
-     * @param dict 菜单实体类
+     * @param menu 菜单实体类
      * @return 成功失败
      */
-    Integer editBaseMenu(BaseMenu dict);
+    Integer editBaseMenu(BaseMenu menu);
 
     /**
      * 删除菜单数据
      *
-     * @param dictId 菜单键值
+     * @param menuId 菜单键值
      * @return 成功失败
      */
-    Integer deleteBaseMenu(Long dictId);
+    Integer deleteBaseMenu(Long menuId);
 
     /**
      * 新增菜单操作接口

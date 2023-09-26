@@ -28,7 +28,7 @@ server:
       # tomcat最大线程数，默认为200
       max: 200
       # Tomcat启动初始化的线程数，默认值25
-      min-spare: 25
+      min-spare: 10
 
 # token配置
 token:
@@ -44,6 +44,9 @@ spring:
   #springboot多环境配置
   profiles:
     active: dev
+  jackson:
+    #JSON序列化时间时区
+    time-zone: GMT+8
 
 
 # MyBatis配置

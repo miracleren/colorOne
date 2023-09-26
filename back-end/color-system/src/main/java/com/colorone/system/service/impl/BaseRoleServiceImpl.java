@@ -72,6 +72,8 @@ public class BaseRoleServiceImpl implements BaseRoleService {
 
     @Override
     public Integer deleteBaseRole(Long roleId) {
+        BaseRole role = new BaseRole();
+        role.setRoleId(roleId);
         int i = baseRoleMapper.deleteById(roleId);
         if (i > 0) {
             baseRoleMenuMapper.deleteMenuByRoleId(roleId, SecurityUtils.getUsername());

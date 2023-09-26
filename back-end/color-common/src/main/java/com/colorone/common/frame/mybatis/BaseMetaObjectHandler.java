@@ -82,6 +82,4 @@ public class BaseMetaObjectHandler implements MetaObjectHandler {
             }
         }
     }
-
-
 }

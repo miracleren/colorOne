@@ -1,12 +1,10 @@
 package com.colorone.system.service.impl;
 
-import com.colorone.common.frame.security.web.TokenService;
 import com.colorone.common.utils.SecurityUtils;
 import com.colorone.common.utils.TreeBuildUtils;
 import com.colorone.system.domain.entity.BaseMenu;
 import com.colorone.system.mapper.BaseMenuMapper;
 import com.colorone.system.service.BaseMenuService;
-import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,8 +60,10 @@ public class BaseMenuServiceImpl implements BaseMenuService {
     }
 
     @Override
-    public Integer deleteBaseMenu(Long dictId) {
-        return baseMenuMapper.deleteById(dictId);
+    public Integer deleteBaseMenu(Long menuId) {
+        BaseMenu menu = new BaseMenu();
+        menu.setMenuId(menuId);
+        return baseMenuMapper.deleteById(menu);
     }
 
     @Override

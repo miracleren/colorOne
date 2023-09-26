@@ -75,7 +75,9 @@ public class BaseUserServiceImpl implements BaseUserService {
 
     @Override
     public Integer deleteBaseUser(Long userId) {
-        return baseUserMapper.deleteById(userId);
+        BaseUser user = new BaseUser();
+        user.setUserId(userId);
+        return baseUserMapper.deleteById(user);
     }
 
     @Override

@@ -54,7 +54,9 @@ public class BaseDeptServiceImpl implements BaseDeptService {
 
     @Override
     public Integer deleteBaseDept(Long deptId) {
-        return baseDeptMapper.deleteById(deptId);
+        BaseDept dept = new BaseDept();
+        dept.setDeptId(deptId);
+        return baseDeptMapper.deleteById(dept);
     }
 
     @Override

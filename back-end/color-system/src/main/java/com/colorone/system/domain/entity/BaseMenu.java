@@ -26,7 +26,7 @@ public class BaseMenu extends BaseEntity {
      * comment '菜单id'   bigint(10)   not null autoIncrement
      */
     @TableId(value = "menu_id", type = IdType.AUTO)
-    Integer menuId;
+    Long menuId;
 
     /**
      * comment '菜单接口名称' varchar(50) not null

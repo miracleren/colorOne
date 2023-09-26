@@ -43,7 +43,9 @@ public class BaseDictServiceImpl implements BaseDictService {
 
     @Override
     public Integer deleteBaseDict(Long dictId) {
-        int res = baseDictMapper.deleteById(dictId);
+        BaseDict dict = new BaseDict();
+        dict.setDictId(dictId);
+        int res = baseDictMapper.deleteById(dict);
         //删除字典子表数据
         if (res > 0)
             baseDictMapper.deleteChildrenById(dictId);

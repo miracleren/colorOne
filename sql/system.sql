@@ -194,3 +194,46 @@ create table base_dept
     primary key (dept_id)
 ) engine = innodb
   auto_increment = 1000 comment = '部门数据表';
+
+
+-------------------------------
+-- 8、公告数据表
+-------------------------------
+ create table base_notice
+(
+    notice_id      bigint(20)  not null auto_increment comment '公告主键',
+    notice_title   varchar(64) not null comment '公告标题',
+    notice_type    varchar(1)  not null comment '公告类型',
+    notice_content varchar(1024) comment '公告内容',
+
+    start_date     datetime comment '公告有效开始时间',
+    end_date       datetime comment '公告有效结束时间',
+
+    del_flag       int(1)      default 0 comment '删除标志（0代表存在 1代表删除）',
+    create_by      varchar(64) default '' comment '创建者',
+    create_time    datetime comment '创建时间',
+    update_by      varchar(64) default '' comment '更新者',
+    update_time    datetime comment '更新时间',
+
+    primary key (notice_id)
+) engine = innodb
+  auto_increment = 1000 comment = '公告数据表';
+
+-------------------------------
+-- 9、公告阅读标记数据表
+-------------------------------
+create table base_notice_read
+(
+    read_id     bigint(20) not null auto_increment comment '公告阅读主键',
+    notice_id   bigint(20) comment '公告编号',
+    user_id     bigint(20) not null comment '已读用户编号',
+
+    del_flag    int(1)      default 0 comment '删除标志（0代表存在 1代表删除）',
+    create_by   varchar(64) default '' comment '创建者',
+    create_time datetime comment '创建时间',
+    update_by   varchar(64) default '' comment '更新者',
+    update_time datetime comment '更新时间',
+
+    primary key (read_id)
+) engine = innodb
+  auto_increment = 1000 comment = '公告阅读标记数据表';
