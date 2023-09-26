@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--scan:当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true-->
+<!--scanPeriod:设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟-->
+<configuration scan="true" scanPeriod="30 seconds">
+    <!--property：自定义的上下文属性配置，可以使用${name}的方式引用value值-->
+    <property name="LOG_DIR" value="E:\_Work\_MyProgram\colorOne\colorOne\logs"/>
+    <property name="APP_NAME" value="color-one"/>
+
+    <!--自定义日志输出格式-->
+    <!--<property name="CONSOLE_LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level ${PID:- } [%15thread] %-40.40(%logger{40}.%method) : %msg%n"/>-->
+    <!--<property name="FILE_LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level ${PID:- } [%15thread] %-40.40(%logger{40}.%method) : %msg%n"/>-->
+    <!--<property name="CONSOLE_COLOR_LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) %magenta(${PID:- }) [%15thread] %boldCyan(%-40.40(%logger{40}.%method)) : %msg%n"/>-->
+
+    <!--引入spring boot默认的logback配置文件，这里使用和spring一致的输出格式-->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!--标准输出：控制台日志-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--文件输出：追加日志到文件中-->
+    <appender name="FILE-LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--实时日志文件的存放路径和名称-->
+        <file>${LOG_DIR}/info.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!--设置滚动策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--滚动切割产生的历史日志文件的存放路径和名称-->
+            <!--%d{yyyy-MM-dd}：按天进行日志滚动-->
+            <!--%i：当文件大小超过maxFileSize时，按照i进行文件滚动-->
+            <FileNamePattern>${LOG_DIR}/${APP_NAME}.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <!--历史日志保存最大天数-->
+            <MaxHistory>30</MaxHistory>
+            <!--当日志文件超过指定的大小时，根据FileNamePattern标签里提到的%i进行日志文件滚动-->
+            <maxFileSize>100MB</maxFileSize>
+        </rollingPolicy>
+    </appender>
+
+    <!--细化日志中依赖包路径输出级别-->
+    <logger name="org.springframework" level="info"/>
+
+    <!--将appender都加入到root根标签-->
+    <!--root级别 DEBUG 如果设置为WARN，则低于WARN的信息都不会输出-->
+    <!--日志级别从低到高分为TRACE < DEBUG < INFO < WARN < ERROR < FATAL，配置WARN只会记录自身和比高于自身级别的日志-->
+    <!--开发调试阶段打开控制台输出，日志级别设置为INFO，生产环境关闭控制台输出，只需要ERROR级别并记录到文件中-->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE-LOG"/>
+    </root>
+</configuration>
