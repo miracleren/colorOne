@@ -51,7 +51,13 @@ public class ApiExtensionAspect {
                 if (ObjectUtils.isNull(loginUser) || CollectionUtils.isEmpty(loginUser.getPermits()) || !PermitUtils.checkPermits(loginUser.getPermits(), permit)) {
                     return new AccessDeniedException("您无权限进行该操作");
                 }
+            } else if (api.permitType() == PermitType.PATH_TOKEN) {
+                String token = HttpServletUtils.getParameter("t");
+                LoginUser loginUser = tokenService.getLoginUser(token);
+                if (ObjectUtils.isNull(loginUser))
+                    return new AccessDeniedException("您无权限进行访问该链接");
             }
+
             return joinPoint.proceed();
         }
         return new Exception("");

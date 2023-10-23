@@ -4,6 +4,8 @@ colorOne:
   name: ColorOne
   # 版本
   version: 1.0.0
+  # 默认上传文件目录池
+  filePool: E:\_Work\_MyProgram\colorOne\colorOne\filePool
 
 
 # 验证码配置

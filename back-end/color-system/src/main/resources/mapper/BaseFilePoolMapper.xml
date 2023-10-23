@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.colorone.system.mapper.BaseFilePoolMapper">
+
+    <select id="selectBaseFilePoolList" resultType="java.util.Map">
+        select file_id as id, file_name as name
+        from base_file_pool p
+        where p.ref_id = #{refId}
+          and p.ref_name = #{refName}
+          and p.del_flag = 0
+    </select>
+
+    <update id="updateFilePoolRefId">
+        update base_file_pool
+        set ref_id      = #{recordId},
+            update_time = sysdate(),
+            update_by   = #{updateBy}
+        where ref_id = #{tempId}
+    </update>
+</mapper>

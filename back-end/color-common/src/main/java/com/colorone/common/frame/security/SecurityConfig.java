@@ -174,7 +174,7 @@ public class SecurityConfig {
             HandlerMethod handlerMethod = infoEntry.getValue();
             ApiExtension api = handlerMethod.getMethodAnnotation(ApiExtension.class);
             if (api != null) {
-                if (api.permitType() == PermitType.ANONYMOUS)
+                if (api.permitType() == PermitType.ANONYMOUS || api.permitType() == PermitType.PATH_TOKEN)
                     anonymousUrls.addAll(infoEntry.getKey().getPatternValues());
                 else if (api.permitType() == PermitType.ROLE) {
                     for (String s : infoEntry.getKey().getPatternValues()) {

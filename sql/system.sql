@@ -220,7 +220,7 @@ create table base_dept
   auto_increment = 1000 comment = '公告数据表';
 
 -------------------------------
--- 9、公告阅读标记数据表
+-- 8、公告阅读标记数据表
 -------------------------------
 create table base_notice_read
 (
@@ -237,3 +237,26 @@ create table base_notice_read
     primary key (read_id)
 ) engine = innodb
   auto_increment = 1000 comment = '公告阅读标记数据表';
+
+
+-------------------------------
+-- 9、文件池数据表
+-------------------------------
+create table base_file_pool
+(
+    file_id     varchar(36)  not null comment '文件编号GUID',
+    file_name   varchar(128)  not null comment '文件名称',
+    save_path   varchar(256)   not null comment '文件保存路径',
+    ref_name    varchar(128) not null comment '关联数据表名称',
+    ref_id      varchar(36)  not null comment '关联数据表编号',
+    type        varchar(64) comment '文件说明类型',
+
+
+    del_flag    int(1)      default 0 comment '删除标志（0代表存在 1代表删除）',
+    create_by   varchar(64) default '' comment '创建者',
+    create_time datetime comment '创建时间',
+    update_by   varchar(64) default '' comment '更新者',
+    update_time datetime comment '更新时间',
+
+    primary key (file_id)
+) engine = innodb comment = '文件池数据表';

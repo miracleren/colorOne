@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 
 /**
  * @author： lee
@@ -20,6 +19,7 @@ import javax.annotation.Resource;
 public class CommonController {
     @Autowired
     private CommonService commonService;
+
 
     /**
      * 项目初始化测试接口
