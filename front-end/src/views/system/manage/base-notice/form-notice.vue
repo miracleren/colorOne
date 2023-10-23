@@ -26,7 +26,12 @@
       <n-form-item-gi :span="24" label="公告内容">
         <n-input v-model:value="model.noticeContent" type="textarea" maxlength="800" show-count/>
       </n-form-item-gi>
+
+      <n-form-item-gi :span="24" label="公告附件管理">
+        <upload-files v-model:files="uploadRef"></upload-files>
+      </n-form-item-gi>
     </n-grid>
+
   </n-form>
 
   <div class="form-action">
@@ -39,6 +44,7 @@ import {onMounted, ref} from 'vue'
 import SelectDict from '@/components/select-dict'
 import validator from '@/utils/system/validator'
 import {addBaseNotice, editBaseNotice} from '@/api/system/notice'
+import UploadFiles from '@/components/upload-files'
 
 
 const props = defineProps({
@@ -46,6 +52,12 @@ const props = defineProps({
   config: Object
 })
 const formRef = ref(null)
+/** 附件管理 */
+const uploadRef = ref({
+  name: 'base_notice',
+  id: null
+})
+
 
 /** 初始化相关数据 **/
 const model = ref({})
@@ -53,6 +65,8 @@ const rangeDate = ref(null)
 onMounted(() => {
   //拷贝数据，编辑时不影响行数据
   model.value = Object.assign({}, props.modelValue)
+  uploadRef.value.id = model.value.noticeId
+
   if (!!model.value.startDate && !!model.value.endDate) {
     rangeDate.value = [new Date(model.value.startDate), new Date(model.value.endDate)]
   }
@@ -69,6 +83,8 @@ const handlePost = () => {
     if (!errors) {
       //新增数据
       if (props.config.type === 'add') {
+        //保存更新添加的附件
+        model.value.params = {fileRefId: uploadRef.value.id}
         addBaseNotice(model.value).then(res => {
           if (res.data) {
             props.config.show = false

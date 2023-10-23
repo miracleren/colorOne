@@ -29,6 +29,19 @@ export function randomPassword() {
  * @param max
  * @returns {*}
  */
-function randomInteger(min, max) {
+export function randomInteger(min, max) {
     return Math.floor(Math.random() * (max - min)) + min
+}
+
+
+export function randomGuid(prefix = '', length = 8) {
+    function S4() {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
+    }
+
+    let guid = prefix
+    for (let i = 0; i < length; i++) {
+        guid += S4()
+    }
+    return guid
 }

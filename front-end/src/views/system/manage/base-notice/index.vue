@@ -30,7 +30,7 @@
       </n-form>
     </template>
     <template #tool>
-      <n-button secondary type="success" @click="handle('view')">
+      <n-button :disabled="ObjectIsEmpty(checkRow)" secondary type="success" @click="handle('view')">
         <icon icon="View"/>
         查看
       </n-button>
