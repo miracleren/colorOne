@@ -249,7 +249,8 @@ create table base_file_pool
     save_path   varchar(256)   not null comment '文件保存路径',
     ref_name    varchar(128) not null comment '关联数据表名称',
     ref_id      varchar(36)  not null comment '关联数据表编号',
-    type        varchar(64) comment '文件说明类型',
+    class_name  varchar(64)  comment '文件分类名称',
+    class_value        varchar(64) comment '文件分类字典值',
 
 
     del_flag    int(1)      default 0 comment '删除标志（0代表存在 1代表删除）',

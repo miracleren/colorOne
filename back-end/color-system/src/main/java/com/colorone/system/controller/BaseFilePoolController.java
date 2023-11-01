@@ -68,17 +68,14 @@ public class BaseFilePoolController {
      */
     @ApiExtension(name = "通用文件上传接口", permitType = PermitType.LOGIN)
     @PostMapping("/file/upload")
-    public RequestResult uploadFile(MultipartFile file, @RequestParam String refName, @RequestParam String refId) {
+    public RequestResult uploadFile(MultipartFile file, BaseFilePool filePool) {
         try {
             // 上传并返回完整文件路径
             String savePath = FileUploadUtils.upload(file, null);
             if (StringUtils.isNotEmpty(savePath)) {
                 //上传成功记录文件到数据库
-                BaseFilePool filePool = new BaseFilePool();
                 filePool.setFileName(file.getOriginalFilename());
                 filePool.setSavePath(savePath);
-                filePool.setRefName(refName);
-                filePool.setRefId(refId);
                 int res = filePoolService.addBaseFilePool(filePool);
                 if (res > 0)
                     return RequestResult.success(filePool.getFileId());

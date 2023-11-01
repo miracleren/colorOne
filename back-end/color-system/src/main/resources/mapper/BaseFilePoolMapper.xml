@@ -3,7 +3,7 @@
 <mapper namespace="com.colorone.system.mapper.BaseFilePoolMapper">
 
     <select id="selectBaseFilePoolList" resultType="java.util.Map">
-        select file_id as id, file_name as name
+        select file_id as id, file_name as name, class_value, class_name
         from base_file_pool p
         where p.ref_id = #{refId}
           and p.ref_name = #{refName}

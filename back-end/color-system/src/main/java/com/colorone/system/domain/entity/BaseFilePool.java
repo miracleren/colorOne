@@ -47,7 +47,12 @@ public class BaseFilePool extends BaseEntity {
     private String refId;
 
     /**
-     * comment '文件说明类型' varchar(64)
+     * comment '文件类别名称' varchar(64)
      */
-    private String type;
+    private String className;
+
+    /**
+     * comment '文件分类字典值' varchar(64)
+     */
+    private String classValue;
 }
