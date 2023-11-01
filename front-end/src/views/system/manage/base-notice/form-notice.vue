@@ -27,15 +27,20 @@
         <n-input v-model:value="model.noticeContent" type="textarea" maxlength="800" show-count/>
       </n-form-item-gi>
 
-      <n-form-item-gi :span="24" label="公告附件管理">
-        <upload-files v-model:files="uploadRef"></upload-files>
+      <n-form-item-gi :span="24">
+        <upload-files title="公告附件管理"
+                      :readonly="props.config.type === 'view'"
+                      v-model:files="uploadInfo"
+                      ref="fileCom"></upload-files>
       </n-form-item-gi>
     </n-grid>
 
   </n-form>
 
   <div class="form-action">
-    <n-button type="primary" @click="handlePost" v-if="props.config.type !== 'view'">提交</n-button>
+    <n-button type="primary" @click="handlePost"
+              v-if="props.config.type !== 'view'">提交
+    </n-button>
   </div>
 </template>
 
@@ -53,19 +58,20 @@ const props = defineProps({
 })
 const formRef = ref(null)
 /** 附件管理 */
-const uploadRef = ref({
+const uploadInfo = ref({
   name: 'base_notice',
-  id: null
+  id: null,
+  classDict: 'base_notice_files'
 })
 
-
+const fileCom = ref(null)
 /** 初始化相关数据 **/
 const model = ref({})
 const rangeDate = ref(null)
 onMounted(() => {
   //拷贝数据，编辑时不影响行数据
   model.value = Object.assign({}, props.modelValue)
-  uploadRef.value.id = model.value.noticeId
+  uploadInfo.value.id = model.value.noticeId
 
   if (!!model.value.startDate && !!model.value.endDate) {
     rangeDate.value = [new Date(model.value.startDate), new Date(model.value.endDate)]
@@ -84,7 +90,7 @@ const handlePost = () => {
       //新增数据
       if (props.config.type === 'add') {
         //保存更新添加的附件
-        model.value.params = {fileRefId: uploadRef.value.id}
+        model.value.params = {fileRefId: uploadInfo.value.id}
         addBaseNotice(model.value).then(res => {
           if (res.data) {
             props.config.show = false
