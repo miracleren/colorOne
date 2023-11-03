@@ -54,6 +54,7 @@ colorOne一套开源的权限管理系统，相关功能将持续开发更新。
 ![demo4.png](attachment%2Fimages%2Fdemo4.png)
 ![demo5.png](attachment%2Fimages%2Fdemo5.png)
 ![demo6.png](attachment%2Fimages%2Fdemo6.png)
+![demo6.png](attachment%2Fimages%2Fdemo7.png)
 
 ## 🚀 开发说明 <a name = "开发说明"></a>
 
