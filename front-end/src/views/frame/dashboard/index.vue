@@ -2,48 +2,48 @@
   <div class="dash-board">
     <div class="card-box">
       <n-grid x-gap="30" :cols="4">
-        <n-gi>
-          <div class="card-show" style="border-color:  rgb(118,125,206);">
+        <n-gi style=" border-left: 6px solid rgb(118,125,206);">
+          <div class="card-show" style="border-color:  rgb(118,125,206,0.5);">
             <icon icon="AlarmSharp" color="rgb(118,125,206)" size="38"></icon>
             <div class="show-number">
               <n-statistic label="用户数" tabular-nums>
                 <n-number-animation ref="numberAnimationInstRef" :from="0" :to="2023"/>
               </n-statistic>
             </div>
-            <n-progress class="number-circle" type="circle" :percentage="83" color="rgb(118,125,206)"/>
+            <n-progress class="number-circle" type="circle" :percentage="88" color="rgb(118,125,206)"/>
           </div>
         </n-gi>
-        <n-gi>
-          <div class="card-show" style="border-color:  rgb(150,207,209);">
+        <n-gi style=" border-left: 6px solid rgb(150,207,209);">
+          <div class="card-show" style="border-color:  rgb(150,207,209,0.5);">
             <icon icon="AmericanFootballSharp" color="rgb(150,207,209)" size="38"></icon>
             <div class="show-number">
               <n-statistic label="任务数" tabular-nums>
                 <n-number-animation ref="numberAnimationInstRef" :from="0" :to="1986"/>
               </n-statistic>
             </div>
-            <n-progress class="number-circle" type="circle" :percentage="83" color="rgb(150,207,209)"/>
+            <n-progress class="number-circle" type="circle" :percentage="66" color="rgb(150,207,209)"/>
           </div>
         </n-gi>
-        <n-gi>
-          <div class="card-show" style="border-color:  rgb(112,158,236);">
+        <n-gi style=" border-left: 6px solid  rgb(112,158,236);">
+          <div class="card-show" style="border-color:  rgb(112,158,236,0.5);">
             <icon icon="BagAdd" color="rgb(112,158,236)" size="38"></icon>
             <div class="show-number">
               <n-statistic label="文章数" tabular-nums>
                 <n-number-animation ref="numberAnimationInstRef" :from="0" :to="503"/>
               </n-statistic>
             </div>
-            <n-progress class="number-circle" type="circle" :percentage="83" color="rgb(112,158,236)"/>
+            <n-progress class="number-circle" type="circle" :percentage="93" color="rgb(112,158,236)"/>
           </div>
         </n-gi>
-        <n-gi>
-          <div class="card-show" style="border-color:  #FFC107;">
+        <n-gi style=" border-left: 6px solid rgb(255,193,7);">
+          <div class="card-show" style="border-color:  rgb(255,193,7,0.5);">
             <icon icon="Balloon" color="#FFC107" size="38"></icon>
             <div class="show-number">
               <n-statistic label="浏览量" tabular-nums>
                 <n-number-animation ref="numberAnimationInstRef" :from="0" :to="1314"/>
               </n-statistic>
             </div>
-            <n-progress class="number-circle" type="circle" :percentage="83" color="#FFC107"/>
+            <n-progress class="number-circle" type="circle" :percentage="68" color="#FFC107"/>
           </div>
         </n-gi>
       </n-grid>
@@ -56,7 +56,7 @@
                 #="{date}"
                 style="height: 500px">
               <n-gradient-text :type="types[date%3]">
-                {{ calendar[date%5] }}
+                {{ calendar[date % 5] }}
               </n-gradient-text>
             </n-calendar>
           </div>
@@ -127,7 +127,7 @@ const tags = ['ColorOne', 'SpringBoot3', 'java17', 'Spring Security', 'MybatisPl
 
     .card-show {
       position: relative;
-      border-left: 8px solid;
+      border-left: 6px solid;
       height: 100px;
       //background-color: rgba(255, 255, 255, 0.5);
       //border-radius: 15px;
