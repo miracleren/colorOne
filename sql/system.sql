@@ -261,3 +261,21 @@ create table base_file_pool
 
     primary key (file_id)
 ) engine = innodb comment = '文件池数据表';
+
+
+-------------------------------
+-- 10、系统登录日志表
+-------------------------------
+create table base_log_login
+(
+    log_id     bigint(20)  not null auto_increment comment '登录记录编号',
+    user_name  varchar(30) not null comment '用户账号',
+    ip_address varchar(50) comment '登录IP地址',
+    browser    varchar(50) comment '浏览器',
+    os         varchar(50) comment '系统',
+    status     int(1) comment '登录状态',
+    msg        varchar(255) comment '登录日志说明',
+    log_time   datetime comment '日志时间',
+    primary key (log_id)
+) engine = innodb
+  auto_increment = 1000 comment = '系统登录日志表';
