@@ -1,5 +1,6 @@
 package com.colorone.common.frame.security.web;
 
+import com.colorone.common.constant.LoginLogInfo;
 import com.colorone.common.domain.auth.LoginUser;
 import com.colorone.common.domain.auth.User;
 import com.colorone.common.utils.PermitUtils;
@@ -32,20 +33,19 @@ public class SecurityUserDetailsService implements UserDetailsService {
      *
      * @param userName
      * @return
-     * @throws UsernameNotFoundException
      */
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         //用户信息
         User user = userDetailsMapper.selectUserByUserName(userName);
         if (user == null) {
-            throw new UsernameNotFoundException("当前登录用户名" + userName + "不存在!");
+            throw new UsernameNotFoundException(String.format(LoginLogInfo.USER_NAME_NOT_FOUND, userName));
         }
 
         //用户角色
         Long[] roles = userDetailsMapper.selectUserRoleByUserId(user.getUserId());
         if (roles == null) {
-            throw new UsernameNotFoundException("当前登录用户名" + userName + "不存没有所在的角色!");
+            throw new UsernameNotFoundException(String.format(LoginLogInfo.USER_ROLE_NOT_FOUND, userName));
         }
 
         //返回登录用户信息实体类

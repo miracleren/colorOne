@@ -31,10 +31,17 @@ public class ControllerExceptionHandler {
 
 
     //region Spring Security异常的处理
+
+    /**
+     * 用户不存在 ，提示 用户名错误\密码错误
+     *
+     * @param e
+     * @return
+     */
     @ExceptionHandler(UsernameNotFoundException.class)
     public RequestResult handleUsernameNotFoundException(UsernameNotFoundException e) {
-        //log.error(e.getMessage(), e);
-        return RequestResult.error(e.toString());
+        log.info(e.getMessage());
+        return RequestResult.error(ExceptionMsg.LOGIN_BAD_CREDENTIALS);
     }
 
     /**
@@ -45,7 +52,7 @@ public class ControllerExceptionHandler {
      */
     @ExceptionHandler(BadCredentialsException.class)
     public RequestResult handleBadCredentialsException(BadCredentialsException e) {
-        //log.error(e.getMessage(), e);
+        log.info(e.getMessage());
         return RequestResult.error(ExceptionMsg.LOGIN_BAD_CREDENTIALS);
     }
 
@@ -57,32 +64,57 @@ public class ControllerExceptionHandler {
      */
     @ExceptionHandler(DisabledException.class)
     public RequestResult handleDisabledException(DisabledException e) {
-        //log.error(e.getMessage(), e);
+        log.info(e.getMessage());
         return RequestResult.error(ExceptionMsg.LOGIN_USER_DISABLED);
     }
 
     /**
-     * 无权限
+     * 账号无权限
      *
      * @param e
      * @return
      */
     @ExceptionHandler(AccessDeniedException.class)
     public RequestResult handleAccessDeniedException(AccessDeniedException e) {
-        //log.error(e.getMessage(), e);
+        log.info(e.getMessage());
         return RequestResult.error(ExceptionMsg.ACCESS_DENIED);
     }
 
     /**
      * 账号已过期
+     *
      * @param e
      * @return
      */
     @ExceptionHandler(AccountExpiredException.class)
     public RequestResult handleAccountExpiredException(AccountExpiredException e) {
-        //log.error(e.getMessage(), e);
+        log.info(e.getMessage());
         return RequestResult.error(ExceptionMsg.ACCOUNT_EXPIRED);
     }
 
+    /**
+     * 密码异常
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(UserPasswordException.class)
+    public RequestResult handleUserPasswordException(UserPasswordException e) {
+        log.info(e.getMessage());
+        return RequestResult.error(ExceptionMsg.LOGIN_BAD_CREDENTIALS);
+    }
+
+    /**
+     * 验证码无效
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(CaptchaException.class)
+    public RequestResult handleCaptchaException(CaptchaException e) {
+        log.info(e.getMessage());
+        return RequestResult.error(ExceptionMsg.CAPTCHA_INVALID);
+    }
     //endregion
+
 }

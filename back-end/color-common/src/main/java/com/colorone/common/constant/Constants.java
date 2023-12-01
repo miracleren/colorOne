@@ -22,6 +22,15 @@ public class Constants {
      */
     public static final Integer LOGIC_DELETE_FALSE = 0;
 
+    /**
+     * 通用成功标识
+     */
+    public static final Integer SUCCESS = 0;
+
+    /**
+     * 通用失败标识
+     */
+    public static final Integer FAIL = 1;
 
 
 }

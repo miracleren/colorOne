@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.colorone.system.mapper.BaseLogMapper">
+    <select id="selectBaseLogLoginList" resultType="java.util.Map">
+        select bll.*, db.dict_label status_name
+        from base_log_login bll
+        left join base_dict db on db.dict_value = CONVERT(bll.status, char) and db.dict_type = 'base_success_status'
+        where 1=1
+        <if test="userName != null and userName != ''">
+            and bll.user_name like CONCAT('%', #{userName}, '%')
+        </if>
+        <if test="status != null and status != ''">
+            and bll.status = #{status}
+        </if>
+
+        <if test="params != null and params.startTime != null ">
+            and bll.log_time > FROM_UNIXTIME(#{params.startTime}/1000)
+        </if>
+        <if test="params != null and params.endTime != null">
+            and bll.log_time <![CDATA[<=]]> adddate(FROM_UNIXTIME(#{params.endTime}/1000),1)
+        </if>
+        order by log_time desc
+    </select>
+</mapper>

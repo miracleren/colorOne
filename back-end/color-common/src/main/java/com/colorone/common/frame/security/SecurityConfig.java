@@ -119,6 +119,8 @@ public class SecurityConfig {
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        //检测用户异常，方便记录日志
+        authProvider.setHideUserNotFoundExceptions(false);
         // DaoAuthenticationProvider 从自定义的 userDetailsService.loadUserByUsername 方法获取UserDetails
         authProvider.setUserDetailsService(userDetailsService());
         // 设置密码编辑器

@@ -1,8 +1,11 @@
 package com.colorone.common.frame.security.handle;
 
 import com.alibaba.fastjson2.JSON;
+import com.colorone.common.constant.Constants;
 import com.colorone.common.domain.auth.LoginUser;
 import com.colorone.common.domain.core.RequestResult;
+import com.colorone.common.frame.asyncTask.AsyncFactory;
+import com.colorone.common.frame.asyncTask.AsyncTaskManager;
 import com.colorone.common.frame.security.web.TokenService;
 import com.colorone.common.utils.HttpServletUtils;
 import com.colorone.common.utils.data.ObjectUtils;
@@ -43,6 +46,8 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
         if (ObjectUtils.isNotNull(loginUser)) {
             // 删除用户缓存
             tokenService.clearToken(loginUser);
+            // 记录用户退出日志
+            AsyncTaskManager.getInstance().execute(AsyncFactory.setLogging(loginUser.getUsername(), Constants.SUCCESS, "成功登出系统"));
         }
 
         HttpServletUtils.renderString(response, JSON.toJSONString(RequestResult.success("成功登出系统!", null)));

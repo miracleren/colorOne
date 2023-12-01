@@ -4,9 +4,10 @@ package com.colorone.common.constant;
  * @author： lee
  * @email：miracleren@gmail.com
  * @date：2023/7/12
- * @备注：
+ * @备注：异常前端提示信息
  */
 public class ExceptionMsg {
+
     /**
      * 用户名或密码错误提示
      */
