@@ -27,14 +27,6 @@ create table base_user
 ) engine = innodb
   auto_increment = 1000 comment = '用户信息表';
 
--- ----------------------------
--- 添加框架默认用户
--- ----------------------------
-insert into base_user
-values (1, 0, 'admin', '颜一', 'miracleren@gmail.com', '13888888888', '1',
-        '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '127.0.0.1', sysdate(), '初始管理员', 0,
-        'admin',sysdate(), 'admin', sysdate());
-
 
 
 
@@ -68,12 +60,12 @@ create table base_menu
 -- ----------------------------
 -- 添加框架默认菜单
 -- ----------------------------
-insert into base_menu
-values (1, '系统管理', 0, 100, 'c', 'system', 'system', '0', '0', '#', '系统管理目录',0, 'admin', sysdate(), 'admin', sysdate());
-insert into base_menu
-values (2, '用户管理', 0, 100, 'm', 'system', 'user', '0', '0', '#', '系统管理用户管理',0, 'admin', sysdate(), 'admin', sysdate());
-insert into base_menu
-values (3, '菜单管理', 0, 101, 'm', 'system', 'menu', '0', '0', '#', '系统管理菜单管理',0, 'admin', sysdate(), 'admin', sysdate());
+-- insert into base_menu
+-- values (1, '系统管理', 0, 100, 'c', 'system', 'system', '0', '0', '#', '系统管理目录',0, 'admin', sysdate(), 'admin', sysdate());
+-- insert into base_menu
+-- values (2, '用户管理', 0, 100, 'm', 'system', 'user', '0', '0', '#', '系统管理用户管理',0, 'admin', sysdate(), 'admin', sysdate());
+-- insert into base_menu
+-- values (3, '菜单管理', 0, 101, 'm', 'system', 'menu', '0', '0', '#', '系统管理菜单管理',0, 'admin', sysdate(), 'admin', sysdate());
 
 
 
@@ -101,7 +93,7 @@ create table base_role (
 -- ----------------------------
 -- 添加框架初始角色
 -- ----------------------------
-insert into base_role values('1', '系统超级管理员', 'A', 1,1,'系统超级管理员角色',0,'', sysdate(), 'OneAdmin', null);
+--insert into base_role values('1', '系统超级管理员', 'A', 1,1,'系统超级管理员角色',0,'', sysdate(), 'OneAdmin', null);
 
 
 -- ----------------------------
@@ -119,7 +111,7 @@ create table base_user_role (
 
   primary key(user_id, role_id)
 ) engine=innodb comment = '用户和角色关联表';
-INSERT INTO colorxx.base_user_role (user_id, role_id, del_flag, create_by, create_time, update_by, update_time) VALUES (1, 1, 0, 'OneAdmin', '2023-06-29 15:46:32', '', null);
+--INSERT INTO colorxx.base_user_role (user_id, role_id, del_flag, create_by, create_time, update_by, update_time) VALUES (1, 1, 0, 'OneAdmin', '2023-06-29 15:46:32', '', null);
 
 
 
