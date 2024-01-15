@@ -43,3 +43,10 @@ export function resetUserPassword(data) {
         url: '/user/reset/password', method: 'put', data: data
     })
 }
+
+//重置自己的密码
+export function resetPasswordBySelf(data) {
+    return request({
+        url: '/user/reset/password/self', method: 'put', data: data
+    })
+}

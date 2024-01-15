@@ -129,7 +129,30 @@ const password = (path, message = null, required = true) => {
     }
 }
 
+/**
+ * 验证两个路径数据是否一致
+ * @param path
+ * @param firstValue
+ * @param message
+ * @param required
+ * @returns {{path: *, rule: {validator(*, *): boolean, trigger: string[], message: string, required: boolean}}|boolean}
+ */
+const isSame = (path, firstValue, message = null, required = true) => {
+    return {
+        path: path,
+        rule: {
+            required: required,
+            message: message || '重复输入的数据不一致',
+            trigger: ['blur', 'input'],
+            validator(rule, value) {
+                console.log('check isSame')
+                return value === firstValue
+            }
+        }
+    }
+}
+
 let validator = {
-    required, number, selectRequired, email, phone, password
+    required, number, selectRequired, email, phone, password, isSame
 }
 export default validator

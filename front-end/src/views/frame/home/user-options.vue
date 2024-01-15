@@ -7,10 +7,14 @@
           {{ nickName.substring(0, 1) }}
         </n-avatar>
       </template>
+      <div class="n-menu ">
+        <n-switch @update:value="changeTheme"/>
+        <span> 暗夜</span>
+      </div>
       <div class="user-options-bar">
-        <div class="n-menu ">
-          <n-switch @update:value="changeTheme"/>
-          <span>深色主题</span>
+        <div class="n-menu " @click="restPassword">
+          <icon icon="CheckmarkDoneSharp" size="18"></icon>
+          <span>重置密码</span>
         </div>
         <div class="n-menu " @click="loginOut">
           <icon icon="LogInOutline" size="18"></icon>
@@ -18,15 +22,23 @@
         </div>
       </div>
     </n-popover>
+
+    <n-modal v-model:show="restFormConfig.show" preset="card" :title="restFormConfig.title" class="edit-from"
+             style="width: 380px">
+      <form-reset-password :config="restFormConfig"/>
+    </n-modal>
   </div>
+
+
 </template>
 
 <script setup>
-import {computed, defineEmits} from 'vue'
+import {computed, defineEmits, ref} from 'vue'
 import {useStore} from 'vuex'
 import icon from '@/components/icon/index.vue'
 import router from '@/frame/router'
 import {loginUserOut} from '@/api/system/login'
+import formResetPassword from '@/views/system/manage/base-user/form-reset-password.vue'
 
 /*更换主题*/
 const emit = defineEmits(['aboutExeVisible'])
@@ -56,6 +68,17 @@ const loginOut = () => {
     }
   })
 }
+
+/* 密码重置 */
+const restFormConfig = ref({
+  show: false,
+  title: nickName.value + '-用户密码重置'
+})
+const restPassword = () => {
+  restFormConfig.value.show = true
+}
+
+
 </script>
 
 <style lang="scss" scoped>
