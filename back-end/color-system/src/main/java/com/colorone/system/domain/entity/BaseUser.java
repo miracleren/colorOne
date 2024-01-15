@@ -94,4 +94,11 @@ public class BaseUser extends BaseEntity {
     @TableField(exist = false)
     private Long[] roles;
 
+    /**
+     * 用户新密码
+     */
+    @TableField(exist = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    String newPassword;
+
 }

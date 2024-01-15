@@ -117,4 +117,17 @@ public class BaseUserServiceImpl implements BaseUserService {
         newUser.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
         return baseUserMapper.updateById(newUser);
     }
+
+    @Override
+    public Integer resetPasswordBySelf(BaseUser user) {
+        BaseUser newUser = new BaseUser();
+        newUser.setUserId(SecurityUtils.getUserId());
+        newUser.setPassword(SecurityUtils.encryptPassword(user.getNewPassword()));
+        return baseUserMapper.updateById(newUser);
+    }
+
+    @Override
+    public BaseUser getBaseUserById(Long userId) {
+        return baseUserMapper.selectById(userId);
+    }
 }

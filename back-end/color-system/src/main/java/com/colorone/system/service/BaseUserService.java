@@ -82,4 +82,18 @@ public interface BaseUserService {
      * @return 成功失败
      */
     Integer resetUserPassword(BaseUser user);
+
+    /**
+     * 重置自己密码
+     * @param user
+     * @return
+     */
+    Integer resetPasswordBySelf(BaseUser user);
+
+    /**
+     * 通过用户Id获取用户信息
+     * @param userId
+     * @return
+     */
+    BaseUser getBaseUserById(Long userId);
 }

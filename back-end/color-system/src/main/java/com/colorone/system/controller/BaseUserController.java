@@ -1,8 +1,13 @@
 package com.colorone.system.controller;
 
+import com.colorone.common.constant.Constants;
+import com.colorone.common.domain.auth.LoginUser;
 import com.colorone.common.domain.core.RequestResult;
 import com.colorone.common.frame.aspect.annotation.ApiExtension;
 import com.colorone.common.frame.aspect.enums.PermitType;
+import com.colorone.common.frame.asyncTask.AsyncFactory;
+import com.colorone.common.frame.asyncTask.AsyncTaskManager;
+import com.colorone.common.frame.security.web.TokenService;
 import com.colorone.common.utils.SecurityUtils;
 import com.colorone.system.domain.entity.BaseUser;
 import com.colorone.system.service.BaseUserService;
@@ -20,6 +25,9 @@ import org.springframework.web.bind.annotation.*;
 public class BaseUserController {
     @Autowired
     private BaseUserService baseUserService;
+
+    @Autowired
+    private TokenService tokenService;
 
     /**
      * 查询用户数据列表
@@ -114,8 +122,42 @@ public class BaseUserController {
         if (SecurityUtils.isSuperAdmin(user.getUserId()))
             return RequestResult.error("修改失败，不能编辑超级管理员的用户信息！");
 
-        return RequestResult.success(baseUserService.resetUserPassword(user) > 0);
+        if (baseUserService.resetUserPassword(user) > 0) {
+            String userName = baseUserService.getBaseUserById(user.getUserId()).getUserName();
+            AsyncTaskManager.getInstance().execute(AsyncFactory.setLogging(userName, Constants.SUCCESS, "用户被" + SecurityUtils.getUsername() + "重置密码"));
+            return RequestResult.success(true);
+        } else
+            return RequestResult.error("密码重置失败");
     }
 
 
+    /**
+     * 重置自己密码
+     *
+     * @param user 用户实体类
+     * @return 成功失败
+     */
+    @PutMapping("/reset/password/self")
+    @ApiExtension(name = "重置自己密码", permitType = PermitType.LOGIN)
+    public RequestResult resetPasswordBySelf(@RequestBody BaseUser user) {
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        String password = loginUser.getUser().getPassword();
+
+        if (SecurityUtils.matchesPassword(user.getNewPassword(), password)) {
+            return RequestResult.error("新密码与旧密码不能相同");
+        }
+        if (!SecurityUtils.matchesPassword(user.getPassword(), password)) {
+            return RequestResult.error("当前登录用户密码错误，修改密码失败");
+        }
+
+        if (baseUserService.resetPasswordBySelf(user) > 0) {
+            // 更新缓存redis的用户密码
+            loginUser.getUser().setPassword(SecurityUtils.encryptPassword(user.getNewPassword()));
+            tokenService.cacheLoginUser(loginUser);
+            AsyncTaskManager.getInstance().execute(AsyncFactory.setLogging(loginUser.getUsername(), Constants.SUCCESS, "用户被" + loginUser.getUsername() + "重置密码"));
+            return RequestResult.success(true);
+
+        }
+        return RequestResult.error("密码重置失败");
+    }
 }
