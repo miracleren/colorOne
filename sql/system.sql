@@ -77,8 +77,8 @@ create table base_role (
   role_name            varchar(30)     not null                   comment '角色名称',
   role_key             varchar(100)    not null                   comment '角色标识',
   role_sort            int(4)          not null                   comment '显示顺序',
-  status      		   int(1)   default 0  not null       comment '角色状态（0正常 1停用）',
-  scope 				varchar(128) null comment '数据权限',
+  status             int(1)   default 0  not null       comment '角色状态（0正常 1停用）',
+  scope         varchar(128) null comment '数据权限',
   remark               varchar(500)    default null               comment '备注',
 
   del_flag    int(1)      default 0 comment '删除标志（0代表存在 1代表删除）',
@@ -86,14 +86,14 @@ create table base_role (
   create_time datetime comment '创建时间',
   update_by   varchar(64)  default '' comment '更新者',
   update_time datetime comment '更新时间',
-  
+
   primary key (role_id)
-)engine=innodb 
+)engine=innodb
  auto_increment = 1000 comment = '用户角色表';
 -- ----------------------------
 -- 添加框架初始角色
 -- ----------------------------
---insert into base_role values('1', '系统超级管理员', 'A', 1,1,'系统超级管理员角色',0,'', sysdate(), 'OneAdmin', null);
+-- insert into base_role values('1', '系统超级管理员', 'A', 1,1,'系统超级管理员角色',0,'', sysdate(), 'OneAdmin', null);
 
 
 -- ----------------------------
@@ -111,7 +111,7 @@ create table base_user_role (
 
   primary key(user_id, role_id)
 ) engine=innodb comment = '用户和角色关联表';
---INSERT INTO colorxx.base_user_role (user_id, role_id, del_flag, create_by, create_time, update_by, update_time) VALUES (1, 1, 0, 'OneAdmin', '2023-06-29 15:46:32', '', null);
+-- INSERT INTO colorxx.base_user_role (user_id, role_id, del_flag, create_by, create_time, update_by, update_time) VALUES (1, 1, 0, 'OneAdmin', '2023-06-29 15:46:32', '', null);
 
 
 
@@ -132,9 +132,9 @@ create table base_role_menu (
 ) engine=innodb comment = '角色与菜单关联表';
 
 
--------------------------------
+-- -----------------------------
 -- 6、字典数据表
--------------------------------
+-- -----------------------------
 create table base_dict
 (
     dict_id     bigint(20) not null auto_increment comment '字典主键',
@@ -160,9 +160,9 @@ create table base_dict
   auto_increment = 1000 comment = '字典数据表';
 
 
--------------------------------
+-- -----------------------------
 -- 7、部门数据表
--------------------------------
+-- -----------------------------
 create table base_dept
 (
     dept_id     bigint(20) not null auto_increment comment '部门主键',
@@ -188,9 +188,9 @@ create table base_dept
   auto_increment = 1000 comment = '部门数据表';
 
 
--------------------------------
+-- -----------------------------
 -- 8、公告数据表
--------------------------------
+-- -----------------------------
  create table base_notice
 (
     notice_id      bigint(20)  not null auto_increment comment '公告主键',
@@ -211,9 +211,9 @@ create table base_dept
 ) engine = innodb
   auto_increment = 1000 comment = '公告数据表';
 
--------------------------------
+-- -----------------------------
 -- 8、公告阅读标记数据表
--------------------------------
+-- -----------------------------
 create table base_notice_read
 (
     read_id     bigint(20) not null auto_increment comment '公告阅读主键',
@@ -231,9 +231,9 @@ create table base_notice_read
   auto_increment = 1000 comment = '公告阅读标记数据表';
 
 
--------------------------------
+-- -----------------------------
 -- 9、文件池数据表
--------------------------------
+-- -----------------------------
 create table base_file_pool
 (
     file_id     varchar(36)  not null comment '文件编号GUID',
@@ -255,9 +255,9 @@ create table base_file_pool
 ) engine = innodb comment = '文件池数据表';
 
 
--------------------------------
+-- -----------------------------
 -- 10、系统登录日志表
--------------------------------
+-- -----------------------------
 create table base_log_login
 (
     log_id     bigint(20)  not null auto_increment comment '登录记录编号',
