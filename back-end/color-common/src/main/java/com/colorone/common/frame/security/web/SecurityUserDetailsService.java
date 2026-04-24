@@ -10,6 +10,8 @@ import com.colorone.common.utils.data.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,7 +25,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SecurityUserDetailsService implements UserDetailsService {
-    private static final Logger log = LoggerFactory.getLogger(UserDetailsService.class);
+    private static final Logger log = LoggerFactory.getLogger(SecurityUserDetailsService.class);
 
     @Autowired
     private UserDetailsMapper userDetailsMapper;
@@ -35,17 +37,22 @@ public class SecurityUserDetailsService implements UserDetailsService {
      * @return
      */
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String userName) {
         //用户信息
         User user = userDetailsMapper.selectUserByUserName(userName);
         if (user == null) {
-            throw new UsernameNotFoundException(String.format(LoginLogInfo.USER_NAME_NOT_FOUND, userName));
+            throw new UsernameNotFoundException(LoginLogInfo.USER_NAME_NOT_FOUND);
+        }
+
+        //用户状态
+        if (user.getStatus() != 0) {
+            throw new LockedException(LoginLogInfo.USER_DISABLE);
         }
 
         //用户角色
         Long[] roles = userDetailsMapper.selectUserRoleByUserId(user.getUserId());
-        if (roles == null) {
-            throw new UsernameNotFoundException(String.format(LoginLogInfo.USER_ROLE_NOT_FOUND, userName));
+        if (roles.length == 0) {
+            throw new AccessDeniedException(LoginLogInfo.USER_ROLE_NOT_FOUND);
         }
 
         //返回登录用户信息实体类
@@ -64,7 +71,11 @@ public class SecurityUserDetailsService implements UserDetailsService {
 
         //用户部门信息,相关子部门
         loginUser.setDept(userDetailsMapper.selectUserDeptById(user.getDeptId()));
-        loginUser.getDept().setChildren(CollectionUtils.joinLong(userDetailsMapper.selectDeptChildren(user.getDeptId()), ","));
+        Long[] childrenDept = userDetailsMapper.selectDeptChildren(user.getDeptId());
+        if (childrenDept.length > 0) {
+            loginUser.getDept().setChildren(CollectionUtils.joinLong(childrenDept, ","));
+        }
+
 
         //加载用户权限过滤条件
         String[] scopes = userDetailsMapper.selectRolesScopeByIds(CollectionUtils.joinLong(roles, ","));

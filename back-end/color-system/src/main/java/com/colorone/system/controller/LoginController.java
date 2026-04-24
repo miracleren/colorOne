@@ -1,6 +1,7 @@
 package com.colorone.system.controller;
 
 import com.colorone.common.constant.Constants;
+import com.colorone.common.constant.ExceptionMsg;
 import com.colorone.common.constant.LoginLogInfo;
 import com.colorone.common.constant.RedisPrefix;
 import com.colorone.common.domain.auth.LoginBody;
@@ -19,8 +20,10 @@ import com.colorone.common.utils.data.IdUtils;
 import com.google.code.kaptcha.Producer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -75,7 +78,7 @@ public class LoginController {
      */
     @PostMapping("/user")
     @ApiExtension(name = "登录接口", permitType = PermitType.ANONYMOUS)
-    public RequestResult login(@RequestBody LoginBody loginBody) throws CaptchaException {
+    public RequestResult login(@RequestBody LoginBody loginBody) throws Exception {
         //验证码是否有效
         if ("true".equals(captchaEnabled)) {
             String codeValue = redisHelper.getObject(RedisPrefix.REDIS_CAPTCHA_CODE + loginBody.getCode());
@@ -94,13 +97,23 @@ public class LoginController {
         Authentication authentication;
         try {
             authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        } catch (Exception e) {
-            if (e instanceof UsernameNotFoundException) {
-                AsyncTaskManager.getInstance().execute(AsyncFactory.setLogging(loginBody.getUserName(), Constants.FAIL, e.getMessage()));
-                throw new UsernameNotFoundException(e.getMessage());
+        }  catch (Exception e) {
+            //登录日志记录
+            String logMsg = e instanceof BadCredentialsException ? LoginLogInfo.BAD_PASSWORD : e.getMessage();
+            AsyncTaskManager.getInstance().execute(AsyncFactory.setLogging(loginBody.getUserName(), Constants.FAIL, logMsg));
+
+            //loadUserByUsername常类型处理,用户不存在、密码错误
+            if (e instanceof UsernameNotFoundException || e instanceof BadCredentialsException) {
+                throw e;
+            } else if (e.getCause() instanceof LockedException) {
+                //账号锁定
+                throw (LockedException) e.getCause();
+            } else if (e.getCause() instanceof AccessDeniedException) {
+                //无效权限
+                throw (AccessDeniedException) e.getCause();
             } else {
-                AsyncTaskManager.getInstance().execute(AsyncFactory.setLogging(loginBody.getUserName(), Constants.FAIL, LoginLogInfo.BAD_PASSWORD));
-                throw new BadCredentialsException(LoginLogInfo.BAD_PASSWORD);
+                //其它异常
+                throw new Exception(ExceptionMsg.FAIL_LOGIN);
             }
         }
 

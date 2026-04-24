@@ -31,4 +31,9 @@ public class LoginLogInfo {
      * 登录成功
      */
     public static final String LOGIN_SUCCESS = "登录成功";
+
+    /**
+     * 用户处于禁用状态
+     */
+    public static final String USER_DISABLE = "用户处于禁用状态";
 }

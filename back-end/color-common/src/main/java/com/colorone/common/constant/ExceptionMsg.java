@@ -33,4 +33,9 @@ public class ExceptionMsg {
      * 验证码无效
      */
     public static final String CAPTCHA_INVALID = "验证码无效或已过期，请重新输入！";
+
+    /**
+     * 登录异常
+     */
+    public static final String FAIL_LOGIN = "登录异常，请联系管理人员！";
 }

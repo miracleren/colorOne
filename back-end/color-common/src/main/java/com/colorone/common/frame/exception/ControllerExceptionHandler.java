@@ -8,6 +8,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -62,8 +63,8 @@ public class ControllerExceptionHandler {
      * @param e
      * @return
      */
-    @ExceptionHandler(DisabledException.class)
-    public RequestResult handleDisabledException(DisabledException e) {
+    @ExceptionHandler(LockedException.class)
+    public RequestResult handleLockedException(LockedException e) {
         log.info(e.getMessage());
         return RequestResult.error(ExceptionMsg.LOGIN_USER_DISABLED);
     }
