@@ -50,8 +50,8 @@ const actions = {
                     console.log('handleLogin-resolve')
                     resolve()
                 }
-            }).catch(() => {
-                reject()
+            }).catch(res => {
+                reject(res)
             })
         })
 
@@ -67,8 +67,8 @@ const actions = {
                 commit('userSetRoles', res.data.roles)
                 commit('userSetPermits', res.data.permits)
                 resolve()
-            }).catch(() => {
-                reject()
+            }).catch(res => {
+                reject(res)
             })
         })
     },
