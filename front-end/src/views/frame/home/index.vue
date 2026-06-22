@@ -22,10 +22,10 @@
       </n-layout-header>
 
       <!--中部-->
-      <n-layout class="body-center" has-sider>
+            <n-layout class="body-center" has-sider>
         <sidebar-menu></sidebar-menu>
         <transition :name="defaultSetting.routerTransition" mode="out-in">
-          <n-layout class="section-body" :key="$route.path">
+          <n-layout class="section-body" :key="defaultSetting.keepAlive? null: $route.path">
             <router-view v-slot="{ Component ,route }">
               <keep-alive>
                 <component :is="Component" v-if="defaultSetting.keepAlive" :key="route.path"/>
