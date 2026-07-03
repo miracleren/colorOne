@@ -27,7 +27,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(Exception.class)
     public RequestResult handleException(Exception e) {
         log.error(e.getMessage(), e);
-        return RequestResult.error(e.toString());
+        return RequestResult.error(e.getMessage());
     }
 
 
